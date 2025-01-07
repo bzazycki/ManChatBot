@@ -1,7 +1,9 @@
 package UI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,7 +48,7 @@ public class ChatPanel extends JPanel {
      * @param input the text to be added to the user side
      */
     public void addUserText(String input) {
-        // TODO Add text in a way that shows it was the user who said something.
+        // TODO adding user text
     }
 
     /**
@@ -54,7 +56,7 @@ public class ChatPanel extends JPanel {
      * @param input the text to be added to the bot side.
      */
     public void addChatText(String input) {
-        // TODO Add text in a way that shows it was the chat who said something.
+        // TODO adding chat text
     }
 
     /**
@@ -91,6 +93,7 @@ public class ChatPanel extends JPanel {
      */
     private JPanel chatPanel() {
         JPanel chatPanel = new JPanel();
+        chatPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.chatPanel = chatPanel;
         return chatPanel;
     }
@@ -102,7 +105,7 @@ public class ChatPanel extends JPanel {
      */
     private void makeAPICallUpdate() {
 
-        String output = "";
+        String output = "Response";
 
         String input = this.inputArea.getText().toString().trim();
 
@@ -114,5 +117,4 @@ public class ChatPanel extends JPanel {
 
         addChatText(output);
     }
-
 }
