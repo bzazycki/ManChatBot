@@ -20,7 +20,7 @@ public class AppPanel extends JPanel {
     /**
      * The JPanel that contains the sprite.
      */
-    private JPanel spritePanel;
+    private SpritePanel spritePanel;
 
     /**
      * The chat panel. This records what has been said by the user and what
@@ -37,20 +37,11 @@ public class AppPanel extends JPanel {
     public AppPanel() {
         super(new GridLayout(1, 2));
 
-        spritePanel = spritePanel();
+        spritePanel = new SpritePanel();
         chatPanel = new ChatPanel();
 
         this.add(spritePanel);
         this.add(chatPanel);
-    }
-
-    /**
-     * Sets up the sprite panel. This includes the art for the system
-     * so that it is more user friendly.
-     * @return the sprite panel
-     */
-    private JPanel spritePanel() {
-        return new JPanel();
     }
 
 }
