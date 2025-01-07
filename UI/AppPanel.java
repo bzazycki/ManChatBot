@@ -35,16 +35,13 @@ public class AppPanel extends JPanel {
      * This requires the sprite files for imaging.
      */
     public AppPanel() {
-        super(new GridLayout(2, 2));
+        super(new GridLayout(1, 2));
 
         spritePanel = spritePanel();
         chatPanel = new ChatPanel();
 
         this.add(spritePanel);
         this.add(chatPanel);
-
-        this.add(new JPanel());
-        this.add(new JPanel());
     }
 
     /**
