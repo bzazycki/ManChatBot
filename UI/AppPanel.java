@@ -10,8 +10,6 @@ import javax.swing.JPanel;
  * 
  * Top Left -> Sprite
  * Top Right -> Chatlog
- * Bottom Left -> ???
- * Bottom Right -> ???
  */
 public class AppPanel extends JPanel {
 
