@@ -14,17 +14,46 @@ import javax.swing.JPanel;
  * Bottom Right -> ???
  */
 public class AppPanel extends JPanel {
+
+    // === *** Subpanel Attributes *** === //
+
+    /**
+     * The JPanel that contains the sprite.
+     */
+    private JPanel spritePanel;
+
+    /**
+     * The chat panel. This records what has been said by the user and what
+     * has been said by the bot.
+     */
+    private ChatPanel chatPanel;
     
     // === *** Constructors *** === //
     
     /**
      * The default constructor, creates the entire application ready to go from here.
+     * This requires the sprite files for imaging.
      */
     public AppPanel() {
         super(new GridLayout(2, 2));
 
-        
+        spritePanel = spritePanel();
+        chatPanel = new ChatPanel();
+
+        this.add(spritePanel);
+        this.add(chatPanel);
+
+        this.add(new JPanel());
+        this.add(new JPanel());
     }
 
+    /**
+     * Sets up the sprite panel. This includes the art for the system
+     * so that it is more user friendly.
+     * @return the sprite panel
+     */
+    private JPanel spritePanel() {
+        return new JPanel();
+    }
 
 }

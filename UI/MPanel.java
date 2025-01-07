@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -21,6 +22,12 @@ public class MPanel extends JPanel {
      * panel when needed.
      */
     private JPanel defaultStartPanel;
+
+    /**
+     * Stores the active app panel instance so that it can be removed when
+     * necessary.
+     */
+    private AppPanel appPanel;
 
     // === *** Constructors *** === //
 
@@ -61,6 +68,8 @@ public class MPanel extends JPanel {
         UIBuilder.addEmptyPanels(gridPanel, 10);
 
         JButton startButton = new JButton("Start");
+        startButton.setBackground(Color.GREEN);
+        startButton.setFocusable(false);
         startButton.addActionListener(e -> switchToAppPanel());
 
         gridPanel.add(startButton);
@@ -76,7 +85,8 @@ public class MPanel extends JPanel {
      */
     private void switchToAppPanel() {
         this.remove(this.defaultStartPanel);
-        //this.add(this.appPanel);
+        this.appPanel = new AppPanel();
+        this.add(this.appPanel);
         this.revalidate();
         this.repaint();
     }
