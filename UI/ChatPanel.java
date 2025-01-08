@@ -6,7 +6,6 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -39,7 +38,7 @@ public class ChatPanel extends JPanel {
     public ChatPanel() {
         super(new BorderLayout());
 
-        this.add(inputPanel(), BorderLayout.SOUTH);
+        this.add(inputPanel(), BorderLayout.NORTH);
         this.add(chatPanel());
     }
 
@@ -74,9 +73,7 @@ public class ChatPanel extends JPanel {
         inputTextArea.setLineWrap(true);
         inputTextArea.setWrapStyleWord(true);
 
-        // Setting it in a scroll pane
-        JScrollPane scrollPane = new JScrollPane(inputTextArea);
-        inputPanel.add(scrollPane);
+        inputPanel.add(inputTextArea);
 
         // The submit button to send the text to the api
         JButton submitButton = new JButton(">");

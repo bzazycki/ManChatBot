@@ -13,4 +13,11 @@ public class Request {
      */
     private static final String IP_ADDRESS = "http://34.236.100.216";
 
+    /**
+     * Makes a request to the backend using the IP address.
+     */
+    public static void makeRequest() {
+        System.out.println("Making request to: " + IP_ADDRESS);
+        // TODO add request logic.
+    }
 }
