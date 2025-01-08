@@ -83,10 +83,20 @@ public class MPanel extends JPanel {
      * Switches to the app panel, and removes the default start panel and then adds 
      * the app panel.
      */
-    private void switchToAppPanel() {
+    public void switchToAppPanel() {
         this.remove(this.defaultStartPanel);
-        this.appPanel = new AppPanel();
+        this.appPanel = new AppPanel(this);
         this.add(this.appPanel);
+        this.revalidate();
+        this.repaint();
+    }
+
+    /**
+     * Swiches to the app panel
+     */
+    public void switchToDefaultPanel() {
+        this.remove(this.appPanel);
+        this.add(this.defaultStartPanel);
         this.revalidate();
         this.repaint();
     }

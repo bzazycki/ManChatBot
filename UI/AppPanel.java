@@ -32,10 +32,10 @@ public class AppPanel extends JPanel {
      * The default constructor, creates the entire application ready to go from here.
      * This requires the sprite files for imaging.
      */
-    public AppPanel() {
+    public AppPanel(MPanel panel) {
         super(new GridLayout(1, 2));
 
-        spritePanel = new SpritePanel();
+        spritePanel = new SpritePanel(panel);
         chatPanel = new ChatPanel();
 
         this.add(spritePanel);

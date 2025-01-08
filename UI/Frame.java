@@ -3,6 +3,7 @@ package UI;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,7 +53,7 @@ public class Frame extends JFrame {
     private JPanel companyBannerPanel() {
         JPanel banner = UIBuilder.panel();
 
-        JLabel label = new JLabel("JustLife");
+        JLabel label = new JLabel(new ImageIcon("./UI/Images/JustLife.png"));
         banner.add(label);
 
         return banner;

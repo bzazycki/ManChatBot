@@ -3,6 +3,7 @@ package UI;
 import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -16,6 +17,12 @@ public class SpritePanel extends JPanel {
    */
   private JLabel activeGifLabel;
 
+  /**
+   * The main panel, this is passed to the Sprite panel so that the end conversation
+   * button has access to the other panel.
+   */
+  private MPanel mainPanel;
+
   // === *** Constructors *** //
 
   /**
@@ -23,14 +30,19 @@ public class SpritePanel extends JPanel {
    * added
    * to.
    */
-  public SpritePanel() {
+  public SpritePanel(MPanel panel) {
     super(new BorderLayout());
+    this.mainPanel = panel;
 
     // Sets the gif label
-    ImageIcon gifIcon = new ImageIcon("UI/Sprite.gif");
+    ImageIcon gifIcon = new ImageIcon("UI/Images/Sprite.gif");
     JLabel gifLabel = new JLabel(gifIcon);
     this.activeGifLabel = gifLabel;
     this.add(gifLabel);
+
+    JButton endConversationButton = new JButton("End Conversation");
+    endConversationButton.addActionListener(e -> mainPanel.switchToDefaultPanel());
+    this.add(endConversationButton, BorderLayout.SOUTH);
   }
 
   /**
@@ -44,6 +56,9 @@ public class SpritePanel extends JPanel {
     JLabel gifLabel = new JLabel(gifIcon);
     this.activeGifLabel = gifLabel;
     this.add(gifLabel);
+
+    this.revalidate();
+    this.repaint();
   }
 
 }
