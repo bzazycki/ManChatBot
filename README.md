@@ -1,6 +1,10 @@
 # ManChatBot
-Group 3 for Manchester study abroad project.
+Miami University - CSE 448/449 Winter 2025 
+Manchester Study Abroad - Group 3
 
-We are making a 'chatbot' app that will run on an android tablet on 'kiosk mode' and assist homeless people who walk up to the tablet. 
+Project Managers: Aiden Hill, Ben Zazycki
+Frontend: George Ives, Lillian Bennett, John Belak
+Backend: Ethan Armbruster, Jalen Brunson, Zach Clouse
 
-We will have a backend that makes API calls to OpenAI and a frontend android app that runs the GUI, text recognition, and text-to-speech. 
+Description: Android App ChatGPT-based chatbot
+Purpose: Provide info to homeless population who visits nonprofit orgainzations
