@@ -35,11 +35,11 @@ def chatbot():
         # Call the OpenAI API
         completion = client.chat.completions.create(
             model="gpt-4o-mini",
-            store=True,  # Optional: store chat logs
             messages=[
                 {"role": "user", "content": user_message}
             ]
         )
+
         
         # Extract the AI response
         ai_response = completion.choices[0].message.content
