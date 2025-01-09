@@ -25,7 +25,7 @@ public class Backend_Functions {
 
 
     public static String getChatResponse(String userMessage) {
-        String flaskURL = "http://34.236.100.216/chatbot"
+        String flaskURL = "http://34.236.100.216/chatbot";
         try {
             URL url = new URL(flaskURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
