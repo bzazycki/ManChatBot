@@ -9,10 +9,6 @@ client = OpenAI(
 # Initialize Flask app
 app = Flask(__name__)
 
-# Read context information from context.txt
-with open('context.txt', 'r') as file:
-    context_info = file.read()
-
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     """
@@ -20,7 +16,8 @@ def chatbot():
     
     Request format:
         {
-            "user_message": "string"
+            "user_message": "string",
+            "context_info": "string"
         }
     
     Response format:
@@ -32,43 +29,25 @@ def chatbot():
         # Get the JSON payload from the request
         data = request.get_json()
         user_message = data.get("user_message", "")
+        context_info = data.get("context_info", "")
         
         if not user_message:
             return jsonify({"error": "No user message provided"}), 400
 
-        # Read conversation history from history.txt
-        conversation_history = []
-        try:
-            with open('history.txt', 'r') as history_file:
-                for line in history_file:
-                    role, content = line.strip().split(': ', 1)
-                    conversation_history.append({"role": role, "content": content})
-        except FileNotFoundError:
-            pass
-        
-        # Add the context information to the conversation history if it's the first message
-        if not conversation_history:
-            conversation_history.append({"role": "system", "content": context_info})
-        
-        # Add the user's message to the conversation history
-        conversation_history.append({"role": "user", "content": user_message})
+        # Prepare the user input for the OpenAI API
+        user_input = [
+            {"role": "system", "content": context_info},
+            {"role": "user", "content": user_message}
+        ]
 
         # Call the OpenAI API
         completion = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=conversation_history
+            messages=user_input
         )
 
         # Extract the AI response
         ai_response = completion.choices[0].message.content
-        
-        # Add the AI's response to the conversation history
-        conversation_history.append({"role": "assistant", "content": ai_response})
-        
-        # Save the updated conversation history to history.txt
-        with open('history.txt', 'a') as history_file:
-            for message in conversation_history[-2:]:  # Only append the last user and assistant messages
-                history_file.write(f"{message['role']}: {message['content']}\n")
         
         # Return the AI response
         return jsonify({"ai_response": ai_response})
@@ -78,4 +57,4 @@ def chatbot():
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='0.0.0.0', port=5000)
