@@ -25,18 +25,18 @@ public class Backend_Functions {
 
 
     public static String getChatResponse(String userMessage) {
+        String flaskURL = "http://34.236.100.216/chatbot"
         try {
-            URL url = new URL("http://34.236.100.216:443");
+            URL url = new URL(flaskURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
-            connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
 
             String jsonInputString = "{\"user_message\": \"" + userMessage + "\"}";
 
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                byte[] input = jsonInputString.getBytes("utf-8");
                 os.write(input, 0, input.length);
             }
 
