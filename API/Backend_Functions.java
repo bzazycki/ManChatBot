@@ -26,7 +26,7 @@ public class Backend_Functions {
 
     public static String getChatResponse(String userMessage) {
         try {
-            URL url = new URL("http://34.236.100.216:80");
+            URL url = new URL("http://34.236.100.216:443");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");

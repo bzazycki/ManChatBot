@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ChatBotApp"
-include(":app")
+include ':app'
