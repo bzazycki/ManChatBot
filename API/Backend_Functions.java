@@ -1,3 +1,5 @@
+package API;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -7,7 +9,7 @@ import java.net.URL;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class API_Memory {
+public class Backend_Functions {
 
     public static void clearMemory() {
         try {
@@ -24,7 +26,7 @@ public class API_Memory {
 
     public static String getChatResponse(String userMessage) {
         try {
-            URL url = new URL("http://localhost:5000/chatbot");
+            URL url = new URL("http://34.236.100.216:80");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -51,5 +53,9 @@ public class API_Memory {
             e.printStackTrace();
             return "An error occurred while getting the chat response.";
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getChatResponse("Hello ChatGPT, tell me anything!"));
     }
 }

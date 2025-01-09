@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Request {
 
-    private static final String IP_ADDRESS = "http://172.31.81.99:5000/chatbot";
+    private static final String IP_ADDRESS = "http://34.236.100.216:80/chatbot";
 
     private static final String AUTH_CODE = "authcode";
 
@@ -18,7 +18,7 @@ public class Request {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            //connection.setRequestProperty("Authorization", "Bearer " + AUTH_CODE);
+            connection.setRequestProperty("Authorization", "Bearer " + AUTH_CODE);
             connection.setDoOutput(true);
 
             String jsonInputString = "{\"input\": \"" + input + "\"}";
