@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageView = new ImageView(this);
 
         // Set the image resource (ensure the image is added to res/drawable folder)
-        imageView.setImageResource(R.drawable.sprite); // Replace 'your_image_name' with the actual image name
+        imageView.setImageResource(R.drawable.helpbutton); // Replace 'your_image_name' with the actual image name
 
         // Scale the image to fit the screen
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 // When the image is clicked, start a new Activity
                 Intent intent = new Intent(MainActivity.this, AppActivity.class); // Replace NewActivity with the target Activity
                 startActivity(intent);
+
+                finish();
             }
         });
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,13 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
-public class    AppActivity extends AppCompatActivity {
+public class AppActivity extends AppCompatActivity {
 
     // === *** Attributes *** === //
 
@@ -84,6 +88,8 @@ public class    AppActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(AppActivity.this, MainActivity.class); // Replace NewActivity with the target Activity
                         startActivity(intent);
+
+                        finish(); // Ends this activity.
 
                         break;
 
@@ -152,31 +158,54 @@ public class    AppActivity extends AppCompatActivity {
         // Panel above the input
         LinearLayout chatPanel = new LinearLayout(this);
         chatPanel.setLayoutParams(new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, 600)); // Example height for the panel
-        chatPanel.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light)); // Set background for pane
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)); // Example height for the panel
         chatPanel.setOrientation(LinearLayout.VERTICAL);
+        chatPanel.setPadding(16, 16, 16, 16);
 
-        // EditText for text input
-        EditText editText = new EditText(this);
-        editText.setHint("Speak aloud or enter text..."); // Hint text for input field
-        RelativeLayout.LayoutParams editTextParams = new RelativeLayout.LayoutParams(
+        ScrollView scrollView = new ScrollView(this);
+        scrollView.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, this.getDisplay().getHeight() - 50));
+
+        scrollView.addView(chatPanel);
+
+        // The input panel.
+        LinearLayout inputContainer = new LinearLayout(this);
+        inputContainer.setOrientation(LinearLayout.HORIZONTAL);
+        RelativeLayout.LayoutParams inputContainerParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        editTextParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM); // Align to bottom
+        inputContainerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        inputContainer.setLayoutParams(inputContainerParams);
+
+
+        // The Edit Text, the input
+        EditText editText = new EditText(this);
+        editText.setHint("Enter your thoughts..."); // Hint text for input field
+        editText.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
+        editText.setPadding(16, 16, 16, 16);
+        editText.setTextColor(getResources().getColor(android.R.color.black));
+        editText.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        editText.setElevation(8); // Slight shadow for better visibility
+        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f); // Weight of 1 for proportional sizing
         editText.setLayoutParams(editTextParams);
 
         // Button to submit text
         Button submitButton = new Button(this);
-        submitButton.setText("Submit");
-        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM); // Align button to bottom next to EditText
-        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT); // Align button to the right of EditText
+        submitButton.setText("Send");
+        submitButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
+        submitButton.setTextColor(getResources().getColor(android.R.color.white));
+        submitButton.setElevation(8); // Slight shadow
+        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        buttonParams.setMargins(16, 0, 0, 0); // Add margin to separate from EditText
         submitButton.setLayoutParams(buttonParams);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Get user input and clear the EditText
                 String input = editText.getText().toString().trim();
+
+                changeAnimation('t');
 
                 if (input.isBlank() || input.isEmpty()) {
                     return;
@@ -193,19 +222,22 @@ public class    AppActivity extends AppCompatActivity {
                 new Thread(() -> {
                     // Get the chat response from the backend
                     String output = Backend_Functions.getChatResponse(input);
-                    //final String trimmed = output.substring(17, output.length() - 2);
-                    final String trimmed = output.trim();
                     // Update the chat panel on the main thread
-                    runOnUiThread(() -> logChatOutput(chatPanel, trimmed));
+                    runOnUiThread(() -> logChatOutput(chatPanel, output));
                 }).start();
+
+                lastActivity = System.currentTimeMillis();
+
+                changeAnimation('l');
             }
         });
 
         // Add panel, EditText, and Button to the rightLayout
-        rightLayout.addView(editText); // Add the EditText at the bottom
-        rightLayout.addView(submitButton); // Add the Button next to the EditText
-        rightLayout.addView(chatPanel); // Panel above the input
-
+         // Add the EditText at the bottom
+        inputContainer.addView(editText); // Add the Button next to the EditText
+        inputContainer.addView(submitButton); // Panel above the input
+        rightLayout.addView(scrollView);
+        rightLayout.addView(inputContainer);
 
         // Set the left and right layouts as children of the main layout
         mainLayout.addView(leftLayout);
@@ -230,7 +262,7 @@ public class    AppActivity extends AppCompatActivity {
                 animation.setVideoURI(talkUri);
                 break;
             case 'l':
-                Uri listenUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
+                Uri listenUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
                 animation.setVideoURI(listenUri);
                 break;
         }
@@ -245,9 +277,26 @@ public class    AppActivity extends AppCompatActivity {
      * @param text the text
      */
     private void logUserInput(LinearLayout container, String text) {
-        TextView input = new EditText(this);
-        input.setText(text);
-        container.addView(input);
+        // Create a bubble for the user's input
+        TextView bubble = new TextView(this);
+        bubble.setText(text);
+        bubble.setPadding(20, 20, 20, 20);
+        bubble.setBackgroundResource(R.drawable.userbubble); // Custom drawable for user bubble
+        bubble.setTextColor(getResources().getColor(android.R.color.white));
+        bubble.setTextSize(16);
+        bubble.setElevation(4); // Slight shadow
+
+        // Set layout parameters for the bubble
+        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        bubbleParams.setMargins(8, 8, 8, 8);
+        bubbleParams.gravity = Gravity.END; // Align to the right for user input
+        bubble.setLayoutParams(bubbleParams);
+
+        // Add bubble to the container
+        container.addView(bubble);
+
+        // Update chat log
         chatLog += "You asked: " + text + "\n\n";
     }
 
@@ -257,9 +306,26 @@ public class    AppActivity extends AppCompatActivity {
      * @param text the text
      */
     private void logChatOutput(LinearLayout container, String text) {
-        TextView input = new EditText(this);
-        input.setText(text);
-        container.addView(input);
+        // Create a bubble for the chatbot's output
+        TextView bubble = new TextView(this);
+        bubble.setText(text);
+        bubble.setPadding(20, 20, 20, 20);
+        bubble.setBackgroundResource(R.drawable.chatbubble); // Custom drawable for chatbot bubble
+        bubble.setTextColor(getResources().getColor(android.R.color.black));
+        bubble.setTextSize(16);
+        bubble.setElevation(4); // Slight shadow
+
+        // Set layout parameters for the bubble
+        LinearLayout.LayoutParams bubbleParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        bubbleParams.setMargins(8, 8, 8, 8);
+        bubbleParams.gravity = Gravity.START; // Align to the left for chatbot response
+        bubble.setLayoutParams(bubbleParams);
+
+        // Add bubble to the container
+        container.addView(bubble);
+
+        // Update chat log
         chatLog += "Chatbot responded: " + text + "\n\n";
     }
 

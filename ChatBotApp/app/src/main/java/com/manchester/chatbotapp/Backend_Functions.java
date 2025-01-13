@@ -18,7 +18,8 @@ public class Backend_Functions {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
-            //connection.setRequestProperty("Authorization", "auth123");
+            //connection.setRequestProperty("Authorization", "Auth123");
+            //connection.setRequestProperty("Location", "Manchester");
             connection.setDoOutput(true);
 
             String jsonInputString = "{\"user_message\": \"" + userMessage + "\"}";
@@ -38,13 +39,26 @@ public class Backend_Functions {
                 return response.toString();
             }
         } catch (Exception e) {
-            StackTraceElement[] stack = e.getStackTrace();
-            String stackTrace = "";
-            for (StackTraceElement elem : stack) {
-                stackTrace += elem.toString() + "\n";
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String stack = "";
+            for (StackTraceElement s : stackTrace) {
+                stack += s.toString() + "\n";
             }
-            return stackTrace;
+            return stack;
             //return "An error occurred while getting the chat response.";
         }
+    }
+
+    /**
+     * Takes the input, and parses it so that a vaild nonclipped response is always
+     * given.
+     * @param output the output from the HTTP request.
+     * @return the trimmed and formatted response.
+     */
+    private String parseOutput(String output) {
+
+
+
+        return output;
     }
 }
