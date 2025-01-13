@@ -1,65 +1,70 @@
+"""
+Author: Ethan Armbruster, Zach Clouse, Jalen Brunson
+Contact Email: armbrue2@miamioh.edu
+"""
+
 from flask import Flask, request, jsonify
 from openai import OpenAI
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize the OpenAI client
 client = OpenAI(
-    api_key="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"
+    api_key=os.getenv("OPENAI_API_KEY")
 )
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# Global variable to store persistent context
-persistent_context = ""
+# Read context information from context.txt
+with open('context.txt', 'r') as file:
+    context_info = file.read()
 
-# Load context from a .txt file
-def load_persistent_context(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            return file.read()
-    except FileNotFoundError:
-        return ""
 
-# Load persistent context at startup
-persistent_context = load_persistent_context("context.txt")
-
-@app.route('/chatbot', methods=['POST'])
-def chatbot():
-    """
-    API endpoint to handle user messages and return AI responses.
+"""
+API endpoint to handle user messages and return AI responses.
     
-    Request format:
+@param request: Flask request object containing JSON payload with user message.
+@return: JSON response containing AI response or error message.
+"""
+    
+"""
+Request format:
         {
-            "user_message": "string",
-            "context_info": "string"
+            "user_message": "string"
         }
     
-    Response format:
+Response format:
         {
             "ai_response": "string"
         }
-    """
+"""
+@app.route('/chatbot', methods=['POST'])
+def chatbot():
+    
     try:
         # Get the JSON payload from the request
         data = request.get_json()
         user_message = data.get("user_message", "")
-        context_info = data.get("context_info", "")
-
+        
         if not user_message:
             return jsonify({"error": "No user message provided"}), 400
 
-        # Prepare the conversation history
         user_input = []
-
-        # Include persistent context only if it's the first message
-        if not context_info and persistent_context:
-            user_input.append({"role": "system", "content": persistent_context})
-
-        # Include any additional context provided by the user
-        if context_info:
+        try:
+            # Read conversation history from history.txt
+            with open('history.txt', 'r') as history_file:
+                for line in history_file:
+                    role, content = line.strip().split(': ', 1)
+                    user_input.append({"role": role, "content": content})
+        except FileNotFoundError:
+            # Add the context information to the user input if history.txt does not exist
             user_input.append({"role": "system", "content": context_info})
-
-        # Add the user's message
+        
+        # Add the user's message to the user input
         user_input.append({"role": "user", "content": user_message})
 
         # Call the OpenAI API
@@ -70,14 +75,20 @@ def chatbot():
 
         # Extract the AI response
         ai_response = completion.choices[0].message.content
-
+        
+        # Add the AI's response to the user input
+        user_input.append({"role": "assistant", "content": ai_response})
+        
+        # Save the updated user input to history.txt
+        with open('history.txt', 'a') as history_file:
+            for message in user_input[-2:]:
+                history_file.write(f"{message['role']}: {message['content']}\n")
+        
         # Return the AI response
         return jsonify({"ai_response": ai_response})
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Run the Flask app
 if __name__ == '__main__':
-    # Ensure the context.txt file is loaded before starting the server
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000)
