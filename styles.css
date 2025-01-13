@@ -26,7 +26,7 @@ nav ul {
   justify-content: center;
 }
 
-nav ul li {
+nav ul li:not(:last-child) {
   margin-right: 30px;
   position: relative;
 }
@@ -49,6 +49,7 @@ nav ul li a:hover,
 nav ul li a:focus {
   color: #fff; /* Highlight on hover */
   transform: scale(1.1);
+  outline: none;
 }
 
 /* Active Link */
@@ -58,7 +59,7 @@ nav ul li a.active {
 
 /* Active link underline animation */
 nav ul li a.active::after {
-  content: \"\";
+  content: "";
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -111,6 +112,7 @@ footer {
   color: #ffc107;
   text-align: center;
   padding: 10px 0;
+  position: relative; /* Keep it in view */
 }
 
 /* Admin Page */
@@ -172,4 +174,3 @@ footer {
 .admin-page button:hover {
   background-color: #333;
 }
-
