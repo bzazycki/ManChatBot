@@ -16,7 +16,6 @@ header {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Navigation Bar */
 nav ul {
   list-style-type: none;
   text-align: center;
@@ -26,151 +25,122 @@ nav ul {
   justify-content: center;
 }
 
-nav ul li:not(:last-child) {
+nav ul li {
   margin-right: 30px;
-  position: relative;
 }
 
-/* Navigation Links */
 nav ul li a {
-  color: #ffc107; /* Yellow for bee theme */
+  color: #ffc107; /* Bee yellow */
   text-decoration: none;
   font-size: 18px;
   padding: 10px 15px;
-  display: inline-block;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1px;
   transition: color 0.3s, transform 0.3s;
 }
 
-/* Hover Effects */
 nav ul li a:hover,
 nav ul li a:focus {
   color: #fff; /* Highlight on hover */
   transform: scale(1.1);
-  outline: none;
 }
 
-/* Active Link */
 nav ul li a.active {
   color: #fff;
 }
 
-/* Active link underline animation */
-nav ul li a.active::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #ffc107;
-  transition: width 0.3s ease;
-}
-
-/* Landing Page */
-.landing-page {
-  text-align: center;
-  padding: 50px;
-  background-color: #ffc107; /* Bee yellow */
-  color: #000; /* Contrast black */
-}
-
-.landing-page h1 {
-  font-size: 3em;
-}
-
-.landing-page .cta-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #000;
-  color: #ffc107;
-  font-size: 1.2em;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.landing-page .cta-button:hover {
-  background-color: #333;
-}
-
-/* Preferences and About Pages */
+.landing-page,
 .preferences-page,
-.about-us {
+.about-us,
+.admin-page {
   padding: 20px;
   background-color: #fff;
   max-width: 800px;
-  margin: 20px auto;
+  margin: 50px auto;
   border-radius: 8px;
-}
-
-footer {
-  background-color: #000;
-  color: #ffc107;
-  text-align: center;
-  padding: 10px 0;
-  position: relative; /* Keep it in view */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Admin Page */
 .admin-page {
-  padding: 20px;
-  background-color: #fff;
-  max-width: 900px;
-  margin: 20px auto;
-  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
 }
 
 .admin-page h1 {
   color: #ffc107;
-  text-align: center;
+  margin-bottom: 20px;
 }
 
-.admin-page table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.admin-page table th, 
-.admin-page table td {
-  border: 1px solid #000;
-  padding: 10px;
+.admin-page .form-group {
+  margin-bottom: 15px;
   text-align: left;
 }
 
-.admin-page table th {
-  background-color: #000;
-  color: #ffc107;
+.admin-page label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
 }
 
-.admin-page table tr:nth-child(even) {
-  background-color: #fdf8e4;
+.admin-page input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.admin-page ul {
+.admin-page input:focus {
+  border-color: #ffc107;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+.admin-page .button-group {
   margin-top: 20px;
-  padding-left: 20px;
 }
 
-.admin-page ul li {
-  color: #000;
-  font-size: 1.1em;
-}
-
-.admin-page button {
+.admin-page .btn-login {
   background-color: #000;
   color: #ffc107;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;
 }
 
-.admin-page button:hover {
+.admin-page .btn-login:hover {
   background-color: #333;
+}
+
+.admin-page .links {
+  margin-top: 20px;
+}
+
+.admin-page .links a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: color 0.3s;
+}
+
+.admin-page .links a:hover {
+  color: #ffc107;
+}
+
+/* Footer */
+footer {
+  background-color: #000;
+  color: #ffc107;
+  text-align: center;
+  padding: 10px 0;
 }
