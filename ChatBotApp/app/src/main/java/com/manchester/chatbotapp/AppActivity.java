@@ -2,6 +2,7 @@ package com.manchester.chatbotapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +38,12 @@ public class    AppActivity extends AppCompatActivity {
      * Stores the chat log so that it can be emailed if needed.
      */
     protected String chatLog = "";
+
+    /**
+     * The animation that is occurring. This will be changed depending
+     * on methods that are called.
+     */
+    protected VideoView animation;
 
     // === *** Constructors *** === //
 
@@ -123,9 +131,16 @@ public class    AppActivity extends AppCompatActivity {
         leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
         leftLayout.setOrientation(LinearLayout.VERTICAL);
-        ImageView imageView = new ImageView(this);
-        imageView.setImageResource(R.drawable.sprite); // Set your image resource
-        leftLayout.addView(imageView); // Add the ImageView to the left layout
+        this.animation = new VideoView(this);
+
+        // Set the video source from the raw resource folder
+        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
+        animation.setVideoURI(videoUri);
+
+        animation.start();
+        animation.setOnCompletionListener(mp -> animation.start());
+
+        leftLayout.addView(animation); // Add the ImageView to the left layout
 
         // === RIGHT FRAME === //
 
@@ -178,8 +193,8 @@ public class    AppActivity extends AppCompatActivity {
                 new Thread(() -> {
                     // Get the chat response from the backend
                     String output = Backend_Functions.getChatResponse(input);
-                    final String trimmed = output.substring(17, output.length() - 2);
-
+                    //final String trimmed = output.substring(17, output.length() - 2);
+                    final String trimmed = output.trim();
                     // Update the chat panel on the main thread
                     runOnUiThread(() -> logChatOutput(chatPanel, trimmed));
                 }).start();
@@ -187,9 +202,10 @@ public class    AppActivity extends AppCompatActivity {
         });
 
         // Add panel, EditText, and Button to the rightLayout
-        rightLayout.addView(chatPanel); // Panel above the input
         rightLayout.addView(editText); // Add the EditText at the bottom
         rightLayout.addView(submitButton); // Add the Button next to the EditText
+        rightLayout.addView(chatPanel); // Panel above the input
+
 
         // Set the left and right layouts as children of the main layout
         mainLayout.addView(leftLayout);
@@ -199,6 +215,29 @@ public class    AppActivity extends AppCompatActivity {
         setContentView(mainLayout);
     }
 
+    /**
+     * Changes the animation based on the character for the resource.
+     * @param c the character that determines what resource to use.
+     */
+    public void changeAnimation(Character c) {
+        switch (c) {
+            case 'w':
+                Uri waveUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
+                animation.setVideoURI(waveUri);
+                break;
+            case 't':
+                Uri talkUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
+                animation.setVideoURI(talkUri);
+                break;
+            case 'l':
+                Uri listenUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
+                animation.setVideoURI(listenUri);
+                break;
+        }
+
+        animation.start();
+        animation.setOnCompletionListener(mp -> animation.start());
+    }
 
     /**
      * Adds the text box to the container.
@@ -224,7 +263,10 @@ public class    AppActivity extends AppCompatActivity {
         chatLog += "Chatbot responded: " + text + "\n\n";
     }
 
-
+    /**
+     * Hides the keyboard so that it does not popup whenever text is added.
+     * @param view the view that is having the keyboard hidden.
+     */
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {

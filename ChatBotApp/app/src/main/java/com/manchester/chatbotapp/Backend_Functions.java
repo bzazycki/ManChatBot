@@ -11,18 +11,6 @@ import java.nio.charset.StandardCharsets;
 
 public class Backend_Functions {
 
-    public static void clearMemory() {
-        try {
-            FileWriter writer = new FileWriter("history.txt", false);
-            writer.write("");
-            writer.close();
-            System.out.println("Memory cleared successfully.");
-        } catch (IOException e) {
-            System.out.println("An error occurred while clearing memory.");
-        }
-    }
-
-
     public static String getChatResponse(String userMessage) {
         String flaskURL = "http://34.236.100.216/chatbot";
         try {
@@ -30,6 +18,7 @@ public class Backend_Functions {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            //connection.setRequestProperty("Authorization", "auth123");
             connection.setDoOutput(true);
 
             String jsonInputString = "{\"user_message\": \"" + userMessage + "\"}";
@@ -49,7 +38,12 @@ public class Backend_Functions {
                 return response.toString();
             }
         } catch (Exception e) {
-            return e.toString();
+            StackTraceElement[] stack = e.getStackTrace();
+            String stackTrace = "";
+            for (StackTraceElement elem : stack) {
+                stackTrace += elem.toString() + "\n";
+            }
+            return stackTrace;
             //return "An error occurred while getting the chat response.";
         }
     }
