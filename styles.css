@@ -1,108 +1,240 @@
-/* General Styles */
+/* General styles */
 body {
   font-family: Arial, sans-serif;
-  line-height: 1.6;
   margin: 0;
   padding: 0;
-  background: #f4f4f9;
-  color: #333;
+  background-color: #fdf8e4; /* Bee honeycomb background */
 }
 
+/* Sticky Navigation Bar */
 header {
-  background: #333;
+  position: sticky;
+  top: 0;
+  background-color: #000;
+  padding: 10px 0;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin-right: 30px;
+}
+
+nav ul li a {
+  color: #ffc107; /* Bee yellow */
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+  color: #fff; /* Highlight on hover */
+  transform: scale(1.1);
+}
+
+nav ul li a.active {
   color: #fff;
-  padding: 10px 20px;
+}
+
+/* Page Containers */
+.landing-page,
+.preferences-page,
+.about-us,
+.admin-page {
+  padding: 20px;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 50px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Admin Page */
+.admin-page {
+  max-width: 400px;
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
+.admin-page h1 {
+  color: #ffc107;
+  margin-bottom: 20px;
 }
 
-nav {
-  background: #444;
-  color: #fff;
-  display: flex;
-  justify-content: center;
+.admin-page .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.admin-page label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.admin-page input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.admin-page input:focus {
+  border-color: #ffc107;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+.admin-page .button-group {
+  margin-top: 20px;
+}
+
+.admin-page .btn-login {
+  background-color: #000;
+  color: #ffc107;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.admin-page .btn-login:hover {
+  background-color: #333;
+}
+
+.admin-page .links {
+  margin-top: 20px;
+}
+
+.admin-page .links a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: color 0.3s;
+}
+
+.admin-page .links a:hover {
+  color: #ffc107;
+}
+
+/* Footer */
+footer {
+  background-color: #000;
+  color: #ffc107;
+  text-align: center;
   padding: 10px 0;
 }
 
-nav a {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-footer {
-  background: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px 20px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-/* Styles for Home Page (if applicable) */
-.home-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* Specific Styles for Forms (Create Account Page) */
-.container {
-  background: #ffffff;
+/* Forgot Password Page */
+.forgot-password-page {
+  max-width: 400px;
+  margin: 50px auto;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  margin: 50px auto; /* Center on the page */
-}
-
-.container h2 {
-  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.form-group {
+.forgot-password-page h1 {
+  color: #ffc107;
+  margin-bottom: 10px;
+}
+
+.forgot-password-page p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.forgot-password-page form {
+  text-align: left;
+}
+
+.forgot-password-page .form-group {
   margin-bottom: 15px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-
-.form-group input {
+.forgot-password-page .btn-login {
   width: 100%;
-  padding: 8px;
+  margin-top: 15px;
+}
+
+/* Create Account Page */
+.create-account-page {
+  max-width: 400px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.create-account-page h2 {
+  color: #ffc107;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-account-page .form-group {
+  margin-bottom: 15px;
+}
+
+.create-account-page label {
+  display: block;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
 }
 
-.form-group input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.form-group button {
+.create-account-page input {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.form-group button:hover {
-  background-color: #0056b3;
+.create-account-page input:focus {
+  border-color: #ffc107;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+.create-account-page button {
+  width: 100%;
+  padding: 10px;
+  background-color: #000;
+  color: #ffc107;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-account-page button:hover {
+  background-color: #333;
 }
