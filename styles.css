@@ -1,146 +1,108 @@
-/* General styles */
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: #fdf8e4; /* Bee honeycomb background */
+  background: #f4f4f9;
+  color: #333;
 }
 
-/* Sticky Navigation Bar */
 header {
-  position: sticky;
-  top: 0;
-  background-color: #000;
-  padding: 10px 0;
-  z-index: 100;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
 }
 
-nav ul {
-  list-style-type: none;
-  text-align: center;
+header h1 {
   margin: 0;
-  padding: 0;
+}
+
+nav {
+  background: #444;
+  color: #fff;
   display: flex;
   justify-content: center;
+  padding: 10px 0;
 }
 
-nav ul li {
-  margin-right: 30px;
-}
-
-nav ul li a {
-  color: #ffc107; /* Bee yellow */
-  text-decoration: none;
-  font-size: 18px;
-  padding: 10px 15px;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 1px;
-  transition: color 0.3s, transform 0.3s;
-}
-
-nav ul li a:hover,
-nav ul li a:focus {
-  color: #fff; /* Highlight on hover */
-  transform: scale(1.1);
-}
-
-nav ul li a.active {
+nav a {
   color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
 }
 
-.landing-page,
-.preferences-page,
-.about-us,
-.admin-page {
+nav a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Styles for Home Page (if applicable) */
+.home-container {
   padding: 20px;
-  background-color: #fff;
   max-width: 800px;
-  margin: 50px auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
-/* Admin Page */
-.admin-page {
-  max-width: 400px;
+/* Specific Styles for Forms (Create Account Page) */
+.container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin: 50px auto; /* Center on the page */
+}
+
+.container h2 {
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.admin-page h1 {
-  color: #ffc107;
-  margin-bottom: 20px;
-}
-
-.admin-page .form-group {
+.form-group {
   margin-bottom: 15px;
-  text-align: left;
 }
 
-.admin-page label {
+.form-group label {
   display: block;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
   margin-bottom: 5px;
+  font-size: 14px;
 }
 
-.admin-page input {
+.form-group input {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
+  border-radius: 4px;
 }
 
-.admin-page input:focus {
-  border-color: #ffc107;
+.form-group input:focus {
+  border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
 
-.admin-page .button-group {
-  margin-top: 20px;
-}
-
-.admin-page .btn-login {
-  background-color: #000;
-  color: #ffc107;
+.form-group button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
-  padding: 10px 20px;
+  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
-.admin-page .btn-login:hover {
-  background-color: #333;
-}
-
-.admin-page .links {
-  margin-top: 20px;
-}
-
-.admin-page .links a {
-  display: block;
-  color: #000;
-  text-decoration: none;
-  font-size: 14px;
-  margin-top: 10px;
-  transition: color 0.3s;
-}
-
-.admin-page .links a:hover {
-  color: #ffc107;
-}
-
-/* Footer */
-footer {
-  background-color: #000;
-  color: #ffc107;
-  text-align: center;
-  padding: 10px 0;
+.form-group button:hover {
+  background-color: #0056b3;
 }
