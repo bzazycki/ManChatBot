@@ -2,6 +2,7 @@ package com.manchester.chatbotapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
@@ -133,20 +134,67 @@ public class AppActivity extends AppCompatActivity {
         // === LEFT FRAME === //
 
         // Left frame: Image
-        LinearLayout leftLayout = new LinearLayout(this);
+        RelativeLayout leftLayout = new RelativeLayout(this);
         leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
-        leftLayout.setOrientation(LinearLayout.VERTICAL);
+
+        // Create a vertical LinearLayout to hold the VideoView and the button row
+        LinearLayout verticalLayout = new LinearLayout(this);
+        verticalLayout.setOrientation(LinearLayout.VERTICAL);
+        verticalLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        // Create the VideoView
         this.animation = new VideoView(this);
 
         // Set the video source from the raw resource folder
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
         animation.setVideoURI(videoUri);
-
         animation.start();
         animation.setOnCompletionListener(mp -> animation.start());
 
-        leftLayout.addView(animation); // Add the ImageView to the left layout
+        // Add the VideoView to the vertical layout
+        verticalLayout.addView(animation);
+
+        // Create a horizontal LinearLayout for the buttons
+        LinearLayout buttonLayout = new LinearLayout(this);
+        buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
+        buttonLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        buttonLayout.setWeightSum(3);  // Ensure buttons take equal space
+
+        // Create the first button
+        Button endChatButton = new Button(this);
+        endChatButton.setText("End Chat");
+        endChatButton.setBackgroundColor(Color.parseColor("#FFD700"));
+        endChatButton.setTextColor(getResources().getColor(android.R.color.black));
+        endChatButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        // Create the second button
+        Button soundButton = new Button(this);
+        soundButton.setText("Sound");
+        soundButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+        soundButton.setTextColor(getResources().getColor(android.R.color.white));
+        soundButton.setTextColor(getResources().getColor(android.R.color.white));
+        soundButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        // Create the third button
+        Button settingsButton = new Button(this);
+        settingsButton.setText("Settings");
+        settingsButton.setBackgroundColor(Color.parseColor("#FFD700"));
+        settingsButton.setTextColor(getResources().getColor(android.R.color.black));
+        settingsButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        // Add the buttons to the horizontal button layout
+        buttonLayout.addView(endChatButton);
+        buttonLayout.addView(soundButton);
+        buttonLayout.addView(settingsButton);
+
+        // Add the button layout below the video in the vertical layout
+        verticalLayout.addView(buttonLayout);
+
+        // Add the vertical layout (with VideoView and buttons) to the leftLayout
+        leftLayout.addView(verticalLayout);
 
         // === RIGHT FRAME === //
 
