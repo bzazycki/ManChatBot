@@ -165,7 +165,8 @@ public class AppActivity extends AppCompatActivity {
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ChatDialog(getThis());
+                ChatDialog chatDialog = new ChatDialog(getThis());
+                chatDialog.show();
             }
         });
 
@@ -339,21 +340,26 @@ public class AppActivity extends AppCompatActivity {
      * @param c the character that determines what resource to use.
      */
     public void changeAnimation(Character c) {
+        Uri videoUri = null;
         switch (c) {
             case 'w':
-                Uri waveUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-                animation.setVideoURI(waveUri);
+                videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
                 break;
             case 't':
-                Uri talkUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
-                animation.setVideoURI(talkUri);
+                videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
                 break;
             case 'l':
-                Uri listenUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
-                animation.setVideoURI(listenUri);
+                videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
                 break;
         }
-
+        
+        // Stop current video
+        animation.stopPlayback();
+        
+        // Set new video URI
+        animation.setVideoURI(videoUri);
+        
+        // Start video and ensure loop
         animation.start();
         animation.setOnCompletionListener(mp -> animation.start());
     }
