@@ -181,40 +181,46 @@ footer {
   margin-top: 15px;
 }
 
-/* Create Account Page */
+/* Create Account Page Styles */
 .create-account-page {
-  max-width: 400px;
+  max-width: 600px;
   margin: 50px auto;
+  padding: 30px;
   background-color: #fff;
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .create-account-page h2 {
   color: #ffc107;
+  font-size: 28px;
   text-align: center;
   margin-bottom: 20px;
 }
 
+.create-account-page form {
+  display: flex;
+  flex-direction: column;
+}
+
 .create-account-page .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .create-account-page label {
-  display: block;
   font-size: 14px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .create-account-page input {
-  width: 100%;
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .create-account-page input:focus {
@@ -224,17 +230,33 @@ footer {
 }
 
 .create-account-page button {
-  width: 100%;
-  padding: 10px;
   background-color: #000;
   color: #ffc107;
   border: none;
+  padding: 10px;
   font-size: 16px;
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 5px;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 .create-account-page button:hover {
   background-color: #333;
 }
+
+.create-account-page .link-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.create-account-page .link-container a {
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.create-account-page .link-container a:hover {
+  color: #ffc107;
+}
+
