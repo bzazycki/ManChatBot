@@ -169,7 +169,8 @@ public class AppActivity extends AppCompatActivity {
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ChatDialog(getThis());
+                ChatDialog chatDialog = new ChatDialog(getThis());
+                chatDialog.show();
             }
         });
 
