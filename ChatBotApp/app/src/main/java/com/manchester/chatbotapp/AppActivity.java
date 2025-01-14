@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -49,6 +50,11 @@ public class AppActivity extends AppCompatActivity {
      * on methods that are called.
      */
     protected VideoView animation;
+
+    /**
+     * The listener can both listen to words and speak.
+     */
+    protected Listener listener;
 
     // === *** Constructors *** === //
 
@@ -119,6 +125,8 @@ public class AppActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.listener = new Listener(this);
 
         // === ENTIRE FRAME === //
 
@@ -292,6 +300,21 @@ public class AppActivity extends AppCompatActivity {
 
         // Set the LinearLayout as the content view
         setContentView(mainLayout);
+
+        new Thread(() -> {
+            try {
+                while (!listener.tts.isSpeaking()) {
+                    Thread.sleep(5);
+                    this.listener.speak("How can I help you today?");
+                }
+                changeAnimation('l');
+                String output = this.listener.listen();
+                Log.e("TextToSpeech", output);
+            } catch (InterruptedException e) {
+
+            }
+        }).start();
+
     }
 
     /**
