@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.manchester.chatbotapp;
 
 import android.content.Context;
@@ -443,3 +444,5 @@ public class AppActivity extends AppCompatActivity {
 
 
 }
+=======
+>>>>>>> 8e95259ed27027bfcfea19acc44041e6dfd9ab62
