@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buzz Settings - Manchester Bee</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Hive</a></li>
+        <li><a href="preferences.html" class="active">Buzz Settings</a></li>
+        <li><a href="aboutus.html">About the Hive</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="preferences-page">
+    <h1>Buzz Settings</h1>
+    <form>
+      <label for="theme">Choose Your Hive Theme:</label>
+      <select id="theme" name="theme">
+        <option value="yellow">Yellow (Classic)</option>
+        <option value="black">Black (Night)</option>
+        <option value="gold">Gold (Premium)</option>
+      </select>
+
+      <label for="notifications">Enable Hive Alerts:</label>
+      <input type="checkbox" id="notifications" name="notifications" checked>
+
+      <button type="submit">Save Settings</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Bee Hive</p>
+  </footer>
+</body>
+</html>
