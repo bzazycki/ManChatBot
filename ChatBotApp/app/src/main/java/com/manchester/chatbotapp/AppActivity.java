@@ -170,6 +170,13 @@ public class AppActivity extends AppCompatActivity {
         endChatButton.setTextColor(getResources().getColor(android.R.color.black));
         endChatButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
 
+        endChatBUtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmailDialog();
+            }
+        });
+
         // Create the second button
         Button soundButton = new Button(this);
         soundButton.setText("Sound");
