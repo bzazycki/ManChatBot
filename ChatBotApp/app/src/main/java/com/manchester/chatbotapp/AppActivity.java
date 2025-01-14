@@ -144,18 +144,6 @@ public class AppActivity extends AppCompatActivity {
         verticalLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
-        // Create the VideoView
-        this.animation = new VideoView(this);
-
-        // Set the video source from the raw resource folder
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-        animation.setVideoURI(videoUri);
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
-
-        // Add the VideoView to the vertical layout
-        verticalLayout.addView(animation);
-
         // Create a horizontal LinearLayout for the buttons
         LinearLayout buttonLayout = new LinearLayout(this);
         buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -190,8 +178,19 @@ public class AppActivity extends AppCompatActivity {
         buttonLayout.addView(soundButton);
         buttonLayout.addView(settingsButton);
 
-        // Add the button layout below the video in the vertical layout
+        // Take 1 part of the available space
         verticalLayout.addView(buttonLayout);
+
+        // Create the VideoView
+        this.animation = new VideoView(this);
+
+        // Set the video source from the raw resource folder
+        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
+        animation.setVideoURI(videoUri);
+        animation.start();
+        animation.setOnCompletionListener(mp -> animation.start());
+
+        verticalLayout.addView(animation);
 
         // Add the vertical layout (with VideoView and buttons) to the leftLayout
         leftLayout.addView(verticalLayout);
