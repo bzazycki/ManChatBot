@@ -1,155 +1,225 @@
 """
-Author: Ethan Armbruster, Zach Clouse, Jalen Brunson
+Author: Ethan Armbruster
 Contact Email: armbrue2@miamioh.edu
 """
 
 from flask import Flask, request, jsonify
 from openai import OpenAI
-from dotenv import load_dotenv
 import os
 import sqlite3
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Initialize the OpenAI client
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)
-
-print("API Key:", os.getenv("OPENAI_API_KEY"))
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# Read context information from context.txt
-with open('context.txt', 'r') as file:
-    context_info = file.read()
+# Global variable to store persistent context
+persistent_context = ""
 
+# Load context from a .txt file (only once during startup)
+def load_persistent_context(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        return ""
 
-"""
-API endpoint to handle user messages and return AI responses.
+# Load persistent context at startup
+persistent_context = load_persistent_context("context.txt")
+
+# Function to get the model from the database
+def get_model():
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT model FROM ai LIMIT 1")
+        model = cursor.fetchone()
+        conn.close()
+        if model:
+            return model[0]
+        else:
+            return None
+    except Exception as e:
+        return None
+
+# Function to get the API key from the database
+def get_api_key():
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT key FROM ai LIMIT 1")
+        api_key = cursor.fetchone()
+        conn.close()
+        return api_key[0]
+    except Exception as e:
+        return None
+
+# Function to log the chat GPT call to the database
+def log_chat_gpt_call(input_text, output_text, input_tokens, output_tokens):
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO history (input, output, input_tokens, output_tokens) VALUES (?, ?, ?, ?)",
+                       (input_text, output_text, input_tokens, output_tokens))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error logging chat GPT call: {e}")
+
+# Initialize the OpenAI client with the API key from the database
+client = OpenAI(
+    api_key=get_api_key()
+)
+
+@app.route('/getModel', methods=['GET'])
+def get_model_route():
+    """
+    API endpoint to get the current model from the database.
     
-@param request: Flask request object containing JSON payload with user message.
-@return: JSON response containing AI response or error message.
-"""
+    @return: JSON response containing the current model or an error message.
+    """
+    try:
+        model = get_model()
+        if model:
+            return jsonify({"model": model}), 200
+        else:
+            return jsonify({"error": "Model not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getApiKey', methods=['GET'])
+def get_api_key_route():
+    """
+    API endpoint to get the current API key from the database.
+    
+    @return: JSON response containing the current API key or an error message.
+    """
+    try:
+        api_key = get_api_key()
+        if api_key:
+            return jsonify({"api_key": api_key}), 200
+        else:
+            return jsonify({"error": "API key not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/updateModel', methods=['POST'])
+def update_model():
+    """
+    API endpoint to update the model in the database.
+    
+    @param request: Flask request object containing JSON payload with the new model.
+    @return: JSON response indicating success or error message.
+    """
+    try:
+        data = request.get_json()
+        new_model = data.get("model", "")
+        
+        if not new_model:
+            return jsonify({"error": "No model provided"}), 400
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("UPDATE ai SET model = ? WHERE id = 1", (new_model,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Model updated successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/updateApiKey', methods=['POST'])
+def update_api_key():
+    """
+    API endpoint to update the API key in the database.
+    
+    @param request: Flask request object containing JSON payload with the new API key.
+    @return: JSON response indicating success or error message.
+    """
+    try:
+        data = request.get_json()
+        new_api_key = data.get("api_key", "")
+        
+        if not new_api_key:
+            return jsonify({"error": "No API key provided"}), 400
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("UPDATE ai SET key = ? WHERE id = 1", (new_api_key,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "API key updated successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
+    """
+    API endpoint to handle user messages and return AI responses.
+    
+    @param request: Flask request object containing JSON payload with user message.
+    @return: JSON response containing AI response or error message.
+    """
     try:
-        # Get the JSON payload from the request
         data = request.get_json()
         user_message = data.get("user_message", "")
         
         if not user_message:
-            return jsonify({"error": "No user message provided"}), 400
+            return "No user message provided"
 
         user_input = []
-        try:
-            # Read conversation history from history.txt
-            with open('history.txt', 'r') as history_file:
-                buffer = []  # Temporary storage for grouping lines of a single message
-                current_role = None  # Tracks the role of the current message
 
-                for line in history_file:
-                    line = line.strip()
-
-                    # Skip empty lines
-                    if not line:
-                        continue
-
-                    # Detect new messages by the `role: content` format
-                    if ': ' in line:
-                        # Save the previous message if present
-                        if current_role and buffer:
-                            user_input.append({"role": current_role, "content": "\n".join(buffer)})
-                        
-                        # Start a new message
-                        current_role, content = line.split(': ', 1)
-                        if current_role not in ["system", "user", "assistant"]:
-                            current_role = None  # Reset role for invalid entries
-                            buffer = []
-                            continue
-                        
-                        buffer = [content.replace("\\n", "\n")]  # Unescape newlines
-                    else:
-                        # Append additional lines to the current message buffer
-                        buffer.append(line.replace("\\n", "\n"))
-
-                # Add the last message if present
-                if current_role and buffer:
-                    user_input.append({"role": current_role, "content": "\n".join(buffer)})
-
-        except FileNotFoundError:
-            # Add the context information to the user input if history.txt does not exist
-            user_input.append({"role": "system", "content": context_info})
+        # Include the persistent context in the first request only
+        if persistent_context:
+            user_input.append({"role": "system", "content": persistent_context})
         
-        # Add the user's message to the user input
+        # Add the user's message
         user_input.append({"role": "user", "content": user_message})
 
         # Call the OpenAI API
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=get_model(),
             messages=user_input
         )
 
         # Extract the AI response
         ai_response = completion.choices[0].message.content
         
-        # Add the AI's response to the user input
-        user_input.append({"role": "assistant", "content": ai_response})
-        
-        # Save the updated user input to history.txt
-        with open('history.txt', 'a') as history_file:
-            for message in user_input[-2:]:
-                role = message["role"]
-                content = message["content"].replace("\n", "\\n")  # Escape newlines for safer storage
-                history_file.write(f"{role}: {content}\n")
+        # Log the chat GPT call to the database
+        input_tokens = len(user_message.split())
+        output_tokens = len(ai_response.split())
+        log_chat_gpt_call(user_message, ai_response, input_tokens, output_tokens)
         
         # Return the AI response
-        return jsonify({"ai_response": ai_response})
+        return ai_response
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/register', methods=['POST'])
-def register():
+@app.route('/login', methods=['POST'])
+def login():
     """
-    API endpoint to register a new user in the SQLite database.
+    API endpoint to check if the provided username and password are valid.
     
-    @param request: Flask request object containing JSON payload with username, password, and email.
-    @return: JSON response indicating success or error message.
+    @param request: Flask request object containing JSON payload with username and password.
+    @return: JSON response indicating whether the login is successful or not.
     """
     try:
-        # Get the JSON payload from the request
         data = request.get_json()
         username = data.get("username", "")
         password = data.get("password", "")
-        email = data.get("email", "")
         
-        if not username or not password or not email:
-            return jsonify({"error": "Missing username, password, or email"}), 400
+        if not username or not password:
+            return jsonify({"error": "Missing username or password"}), 400
 
-        # Connect to the SQLite database
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
-
-        # Insert the new user into the account table
-        cursor.execute("""
-            INSERT INTO account (username, password, email)
-            VALUES (?, ?, ?)
-        """, (username, password, email))
-
-        # Commit the transaction and close the connection
-        conn.commit()
-        conn.close()
-
-        return jsonify({"message": "User registered successfully"}), 201
-    
-    except sqlite3.IntegrityError as e:
-        return jsonify({"error": str(e)}), 400
+        cursor.execute("SELECT 1 FROM account WHERE username = ? AND password = ?", (username, password))
+        if cursor.fetchone():
+            return jsonify({"valid": True}), 200
+        else:
+            return jsonify({"valid": False}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1', port=5000, debug=True)
