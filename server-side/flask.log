@@ -7,65 +7,6 @@ Press CTRL+C to quit
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 808-371-178
-127.0.0.1 - - [14/Jan/2025 14:57:38] "POST /chatbot HTTP/1.1" 200 -
-127.0.0.1 - - [14/Jan/2025 14:57:38] "POST /chatbot HTTP/1.1" 200 -
-127.0.0.1 - - [14/Jan/2025 14:57:58] "POST /chatbot HTTP/1.1" 200 -
-127.0.0.1 - - [14/Jan/2025 14:58:39] "POST /chatbot HTTP/1.1" 200 -
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 808-371-178
-127.0.0.1 - - [14/Jan/2025 15:00:45] "POST /chatbot HTTP/1.1" 200 -
-127.0.0.1 - - [14/Jan/2025 15:03:47] "GET /.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:48] "GET /whturk/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:48] "GET /staging.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:49] "GET /ubuntu/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:49] "GET /prisma/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:50] "GET /travis/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:50] "GET /secret/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:50] "GET /parity/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:51] "GET /addons/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:51] "GET /secure/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:52] "GET /module/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:52] "GET /widget/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:52] "GET /drupal/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:53] "GET /kibana/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:53] "GET /jsrelay/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:53] "GET /layouts/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:54] "GET /website/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:54] "GET /plugins/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:54] "GET /profile/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:55] "GET /oldsite/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:55] "GET /webroot/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:56] "GET /sistema/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:56] "GET /ikiwiki/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:56] "GET /twitter/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:57] "GET /widgets/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:57] "GET /monerod/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:57] "GET /outputs/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:58] "GET /classes/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:58] "GET /fileweb/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:58] "GET /Backend/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:59] "GET /sendgrid/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:59] "GET /dotfiles/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:59] "GET /profiles/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:03:59] "GET /examples/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:04:00] "GET /var/backup/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:04:00] "GET /lib64/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:04:01] "GET /2024/.env HTTP/1.1" 404 -
-127.0.0.1 - - [14/Jan/2025 15:05:12] "POST /chatbot HTTP/1.1" 200 -
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 808-371-178
-127.0.0.1 - - [14/Jan/2025 15:05:38] "POST /chatbot HTTP/1.1" 200 -
-127.0.0.1 - - [14/Jan/2025 15:05:50] "POST /chatbot HTTP/1.1" 200 -
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 808-371-178
-127.0.0.1 - - [14/Jan/2025 15:14:21] "POST /chatbot HTTP/1.1" 200 -
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 808-371-178
+127.0.0.1 - - [14/Jan/2025 15:33:20] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 15:35:50] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 15:36:21] "GET /druid/index.html HTTP/1.1" 404 -
