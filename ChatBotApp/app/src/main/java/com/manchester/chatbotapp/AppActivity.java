@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -14,16 +13,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
 public class AppActivity extends AppCompatActivity {
 
@@ -302,8 +298,6 @@ public class AppActivity extends AppCompatActivity {
                     runOnUiThread(() -> logChatOutput(chatPanel, output));
                     listener.speak(output);
 
-                    String text = listener.listen();
-                    Log.e("ListenerInput", text);
                 }).start();
 
                 lastActivity = System.currentTimeMillis();
