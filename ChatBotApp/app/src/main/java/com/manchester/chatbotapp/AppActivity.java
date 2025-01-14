@@ -166,10 +166,10 @@ public class AppActivity extends AppCompatActivity {
         endChatButton.setTextColor(getResources().getColor(android.R.color.black));
         endChatButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
 
-        endChatBUtton.setOnClickListener(new View.OnClickListener() {
+        endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEmailDialog();
+                new ChatDialog(getThis());
             }
         });
 
@@ -180,6 +180,19 @@ public class AppActivity extends AppCompatActivity {
         soundButton.setTextColor(getResources().getColor(android.R.color.white));
         soundButton.setTextColor(getResources().getColor(android.R.color.white));
         soundButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+        soundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener.allowSpeech) {
+                    listener.allowSpeech = false;
+                    soundButton.setTextColor(Color.RED);
+                } else {
+                    listener.allowSpeech = true;
+                    soundButton.setTextColor(Color.WHITE);
+                }
+            }
+        });
+
 
         // Create the third button
         Button settingsButton = new Button(this);
@@ -286,6 +299,10 @@ public class AppActivity extends AppCompatActivity {
                     String output = Backend_Functions.getChatResponse(input);
                     // Update the chat panel on the main thread
                     runOnUiThread(() -> logChatOutput(chatPanel, output));
+                    listener.speak(output);
+
+                    String text = listener.listen();
+                    Log.e("ListenerInput", text);
                 }).start();
 
                 lastActivity = System.currentTimeMillis();
@@ -345,6 +362,14 @@ public class AppActivity extends AppCompatActivity {
 
         animation.start();
         animation.setOnCompletionListener(mp -> animation.start());
+    }
+
+    /**
+     * Gets the App Activity Object.
+     * @return the reference to the object.
+     */
+    private AppActivity getThis() {
+        return this;
     }
 
     /**
