@@ -21,7 +21,7 @@
   </header>
 
   <!-- Main Content for Create Account -->
-  <div class="container">
+  <div class="container create-account-page">
     <h2>Create an Account</h2>
     <form id="createAccountForm">
       <div class="form-group">
@@ -44,6 +44,22 @@
         <button type="submit">Submit</button>
       </div>
     </form>
+
+    <!-- Product Key Input (Initially hidden) -->
+    <div id="productKeyContainer" class="hidden">
+      <h3>Enter Product Key</h3>
+      <div class="product-key-inputs">
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+        <input type="text" maxlength="1" class="product-key-box" />
+      </div>
+      <button id="submitProductKey">Submit</button>
+    </div>
   </div>
 
   <!-- Footer -->
@@ -67,13 +83,68 @@
         return;
       }
 
-      // Show a popup for the product key
-      const productKey = prompt("Please enter your Product Key:");
-      if (productKey) {
-        alert(`Account created successfully!\n\nUsername: ${username}\nEmail: ${email}\nProduct Key: ${productKey}`);
-      } else {
-        alert("Product Key is required to complete the account creation.");
-      }
+      // Show product key input fields after form submission
+      const productKeyContainer = document.getElementById("productKeyContainer");
+      productKeyContainer.classList.remove('hidden');
+
+      const productKeyBoxes = document.querySelectorAll(".product-key-box");
+      const submitProductKeyButton = document.getElementById("submitProductKey");
+
+      // Auto-focus logic for product key inputs
+      productKeyBoxes.forEach((box, index) => {
+        box.addEventListener("input", (event) => {
+          const value = event.target.value;
+
+          // Move to the next box if a digit is entered
+          if (value.length === 1 && index < productKeyBoxes.length - 1) {
+            productKeyBoxes[index + 1].focus();
+          }
+
+          // Move focus to previous box if the user presses Backspace
+          if (value.length === 0 && index > 0) {
+            productKeyBoxes[index - 1].focus();
+          }
+        });
+      });
+
+      // Collect and validate the product key on submission
+      submitProductKeyButton.addEventListener("click", async () => {
+        const productKey = Array.from(productKeyBoxes)
+          .map((box) => box.value)
+          .join("");
+
+        if (productKey.length === 8) {
+          // Send account data to backend
+          const accountData = {
+            username: username,
+            email: email,
+            password: password,
+            product_key: productKey
+          };
+
+          try {
+            const response = await fetch("/create_account", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(accountData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              alert(`Account created successfully!\n\nUsername: ${result.username}\nEmail: ${result.email}\nProduct Key: ${result.product_key}`);
+            } else {
+              alert(result.error || "Error creating account");
+            }
+          } catch (error) {
+            alert("An error occurred while creating the account.");
+          }
+        } else {
+          alert("Please fill all 8 boxes with valid digits.");
+        }
+      });
     });
   </script>
 </body>
