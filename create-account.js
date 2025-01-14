@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const productKeyBoxes = document.querySelectorAll('.product-key-box');
     const submitProductKeyButton = document.getElementById('submitProductKey');
 
-    // API endpoints
-    const API_BASE_URL = 'http://127.0.0.1:5000';
+    // Updated API endpoints
+    const API_BASE_URL = 'http://34.236.100.216';
     const API_ENDPOINTS = {
         CHECK_KEY: `${API_BASE_URL}/checkRegKey`,
         REGISTER: `${API_BASE_URL}/register`
@@ -77,18 +77,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle product key submission
     async function handleProductKeySubmit() {
-        const productKey = Array.from(productKeyBoxes)
-            .map(box => box.value)
-            .join('');
-
-        if (productKey.length !== 8) {
-            showError('Please fill all 8 boxes with valid digits.');
-            return;
-        }
-
         try {
+            const productKey = Array.from(productKeyBoxes)
+                .map(box => box.value)
+                .join('');
+
+            console.log('Attempting to validate key:', productKey); // Debug log
+
+            if (productKey.length !== 8) {
+                showError('Please fill all 8 boxes with valid digits.');
+                return;
+            }
+
             // First validate the registration key
+            console.log('Calling validateRegistrationKey...'); // Debug log
             const isKeyValid = await validateRegistrationKey(productKey);
+            console.log('Key validation result:', isKeyValid); // Debug log
             
             if (!isKeyValid) {
                 showError('Invalid registration key. Please try again.');
@@ -96,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // If key is valid, create the account
+            console.log('Creating account...'); // Debug log
             const success = await createAccount(formData);
             
             if (success) {
@@ -106,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1500);
             }
         } catch (error) {
+            console.error('Error in handleProductKeySubmit:', error); // Debug log
             showError(`Error: ${error.message}`);
         }
     }
@@ -113,51 +119,76 @@ document.addEventListener('DOMContentLoaded', function() {
     // Validate registration key with backend
     async function validateRegistrationKey(key) {
         try {
+            console.log('Making request to:', API_ENDPOINTS.CHECK_KEY); // Debug log
+            
             const response = await fetch(API_ENDPOINTS.CHECK_KEY, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ reg_key: key })
             });
 
+            console.log('Response status:', response.status); // Debug log
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Server error:', errorText); // Debug log
+                throw new Error(`Server error: ${response.status}`);
+            }
+
             const data = await response.json();
+            console.log('Response data:', data); // Debug log
+            
             return data.valid;
         } catch (error) {
-            throw new Error('Failed to validate registration key');
+            console.error('Error in validateRegistrationKey:', error); // Debug log
+            throw new Error(`Failed to validate registration key: ${error.message}`);
         }
     }
 
     // Create account with backend
     async function createAccount(userData) {
         try {
+            console.log('Making registration request to:', API_ENDPOINTS.REGISTER); // Debug log
+            
             const response = await fetch(API_ENDPOINTS.REGISTER, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(userData)
             });
 
-            const data = await response.json();
+            console.log('Registration response status:', response.status); // Debug log
 
             if (!response.ok) {
-                throw new Error(data.error || 'Failed to create account');
+                const errorText = await response.text();
+                console.error('Registration error:', errorText); // Debug log
+                throw new Error(`Failed to create account: ${response.status}`);
             }
+
+            const data = await response.json();
+            console.log('Registration response data:', data); // Debug log
 
             return true;
         } catch (error) {
+            console.error('Error in createAccount:', error); // Debug log
             throw new Error(error.message || 'Failed to create account');
         }
     }
 
     // Helper function to show errors
     function showError(message) {
-        alert(message); // You can replace this with a better UI notification system
+        console.error('Error:', message); // Debug log
+        alert(message);
     }
 
     // Helper function to show success messages
     function showSuccess(message) {
-        alert(message); // You can replace this with a better UI notification system
+        console.log('Success:', message); // Debug log
+        alert(message);
     }
 });
