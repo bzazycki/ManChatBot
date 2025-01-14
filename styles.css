@@ -51,137 +51,6 @@ nav ul li a.active {
 }
 
 /* Page Containers */
-.landing-page,
-.preferences-page,
-.about-us,
-.admin-page {
-  padding: 20px;
-  background-color: #fff;
-  max-width: 800px;
-  margin: 50px auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Admin Page */
-.admin-page {
-  max-width: 400px;
-  text-align: center;
-}
-
-.admin-page h1 {
-  color: #ffc107;
-  margin-bottom: 20px;
-}
-
-.admin-page .form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.admin-page label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.admin-page input {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.admin-page input:focus {
-  border-color: #ffc107;
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
-}
-
-.admin-page .button-group {
-  margin-top: 20px;
-}
-
-.admin-page .btn-login {
-  background-color: #000;
-  color: #ffc107;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.admin-page .btn-login:hover {
-  background-color: #333;
-}
-
-.admin-page .links {
-  margin-top: 20px;
-}
-
-.admin-page .links a {
-  display: block;
-  color: #000;
-  text-decoration: none;
-  font-size: 14px;
-  margin-top: 10px;
-  transition: color 0.3s;
-}
-
-.admin-page .links a:hover {
-  color: #ffc107;
-}
-
-/* Footer */
-footer {
-  background-color: #000;
-  color: #ffc107;
-  text-align: center;
-  padding: 10px 0;
-}
-
-/* Forgot Password Page */
-.forgot-password-page {
-  max-width: 400px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.forgot-password-page h1 {
-  color: #ffc107;
-  margin-bottom: 10px;
-}
-
-.forgot-password-page p {
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.forgot-password-page form {
-  text-align: left;
-}
-
-.forgot-password-page .form-group {
-  margin-bottom: 15px;
-}
-
-.forgot-password-page .btn-login {
-  width: 100%;
-  margin-top: 15px;
-}
-
-/* Create Account Page Styles */
 .create-account-page {
   max-width: 600px;
   margin: 50px auto;
@@ -260,3 +129,10 @@ footer {
   color: #ffc107;
 }
 
+/* Footer */
+footer {
+  background-color: #000;
+  color: #ffc107;
+  text-align: center;
+  padding: 10px 0;
+}
