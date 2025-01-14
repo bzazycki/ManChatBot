@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
+import java.util.ArrayList;
 
 /**
  * The Listener Class. This intakes and processes speech into words, and given
@@ -24,7 +25,7 @@ import java.util.Locale;
  */
 public class Listener {
 
-    public static String listen(Context c) {
+    public static void speak(Context c, String wordsToSpeak) {
 
         TextToSpeech tts = new TextToSpeech(c, status -> {
             if (status == TextToSpeech.ERROR) {
@@ -36,6 +37,11 @@ public class Listener {
         tts.setLanguage(ukLocale);
         tts.setPitch(1.0f);
         tts.setSpeechRate(0.8f);
+
+        tts.speak(wordsToSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    public static String listen(Context c) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(c);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
@@ -58,7 +64,12 @@ public class Listener {
             public void onError(int error) {}
 
             @Override
-            public void onResults(Bundle results) {}
+            public void onResults(Bundle results) {
+                ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                if (matches != null && matches.isEmpty()) {
+
+                }
+            }
 
             @Override
             public void onPartialResults(Bundle partialResults) {}
@@ -66,9 +77,7 @@ public class Listener {
             @Override
             public void onEvent(int eventType, Bundle params) {}
         });
-
-
-        return "No Input";
     }
+
 
 }
