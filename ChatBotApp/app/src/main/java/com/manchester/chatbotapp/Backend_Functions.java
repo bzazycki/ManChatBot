@@ -36,7 +36,7 @@ public class Backend_Functions {
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
-                return response.toString();
+                return parseOutput(response.toString());
             }
         } catch (Exception e) {
             StackTraceElement[] stackTrace = e.getStackTrace();
@@ -44,7 +44,7 @@ public class Backend_Functions {
             for (StackTraceElement s : stackTrace) {
                 stack += s.toString() + "\n";
             }
-            return stack;
+            return "I apologize for the inconvenience, but I am incapable of helping at this time";
             //return "An error occurred while getting the chat response.";
         }
     }
@@ -55,9 +55,7 @@ public class Backend_Functions {
      * @param output the output from the HTTP request.
      * @return the trimmed and formatted response.
      */
-    private String parseOutput(String output) {
-
-
+    private static String parseOutput(String output) {
 
         return output;
     }

@@ -1,7 +1,5 @@
 package com.manchester.chatbotapp;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.speech.RecognitionListener;
@@ -9,13 +7,6 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 import java.util.ArrayList;
