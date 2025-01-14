@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * The Listener Class. This intakes and processes speech into words, and given
@@ -95,86 +94,60 @@ public class Listener {
     }
 
     public String listen() {
-        if (context.checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            Log.e("TextToSpeech", "");
-            return "Microphone permission not granted.";
-        }
 
         final String[] result = {""};
-        final CountDownLatch latch = new CountDownLatch(1); // To wait for the result
 
         sr.setRecognitionListener(new RecognitionListener() {
             @Override
-            public void onResults(Bundle results) {
-                ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                if (matches != null && !matches.isEmpty()) {
-                    result[0] = matches.get(0);
-                } else {
-                    result[0] = "No matches found.";
-                }
-                latch.countDown(); // Release the latch
-            }
-
-            @Override
-            public void onPartialResults(Bundle partialResults) {
-
-            }
-
-            @Override
-            public void onEvent(int eventType, Bundle params) {
-
-            }
-
-            @Override
             public void onReadyForSpeech(Bundle params) {
-
             }
 
             @Override
             public void onBeginningOfSpeech() {
-
             }
 
             @Override
             public void onRmsChanged(float rmsdB) {
-
             }
 
             @Override
             public void onBufferReceived(byte[] buffer) {
-
             }
 
             @Override
             public void onEndOfSpeech() {
-
             }
 
             @Override
             public void onError(int error) {
-                result[0] = "Error code: " + error;
-                latch.countDown(); // Release the latch
             }
 
-            // Other overridden methods omitted for brevity
+            @Override
+            public void onResults(Bundle results) {
+                ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                if (matches != null && matches.isEmpty()) {
+                    String foundResult = matches.get(0);
+                    result[0] = foundResult;
+                }
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+            }
         });
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale.toLanguageTag());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.UK);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...");
         sr.startListening(intent);
 
-        try {
-            latch.await(); // Wait for the result
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return "Interrupted while waiting for recognition.";
-        }
-
         return result[0];
     }
-
 
 
 }

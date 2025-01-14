@@ -307,9 +307,8 @@ public class AppActivity extends AppCompatActivity {
                     Thread.sleep(5);
                     this.listener.speak("How can I help you today?");
                 }
-                changeAnimation('l');
-                String output = this.listener.listen();
-                Log.e("TextToSpeech", output);
+                //String output = this.listener.listen();
+                Log.e("TextToSpeech", "Listened");
             } catch (InterruptedException e) {
 
             }
