@@ -147,8 +147,11 @@ public class AppActivity extends AppCompatActivity {
 
         // Left frame: Image
         RelativeLayout leftLayout = new RelativeLayout(this);
-        leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
+        LinearLayout.LayoutParams leftLayoutParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f); // 50% width
+        leftLayout.setLayoutParams(leftLayoutParams);
+        leftLayoutParams.setMargins(0, 0, dpToPx(8), 0); // Add margin on the right side of left layout
+        leftLayout.setLayoutParams(leftLayoutParams);
 
         // Create a vertical LinearLayout to hold the VideoView and the button row
         LinearLayout verticalLayout = new LinearLayout(this);
@@ -238,8 +241,11 @@ public class AppActivity extends AppCompatActivity {
 
         // Right frame: TextBox and Button
         RelativeLayout rightLayout = new RelativeLayout(this);
-        rightLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
+        LinearLayout.LayoutParams rightLayoutParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f); // 50% width
+        rightLayout.setLayoutParams(rightLayoutParams);
+        rightLayoutParams.setMargins(dpToPx(8), 0, 0, 0); // Add margin on the left side
+        rightLayout.setLayoutParams(rightLayoutParams);
 
         // Panel above the input
         LinearLayout chatPanel = new LinearLayout(this);
