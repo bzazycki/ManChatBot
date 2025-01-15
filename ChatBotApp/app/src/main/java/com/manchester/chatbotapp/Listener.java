@@ -158,6 +158,9 @@ public class Listener {
 
                 @Override
                 public void onEvent(int eventType, Bundle params) {}
+
+
+
             });
 
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -165,9 +168,6 @@ public class Listener {
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
             intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true); // Optional
             intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5); // Optional, increase for more matches
-            sr.startListening(intent);
-
-            // Start listening
             sr.startListening(intent);
         });
     }
