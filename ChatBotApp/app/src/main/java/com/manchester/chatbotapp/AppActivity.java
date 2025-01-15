@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.content.pm.PackageManager;
 import android.Manifest;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -159,14 +161,20 @@ public class AppActivity extends AppCompatActivity {
         buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
         buttonLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        buttonLayout.setWeightSum(3);  // Ensure buttons take equal space
+        buttonLayout.setWeightSum(2);  // Ensure buttons take equal space
 
         // Create the first button
         Button endChatButton = new Button(this);
-        endChatButton.setText("<-");
-        endChatButton.setBackgroundColor(Color.parseColor("#FFD700"));
-        endChatButton.setTextColor(getResources().getColor(android.R.color.black));
-        endChatButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+        endChatButton.setText("END CHAT");
+        endChatButton.setBackground(getDrawable(R.drawable.rounded_button));
+        endChatButton.setTextColor(getResources().getColor(android.R.color.white));
+        endChatButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+        // Set smaller size and margins
+        LinearLayout.LayoutParams endChatParams = new LinearLayout.LayoutParams(
+                dpToPx(120), dpToPx(48)); // Smaller size (width: 120dp, height: 48dp)
+        endChatParams.setMargins(dpToPx(16), dpToPx(8), dpToPx(16), dpToPx(8)); // Add margins
+        endChatButton.setLayoutParams(endChatParams);
 
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,39 +184,38 @@ public class AppActivity extends AppCompatActivity {
             }
         });
 
-        // Create the second button
-        Button soundButton = new Button(this);
-        soundButton.setText("\uD83D\uDD0A");
-        soundButton.setBackgroundColor(getResources().getColor(android.R.color.black));
-        soundButton.setTextColor(getResources().getColor(android.R.color.white));
-        soundButton.setTextColor(getResources().getColor(android.R.color.white));
-        soundButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-        soundButton.setOnClickListener(new View.OnClickListener() {
+        // Create the ImageView for sound toggle
+        final ImageView soundImageView = new ImageView(this);
+
+        // Set the initial image for the sound icon
+        soundImageView.setImageResource(R.drawable.volume_on);
+
+        // Add space between buttons by adding padding or margins
+        LinearLayout.LayoutParams soundButtonParams = new LinearLayout.LayoutParams(
+                dpToPx(48), dpToPx(48)); // Adjust size
+        soundButtonParams.setMargins(dpToPx(16), 0, 0, 0); // Add left margin for spacing
+        soundImageView.setLayoutParams(soundButtonParams);
+
+        // Set onClickListener to toggle sound state
+        soundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener.allowSpeech) {
                     listener.allowSpeech = false;
-                    soundButton.setTextColor(Color.RED);
+                    soundImageView.setImageResource(R.drawable.volume_off);
                     listener.stopSpeaking();
                 } else {
                     listener.allowSpeech = true;
-                    soundButton.setTextColor(Color.WHITE);
+                    soundImageView.setImageResource(R.drawable.volume_on);
                 }
             }
         });
 
-
-        // Create the third button
-        Button settingsButton = new Button(this);
-        settingsButton.setText("Settings");
-        settingsButton.setBackgroundColor(Color.parseColor("#FFD700"));
-        settingsButton.setTextColor(getResources().getColor(android.R.color.black));
-        settingsButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-
         // Add the buttons to the horizontal button layout
         buttonLayout.addView(endChatButton);
-        buttonLayout.addView(soundButton);
-        buttonLayout.addView(settingsButton);
+
+        // Add the ImageView to the buttonLayout
+        buttonLayout.addView(soundImageView);
 
         // Take 1 part of the available space
         verticalLayout.addView(buttonLayout);
@@ -529,5 +536,11 @@ public class AppActivity extends AppCompatActivity {
         super.onDestroy();
         // Clean up the handler to avoid memory leaks
         inactivityHandler.removeCallbacks(inactivityRunnable);
+    }
+
+    // Helper method to convert dp to pixels
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
     }
 }

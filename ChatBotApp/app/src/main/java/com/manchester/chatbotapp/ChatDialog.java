@@ -19,7 +19,7 @@ public class ChatDialog extends Dialog {
     private Context c;
 
     public ChatDialog(AppActivity c) {
-        super(c);
+        super(c, R.style.DialogTheme);
         this.c = c;
     }
 
