@@ -2,8 +2,10 @@ package com.manchester.chatbotapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +16,10 @@ import android.widget.ImageView;
  * function is called when it is created.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+    private Handler inactivityHandler;
+    private Runnable inactivityRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
