@@ -67,13 +67,26 @@ public class AppActivity extends AppCompatActivity {
     protected Listener listener;
 
     /**
-     *
+     * The code to ensure that the application has access to the microphone.
+     * If it does not have access to the microphone then it needs to ask for
+     * it.
      */
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
+    /**
+     * The Inactivity timeout. Lets the System timeout after this amount of time
+     * before the end chat dialog appears.
+     */
     private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+
+    /**
+     * The Inactivity handler. This works with the inactivity runnable to ensure
+     * that the system can time out when it has not been used in a while.
+     */
     private Handler inactivityHandler;
     private Runnable inactivityRunnable;
+
+    private EditText userTextInput;
 
 
     // === *** Constructors *** === //
@@ -198,7 +211,7 @@ public class AppActivity extends AppCompatActivity {
 
         // Create the first button
         Button endChatButton = new Button(this);
-        endChatButton.setText("End Chat");
+        endChatButton.setText("<-");
         endChatButton.setBackgroundColor(Color.parseColor("#FFD700"));
         endChatButton.setTextColor(getResources().getColor(android.R.color.black));
         endChatButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
@@ -213,7 +226,7 @@ public class AppActivity extends AppCompatActivity {
 
         // Create the second button
         Button soundButton = new Button(this);
-        soundButton.setText("Sound");
+        soundButton.setText("\uD83D\uDD0A");
         soundButton.setBackgroundColor(getResources().getColor(android.R.color.black));
         soundButton.setTextColor(getResources().getColor(android.R.color.white));
         soundButton.setTextColor(getResources().getColor(android.R.color.white));
@@ -292,20 +305,20 @@ public class AppActivity extends AppCompatActivity {
 
 
         // The Edit Text, the input
-        EditText editText = new EditText(this);
-        editText.setHint("Enter your thoughts..."); // Hint text for input field
-        editText.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
-        editText.setPadding(16, 16, 16, 16);
-        editText.setTextColor(getResources().getColor(android.R.color.black));
-        editText.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-        editText.setElevation(8); // Slight shadow for better visibility
+        userTextInput = new EditText(this);
+        userTextInput.setHint("Enter your thoughts..."); // Hint text for input field
+        userTextInput.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
+        userTextInput.setPadding(16, 16, 16, 16);
+        userTextInput.setTextColor(getResources().getColor(android.R.color.black));
+        userTextInput.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        userTextInput.setElevation(8); // Slight shadow for better visibility
         LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f); // Weight of 1 for proportional sizing
-        editText.setLayoutParams(editTextParams);
+        userTextInput.setLayoutParams(editTextParams);
 
         // Button to submit text
         Button submitButton = new Button(this);
-        submitButton.setText("Send");
+        submitButton.setText("➤");
         submitButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
         submitButton.setTextColor(getResources().getColor(android.R.color.white));
         submitButton.setElevation(8); // Slight shadow
@@ -316,8 +329,9 @@ public class AppActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Get user input and clear the EditText
-                String input = editText.getText().toString().trim();
+                String input = userTextInput.getText().toString().trim();
 
                 changeAnimation('t');
 
@@ -325,7 +339,7 @@ public class AppActivity extends AppCompatActivity {
                     return;
                 }
 
-                editText.setText("");
+                userTextInput.setText("");
 
                 hideKeyboard(view);
 
@@ -349,24 +363,32 @@ public class AppActivity extends AppCompatActivity {
 
                 changeAnimation('l');
 
-                // Start listening for speech recognition asynchronously
-                listener.listen(text -> {
-                    if (text != null) {
-                        Log.e("Listener", "Recognized text: " + text);
-
-                        // Update the UI with recognized text
-                        runOnUiThread(() -> logUserInput(chatPanel, "Recognized: " + text));
-                    } else {
-                        Log.e("Listener", "Failed to recognize speech.");
-                    }
-                });
             }
         });
 
+        Button listenButton = new Button(this);
+        listenButton.setText("\uD83C\uDFA4");
+        listenButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
+        listenButton.setTextColor(getResources().getColor(android.R.color.white));
+        listenButton.setElevation(8); // Slight shadow
+        LinearLayout.LayoutParams lButtonParam = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        buttonParams.setMargins(16, 0, 0, 0); // Add margin to separate from EditText
+        listenButton.setLayoutParams(lButtonParam);
+        listenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startListening();
+            }
+
+        });
+
+
         // Add panel, EditText, and Button to the rightLayout
         // Add the EditText at the bottom
-        inputContainer.addView(editText); // Add the Button next to the EditText
+        inputContainer.addView(userTextInput); // Add the Button next to the EditText
         inputContainer.addView(submitButton); // Panel above the input
+        inputContainer.addView(listenButton);
         rightLayout.addView(scrollView);
         rightLayout.addView(inputContainer);
 
@@ -421,6 +443,24 @@ public class AppActivity extends AppCompatActivity {
         animation.start();
         animation.setOnCompletionListener(mp -> animation.start());
     }
+
+    /**
+     * Starts listening and then puts the text into the userInputText
+     */
+    private void startListening() {
+        // Start listening for speech recognition asynchronously
+        listener.listen(text -> {
+            if (text != null) {
+                Log.e("Listener", "Recognized text: " + text);
+
+                // Update the UI with recognized text
+                userTextInput.setText(text);
+            } else {
+                Log.e("Listener", "Failed to recognize speech.");
+            }
+        });
+    }
+
 
     /**
      * Gets the App Activity Object.
