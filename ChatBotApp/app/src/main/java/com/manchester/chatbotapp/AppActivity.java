@@ -1,16 +1,15 @@
 package com.manchester.chatbotapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
+
+import android.os.Handler;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.Manifest;
-import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -71,6 +70,10 @@ public class AppActivity extends AppCompatActivity {
      *
      */
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
+    private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+    private Handler inactivityHandler;
+    private Runnable inactivityRunnable;
 
 
     // === *** Constructors *** === //
@@ -145,6 +148,13 @@ public class AppActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        inactivityHandler = new Handler();
+        inactivityRunnable = new Runnable() {
+            public void run() {
+                showInactivityDialog();
+            }
+        };
 
         this.listener = new Listener(this);
 
@@ -380,6 +390,7 @@ public class AppActivity extends AppCompatActivity {
             }
         }).start();
 
+        resetInactivityTimer();
     }
 
     /**
@@ -488,5 +499,38 @@ public class AppActivity extends AppCompatActivity {
         }
     }
 
+    // Resets timer on any user interaction
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        resetInactivityTimer();
+    }
 
+    // Removes any pending callbacks and reschedule
+    private void resetInactivityTimer() {
+        inactivityHandler.removeCallbacks(inactivityRunnable);
+        inactivityHandler.postDelayed(inactivityRunnable,INACTIVITY_TIMEOUT);
+    }
+
+    // Shows a dialog to alert user
+    private void showInactivityDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Inactivity Alert")
+                .setMessage("You have been inactive for 2 minutes.")
+                .setPositiveButton("Okay", (dialog, which) -> {
+                    // Reset the timer when dialog is dismissed
+                    resetInactivityTimer();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Clean up the handler to avoid memory leaks
+        inactivityHandler.removeCallbacks(inactivityRunnable);
+    }
 }
