@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ChatBotApp</string>
+    <string name="cancel">Cancel</string>
+    <string name="quit">Quit</string>
+    <string name="send_a_copy_of_your_chat_log">Send a copy of your chat log!</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="send">Send</string>
+    <string name="back">Back</string>
 </resources>

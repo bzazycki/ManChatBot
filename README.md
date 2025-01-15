@@ -11,3 +11,5 @@ Backend: Ethan Armbruster, Jalen Brunson, Zach Clouse
 Description: Android App ChatGPT-based chatbot
 
 Purpose: Provide info to homeless population who visits nonprofit orgainzations
+
+Our Website - https://kiosk.quickquit.app/
