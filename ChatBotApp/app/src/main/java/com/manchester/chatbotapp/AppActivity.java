@@ -99,57 +99,9 @@ public class AppActivity extends AppCompatActivity {
 
         lastActivity = System.currentTimeMillis();
 
-        setupThread();
-
     }
 
     // === *** Methods *** === //
-
-    /**
-     * Sets up the watcher thread. This will watch the application and if it is ever inactive
-     * for more time than MAX_TIME allows it will switch back to the main screen. That is all
-     * this thread does. This thread can be safely ignored as it does not interact with any
-     * views, ony activities. Whenever the user touches something on the screen or interacts
-     * with something then the "lastActivity" field should be updated with the system time.
-     */
-    public void setupThread() {
-
-        Thread watcher = new Thread(() -> {
-
-            try {
-
-                while (true) {
-                    Thread.sleep(1000);
-
-                    long current = System.currentTimeMillis();
-
-                    long timeSince = current - lastActivity;
-
-                    System.out.println(timeSince);
-
-                    if (timeSince > MAX_TIME) {
-
-                        Intent intent = new Intent(AppActivity.this, MainActivity.class); // Replace NewActivity with the target Activity
-                        startActivity(intent);
-
-                        finish(); // Ends this activity.
-
-                        break;
-
-                    }
-                }
-
-            } catch (Exception e) {
-                // On a failure, it should switch back the new intent.
-                Intent intent = new Intent(AppActivity.this, MainActivity.class); // Replace NewActivity with the target Activity
-                startActivity(intent);
-            }
-
-        });
-
-        watcher.start();
-
-    }
 
     /**
      * Overrides the create method to show the graphics as they appear.
@@ -349,7 +301,7 @@ public class AppActivity extends AppCompatActivity {
                 // Run the network call on a background thread
                 new Thread(() -> {
                     // Get the chat response from the backend
-                    String output = Backend_Functions.getChatResponse(input);
+                    String output = Backend_Functions.getChatResponse(chatLog, input);
 
                     // Update the chat panel and speak the output on the main thread
                     runOnUiThread(() -> {
@@ -496,7 +448,7 @@ public class AppActivity extends AppCompatActivity {
         container.addView(bubble);
 
         // Update chat log
-        chatLog += "You asked: " + text + "\n\n";
+        chatLog += "User asked: " + text + "   ";
     }
 
     /**
@@ -525,7 +477,7 @@ public class AppActivity extends AppCompatActivity {
         container.addView(bubble);
 
         // Update chat log
-        chatLog += "Chatbot responded: " + text + "\n\n";
+        chatLog += "Chat responded: " + text + "   ";
     }
 
     /**
@@ -567,6 +519,11 @@ public class AppActivity extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * On the destruction of this, remove all of the callbacks from the
+     * inactivity handler so that it does not popup after the activity
+     * has ended. This is an overridden method from AppCompatActivity.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Backend_Functions {
 
-    public static String getChatResponse(String userMessage) {
+    public static String getChatResponse(String history, String userMessage) {
         String flaskURL = "http://34.236.100.216/chatbot";
         try {
             URL url = new URL(flaskURL);
@@ -22,7 +22,11 @@ public class Backend_Functions {
             //connection.setRequestProperty("Location", "Manchester");
             connection.setDoOutput(true);
 
-            String jsonInputString = "{\"user_message\": \"" + userMessage + "\"}";
+            String messageToChat = "This is the history of the conversation that you have been " +
+                    "having with the user: " + history + " -- This is what the user has said most "
+                    + "recently: " + userMessage;
+
+            String jsonInputString = "{\"user_message\": \"" + messageToChat + "\"}";
 
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
