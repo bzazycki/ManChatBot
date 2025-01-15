@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +23,17 @@ public class ChatDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_chat); // Define a layout for your custom dialog
+        setContentView(R.layout.dialog_chat); // Use the dialog layout with rounded edges
+
+        // Set background drawable for rounded edges (transparent window)
+        if (getWindow() != null) {
+            getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
 
         // Initialize views
         final EditText emailInput = findViewById(R.id.email_input);
         Button sendButton = findViewById(R.id.send_button);
-        Button cancelButton = findViewById(R.id.cancel_button);
+        Button cancelButton = findViewById(R.id.back_button);
         Button quitButton = findViewById(R.id.quit_button);
 
         // Handle button clicks
@@ -57,5 +63,10 @@ public class ChatDialog extends Dialog {
                 System.exit(0);
             }
         });
+    }
+
+    // Utility to show this dialog
+    public void showDialog() {
+        this.show();
     }
 }
