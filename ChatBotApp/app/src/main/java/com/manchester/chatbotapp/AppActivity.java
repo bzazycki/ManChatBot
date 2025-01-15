@@ -2,11 +2,18 @@ package com.manchester.chatbotapp;
 
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.Layout;
+=======
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,10 +22,22 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+<<<<<<< HEAD
+import android.widget.ImageView;
+=======
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+<<<<<<< HEAD
+import android.widget.Toast;
+import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.widgets.WidgetContainer;
+
+=======
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +51,7 @@ import androidx.core.content.ContextCompat;
  * so keeping it all together is the design. Different components are stored
  * as attributes of the activity.
  */
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
 public class AppActivity extends AppCompatActivity {
 
     // === *** Attributes *** === //
@@ -63,12 +83,15 @@ public class AppActivity extends AppCompatActivity {
      */
     protected Listener listener;
 
+<<<<<<< HEAD
+=======
     /**
      *
      */
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
 
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
     // === *** Constructors *** === //
 
     /**
@@ -87,10 +110,14 @@ public class AppActivity extends AppCompatActivity {
 
     /**
      * Sets up the watcher thread. This will watch the application and if it is ever inactive
+<<<<<<< HEAD
+     * for more time than MAX_TIME allows it will switch back to the main screen.
+=======
      * for more time than MAX_TIME allows it will switch back to the main screen. That is all
      * this thread does. This thread can be safely ignored as it does not interact with any
      * views, ony activities. Whenever the user touches something on the screen or interacts
      * with something then the "lastActivity" field should be updated with the system time.
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
      */
     public void setupThread() {
 
@@ -144,6 +171,8 @@ public class AppActivity extends AppCompatActivity {
 
         this.listener = new Listener(this);
 
+<<<<<<< HEAD
+=======
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -151,6 +180,7 @@ public class AppActivity extends AppCompatActivity {
                     REQUEST_RECORD_AUDIO_PERMISSION);
         }
 
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
         // === ENTIRE FRAME === //
 
         // Make the app fullscreen by removing the title bar and status bar
@@ -210,7 +240,10 @@ public class AppActivity extends AppCompatActivity {
                 if (listener.allowSpeech) {
                     listener.allowSpeech = false;
                     soundButton.setTextColor(Color.RED);
+<<<<<<< HEAD
+=======
                     listener.stopSpeaking();
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
                 } else {
                     listener.allowSpeech = true;
                     soundButton.setTextColor(Color.WHITE);
@@ -322,6 +355,14 @@ public class AppActivity extends AppCompatActivity {
                 new Thread(() -> {
                     // Get the chat response from the backend
                     String output = Backend_Functions.getChatResponse(input);
+<<<<<<< HEAD
+                    // Update the chat panel on the main thread
+                    runOnUiThread(() -> logChatOutput(chatPanel, output));
+                    listener.speak(output);
+
+                    String text = listener.listen();
+                    Log.e("ListenerInput", text);
+=======
 
                     // Update the chat panel and speak the output on the main thread
                     runOnUiThread(() -> {
@@ -329,11 +370,14 @@ public class AppActivity extends AppCompatActivity {
                         listener.speak(output);
                     });
 
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
                 }).start();
 
                 lastActivity = System.currentTimeMillis();
 
                 changeAnimation('l');
+<<<<<<< HEAD
+=======
 
                 // Start listening for speech recognition asynchronously
                 listener.listen(text -> {
@@ -346,6 +390,7 @@ public class AppActivity extends AppCompatActivity {
                         Log.e("Listener", "Failed to recognize speech.");
                     }
                 });
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
             }
         });
 
@@ -366,7 +411,11 @@ public class AppActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 while (!listener.tts.isSpeaking()) {
+<<<<<<< HEAD
+                    Thread.sleep(5);
+=======
                     Thread.sleep(500);
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
                     this.listener.speak("How can I help you today?");
                 }
                 //String output = this.listener.listen();
@@ -383,6 +432,26 @@ public class AppActivity extends AppCompatActivity {
      * @param c the character that determines what resource to use.
      */
     public void changeAnimation(Character c) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        switch (c) {
+            case 'w':
+                Uri waveUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
+                animation.setVideoURI(waveUri);
+                break;
+            case 't':
+                Uri talkUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
+                animation.setVideoURI(talkUri);
+                break;
+            case 'l':
+                Uri listenUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
+                animation.setVideoURI(listenUri);
+                break;
+        }
+
+=======
+=======
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
         Uri videoUri = null;
         switch (c) {
             case 'w':
@@ -403,6 +472,10 @@ public class AppActivity extends AppCompatActivity {
         animation.setVideoURI(videoUri);
         
         // Start video and ensure loop
+<<<<<<< HEAD
+>>>>>>> 5be86ba720d54d33ba9bc7fbac97988dd4f93954
+=======
+>>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
         animation.start();
         animation.setOnCompletionListener(mp -> animation.start());
     }
