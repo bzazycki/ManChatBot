@@ -262,11 +262,10 @@ public class AppActivity extends AppCompatActivity {
         inputContainerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         inputContainer.setLayoutParams(inputContainerParams);
 
-
         // The Edit Text, the input
         userTextInput = new EditText(this);
         userTextInput.setHint("Enter your thoughts..."); // Hint text for input field
-        userTextInput.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
+        userTextInput.setBackground(getDrawable(R.drawable.rounded_edit_text)); // Rounded background
         userTextInput.setPadding(16, 16, 16, 16);
         userTextInput.setTextColor(getResources().getColor(android.R.color.black));
         userTextInput.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -275,9 +274,10 @@ public class AppActivity extends AppCompatActivity {
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f); // Weight of 1 for proportional sizing
         userTextInput.setLayoutParams(editTextParams);
 
-        // Button to submit text
+        // Button to submit text (send arrow)
         Button submitButton = new Button(this);
         submitButton.setText("➤");
+        submitButton.setTextSize(24); // Increase text size for the arrow
         submitButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
         submitButton.setTextColor(getResources().getColor(android.R.color.white));
         submitButton.setElevation(8); // Slight shadow
@@ -288,8 +288,7 @@ public class AppActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Get user input and clear the EditText
+                // Handle submit action
                 String input = userTextInput.getText().toString().trim();
 
                 changeAnimation('t');
@@ -321,30 +320,28 @@ public class AppActivity extends AppCompatActivity {
                 lastActivity = System.currentTimeMillis();
 
                 changeAnimation('l');
-
             }
         });
 
+        // Mic Button with Image
         Button listenButton = new Button(this);
-        listenButton.setText("\uD83C\uDFA4");
-        listenButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
+        listenButton.setBackgroundResource(R.drawable.microphone); // Set an image for the mic button
         listenButton.setTextColor(getResources().getColor(android.R.color.white));
         listenButton.setElevation(8); // Slight shadow
+
         LinearLayout.LayoutParams lButtonParam = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        buttonParams.setMargins(16, 0, 0, 0); // Add margin to separate from EditText
+                80, 80); // Width and Height
+
+        lButtonParam.setMargins(16, 0, 0, 0); // Add margin to separate from EditText
         listenButton.setLayoutParams(lButtonParam);
         listenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startListening();
             }
-
         });
 
-
         // Add panel, EditText, and Button to the rightLayout
-        // Add the EditText at the bottom
         inputContainer.addView(userTextInput); // Add the Button next to the EditText
         inputContainer.addView(submitButton); // Panel above the input
         inputContainer.addView(listenButton);
@@ -357,6 +354,7 @@ public class AppActivity extends AppCompatActivity {
 
         // Set the LinearLayout as the content view
         setContentView(mainLayout);
+
 
         new Thread(() -> {
             try {
