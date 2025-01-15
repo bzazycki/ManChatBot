@@ -28,3 +28,171 @@ Press CTRL+C to quit
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 808-371-178
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+127.0.0.1 - - [14/Jan/2025 16:05:27] "GET / HTTP/1.1" 404 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+127.0.0.1 - - [14/Jan/2025 16:07:24] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:45] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:46] "GET /api/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:47] "GET /phpinfo.php HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:49] "GET /app/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:50] "GET /index.html HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:51] "GET /admin/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:53] "GET /wp-config.php.save HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:54] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:55] "GET /.aws/credentials HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:56] "GET /phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:57] "GET /config.properties HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:58] "GET /.json HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:22:59] "GET /application-dev.properties HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:00] "GET /admin/config HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:03] "GET /wp-config.php HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:05] "GET /config/php.ini HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:06] "GET /_profiler/phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:08] "GET /test HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:10] "GET /info HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:12] "GET /info.php HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 16:23:14] "GET /_profiler/phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 17:37:41] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 17:42:24] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 17:44:57] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 17:51:49] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 17:59:34] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 17:59:57] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 18:48:11] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 18:49:04] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 18:50:27] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 18:50:35] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 18:52:43] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 18:53:52] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 18:54:39] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:04:50] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:08:15] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:16:47] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:21:45] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:23:19] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:29:44] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 19:29:45] "POST /chatbot HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+Error logging chat GPT call: table history has no column named output
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+127.0.0.1 - - [14/Jan/2025 19:33:38] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 19:35:07] "POST /chatbot HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+Error logging chat GPT call: Object of type ChatCompletion is not JSON serializable
+Error logging chat GPT call: Object of type ChatCompletion is not JSON serializable
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+127.0.0.1 - - [14/Jan/2025 19:43:35] "GET / HTTP/1.1" 404 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+127.0.0.1 - - [14/Jan/2025 19:50:42] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [14/Jan/2025 20:07:46] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 20:32:32] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 20:32:32] "POST / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 20:32:32] "GET /api/index.php/v1/config/application?public=true&page[offset]=0&page[limit]=60 HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 20:43:27] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 20:56:36] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:18:04] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:44] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:44] "GET /api/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:44] "GET /phpinfo.php HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:44] "GET /app/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:44] "GET /index.html HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:45] "GET /admin/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:45] "GET /wp-config.php.save HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:45] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:45] "GET /.aws/credentials HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:45] "GET /phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /config.properties HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /.json HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /application-dev.properties HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /admin/config HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /wp-config.php HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /config/php.ini HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /_profiler/phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /test HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /info HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /info.php HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /conf/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /wp-content/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:46] "GET /wp-admin/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /library/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /new/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /vendor/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /old/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /local/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /blog/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /crm/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /laravel/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:47] "GET /app/config/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /apps/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /audio/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /cgi-bin/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /backend/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /src/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /base/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /core/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /vendor/laravel/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:48] "GET /storage/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /protected/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /newsite/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /www/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /sites/all/libraries/mailchimp/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /database/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /public/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:34:49] "GET /[DOMAIN]/.env HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:47:35] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 21:48:19] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 22:53:20] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 23:42:00] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 23:52:23] "GET /.git/config HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 00:12:58] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 02:25:47] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 02:45:06] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 02:45:12] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 02:45:49] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 02:52:29] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 03:49:50] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 04:13:18] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 04:13:18] "POST / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:20:42] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:23:34] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:23:35] "GET /.env.example HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:23:36] "GET /blog/.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:23:37] "GET /api/.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:23:37] "GET /laravel/.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:23:38] "GET /docs/.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:30:59] "GET /cgi-bin/luci/;stok=/locale?form=country&operation=read HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:59:22] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 05:59:23] "POST / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 06:48:11] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 07:56:14] "GET /signin HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 08:08:51] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 08:09:02] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 08:11:33] "GET /cgi-bin/luci/;stok=/locale?form=country&operation=read HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 08:53:09] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 08:53:09] "POST / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 09:08:22] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2025 09:23:02] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [15/Jan/2025 09:30:16] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [15/Jan/2025 09:30:55] "POST /chatbot HTTP/1.1" 200 -

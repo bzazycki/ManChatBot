@@ -7,6 +7,8 @@ from flask import Flask, request, jsonify
 from openai import OpenAI
 import os
 import sqlite3
+import json
+from datetime import datetime
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -68,12 +70,13 @@ def getContext():
         return ""
 
 # Function to log the chat GPT call to the database
-def log_chat_gpt_call(input_text, output_text, input_tokens, output_tokens):
+def dbLog(user_message, response_json):
     try:
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO history (input, output, input_tokens, output_tokens) VALUES (?, ?, ?, ?)",
-                       (input_text, output_text, input_tokens, output_tokens))
+        timestamp = datetime.now().isoformat()
+        cursor.execute("INSERT INTO history (input, output, timestamp) VALUES (?, ?, ?)",
+                       (user_message, json.dumps(response_json.content), timestamp))
         conn.commit()
         conn.close()
     except Exception as e:
@@ -92,7 +95,7 @@ def getModelRoute():
     @return: JSON response containing the current model or an error message.
     """
     try:
-        model = get_model()
+        model = getModel()
         if model:
             return jsonify({"model": model}), 200
         else:
@@ -234,7 +237,7 @@ def chatbot():
 
         # Call the OpenAI API
         completion = client.chat.completions.create(
-            model=get_model(),
+            model=getModel(),
             messages=user_input
         )
 
@@ -242,9 +245,7 @@ def chatbot():
         ai_response = completion.choices[0].message.content
         
         # Log the chat GPT call to the database
-        input_tokens = len(user_message.split())
-        output_tokens = len(ai_response.split())
-        log_chat_gpt_call(user_message, ai_response, input_tokens, output_tokens)
+        dbLog(user_message, completion)
         
         # Return the AI response
         return ai_response
