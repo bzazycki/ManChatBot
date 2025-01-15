@@ -2,6 +2,10 @@ package com.manchester.chatbotapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.Layout;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.Manifest;
@@ -64,15 +68,9 @@ public class AppActivity extends AppCompatActivity {
     protected Listener listener;
 
     /**
-     * Ensures that the system asks for permission to use the audio.
+     *
      */
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-
-    /**
-     * The Text Input. Allows the user to input what they want to say
-     * so that they can submit it to the system.
-     */
-    protected EditText userInput;
 
 
     // === *** Constructors *** === //
@@ -284,16 +282,16 @@ public class AppActivity extends AppCompatActivity {
 
 
         // The Edit Text, the input
-        userInput = new EditText(this);
-        userInput.setHint("Enter your thoughts..."); // Hint text for input field
-        userInput.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
-        userInput.setPadding(16, 16, 16, 16);
-        userInput.setTextColor(getResources().getColor(android.R.color.black));
-        userInput.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-        userInput.setElevation(8); // Slight shadow for better visibility
+        EditText editText = new EditText(this);
+        editText.setHint("Enter your thoughts..."); // Hint text for input field
+        editText.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
+        editText.setPadding(16, 16, 16, 16);
+        editText.setTextColor(getResources().getColor(android.R.color.black));
+        editText.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        editText.setElevation(8); // Slight shadow for better visibility
         LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f); // Weight of 1 for proportional sizing
-        userInput.setLayoutParams(editTextParams);
+        editText.setLayoutParams(editTextParams);
 
         // Button to submit text
         Button submitButton = new Button(this);
@@ -308,51 +306,56 @@ public class AppActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startListening();
-
-                return;
-
-
                 // Get user input and clear the EditText
-//                String input = editText.getText().toString().trim();
-//
-//                changeAnimation('t');
-//
-//                if (input.isBlank() || input.isEmpty()) {
-//                    return;
-//                }
-//
-//                editText.setText("");
-//
-//                hideKeyboard(view);
-//
-//                // Log user input on the chat panel
-//                logUserInput(chatPanel, input);
-//
-//                // Run the network call on a background thread
-//                new Thread(() -> {
-//                    // Get the chat response from the backend
-//                    String output = Backend_Functions.getChatResponse(input);
-//
-//                    // Update the chat panel and speak the output on the main thread
-//                    runOnUiThread(() -> {
-//                        logChatOutput(chatPanel, output);
-//                        listener.speak(output);
-//                    });
-//
-//                }).start();
-//
-//                lastActivity = System.currentTimeMillis();
-//
-//                changeAnimation('l');
+                String input = editText.getText().toString().trim();
 
+                changeAnimation('t');
+
+                if (input.isBlank() || input.isEmpty()) {
+                    return;
+                }
+
+                editText.setText("");
+
+                hideKeyboard(view);
+
+                // Log user input on the chat panel
+                logUserInput(chatPanel, input);
+
+                // Run the network call on a background thread
+                new Thread(() -> {
+                    // Get the chat response from the backend
+                    String output = Backend_Functions.getChatResponse(input);
+
+                    // Update the chat panel and speak the output on the main thread
+                    runOnUiThread(() -> {
+                        logChatOutput(chatPanel, output);
+                        listener.speak(output);
+                    });
+
+                }).start();
+
+                lastActivity = System.currentTimeMillis();
+
+                changeAnimation('l');
+
+                // Start listening for speech recognition asynchronously
+                listener.listen(text -> {
+                    if (text != null) {
+                        Log.e("Listener", "Recognized text: " + text);
+
+                        // Update the UI with recognized text
+                        runOnUiThread(() -> logUserInput(chatPanel, "Recognized: " + text));
+                    } else {
+                        Log.e("Listener", "Failed to recognize speech.");
+                    }
+                });
             }
         });
 
         // Add panel, EditText, and Button to the rightLayout
-         // Add the EditText at the bottom
-        inputContainer.addView(userInput); // Add the Button next to the EditText
+        // Add the EditText at the bottom
+        inputContainer.addView(editText); // Add the Button next to the EditText
         inputContainer.addView(submitButton); // Panel above the input
         rightLayout.addView(scrollView);
         rightLayout.addView(inputContainer);
@@ -371,6 +374,7 @@ public class AppActivity extends AppCompatActivity {
                     this.listener.speak("How can I help you today?");
                 }
                 //String output = this.listener.listen();
+                Log.e("TextToSpeech", "Listened");
             } catch (InterruptedException e) {
 
             }
@@ -395,33 +399,16 @@ public class AppActivity extends AppCompatActivity {
                 videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
                 break;
         }
-        
+
         // Stop current video
         animation.stopPlayback();
-        
+
         // Set new video URI
         animation.setVideoURI(videoUri);
-        
+
         // Start video and ensure loop
         animation.start();
         animation.setOnCompletionListener(mp -> animation.start());
-    }
-
-    /**
-     * Starts listening for user speech, before then placing that speech into the typing box
-     * so that if required a user can submit it.
-     */
-    public void startListening() {
-        // Start listening for speech recognition asynchronously
-        listener.listen(text -> {
-            if (text != null) {
-                Log.e("Listener", "Recognized text: " + text);
-                userInput.setText(text);
-                // Update the UI with recognized text
-            } else {
-                Log.e("Listener", "Failed to recognize speech.");
-            }
-        });
     }
 
     /**
