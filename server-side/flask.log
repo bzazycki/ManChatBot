@@ -10,3 +10,21 @@ Press CTRL+C to quit
 127.0.0.1 - - [14/Jan/2025 15:33:20] "POST /chatbot HTTP/1.1" 200 -
 127.0.0.1 - - [14/Jan/2025 15:35:50] "POST /chatbot HTTP/1.1" 200 -
 127.0.0.1 - - [14/Jan/2025 15:36:21] "GET /druid/index.html HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 15:56:16] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [14/Jan/2025 15:57:44] "POST /chatbot HTTP/1.1" 500 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 808-371-178
