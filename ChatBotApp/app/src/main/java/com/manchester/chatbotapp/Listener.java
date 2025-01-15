@@ -1,21 +1,16 @@
 package com.manchester.chatbotapp;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.SpeechRecognizer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.core.util.Consumer;
 
 import java.util.Locale;
 import java.util.ArrayList;
@@ -109,76 +104,97 @@ public class Listener {
     }
 
     /**
+     * Stops the speaking mid speech.
+     */
+    public void stopSpeaking() {
+        if (tts.isSpeaking()) {
+            tts.stop();
+        }
+    }
+
+
+    /**
      * Waits for user input.
      * @return the user input that was read from the voice.
      */
-    public String listen() {
-        context.changeAnimation('l');
-        // Create a CountDownLatch with 1 count to block until the result is available
-        final CountDownLatch latch = new CountDownLatch(1);
-        final String[] result = {""};
+    public void listen(Consumer<String> callback) {
+        // Initialize SpeechRecognizer on the main thread
+        new Handler(Looper.getMainLooper()).post(() -> {
+            sr = SpeechRecognizer.createSpeechRecognizer(context);
 
-        // Initialize SpeechRecognizer
-        this.sr = SpeechRecognizer.createSpeechRecognizer(context);
+            sr.setRecognitionListener(new RecognitionListener() {
+                @Override
+                public void onReadyForSpeech(Bundle params) {}
 
-        // Set the RecognitionListener
-        sr.setRecognitionListener(new RecognitionListener() {
-            @Override
-            public void onReadyForSpeech(Bundle params) {}
+                @Override
+                public void onBeginningOfSpeech() {}
 
-            @Override
-            public void onBeginningOfSpeech() {}
+                @Override
+                public void onRmsChanged(float rmsdB) {}
 
-            @Override
-            public void onRmsChanged(float rmsdB) {}
+                @Override
+                public void onBufferReceived(byte[] buffer) {}
 
-            @Override
-            public void onBufferReceived(byte[] buffer) {}
+                @Override
+                public void onEndOfSpeech() {}
 
-            @Override
-            public void onEndOfSpeech() {}
-
-            @Override
-            public void onError(int error) {
-                // Destroy SpeechRecognizer in case of error
-                sr.destroy();
-                latch.countDown(); // Release the latch to prevent blocking forever
-            }
-
-            @Override
-            public void onResults(Bundle results) {
-                ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                if (matches != null && !matches.isEmpty()) {
-                    result[0] = matches.get(0); // Set the result
+                @Override
+                public void onError(int error) {
+                    Log.d("TEXTERROR", getErrorText(error));
+                    sr.destroy(); // Cleanup
+                    callback.accept(null); // Pass null or an error message
                 }
-                latch.countDown(); // Release the latch once results are received
-            }
 
-            @Override
-            public void onPartialResults(Bundle partialResults) {}
+                @Override
+                public void onResults(Bundle results) {
+                    ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                    String recognizedText = (matches != null && !matches.isEmpty()) ? matches.get(0) : null;
+                    sr.destroy(); // Cleanup
+                    callback.accept(recognizedText); // Pass the result to the callback
+                }
 
-            @Override
-            public void onEvent(int eventType, Bundle params) {}
+                @Override
+                public void onPartialResults(Bundle partialResults) {}
+
+                @Override
+                public void onEvent(int eventType, Bundle params) {}
+            });
+
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+            intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true); // Optional
+            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5); // Optional, increase for more matches
+            sr.startListening(intent);
+
+            // Start listening
+            sr.startListening(intent);
         });
+    }
 
-        // Prepare the speech recognition intent
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.UK);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...");
-
-        // Start listening
-        sr.startListening(intent);
-
-        try {
-            // Wait for the result or error (this will block until latch.countDown() is called)
-            latch.await();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Handle interruption properly
+    private String getErrorText(int errorCode) {
+        switch (errorCode) {
+            case SpeechRecognizer.ERROR_AUDIO:
+                return "Audio recording error";
+            case SpeechRecognizer.ERROR_CLIENT:
+                return "Client side error";
+            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                return "Insufficient permissions";
+            case SpeechRecognizer.ERROR_NETWORK:
+                return "Network error";
+            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                return "Network timeout";
+            case SpeechRecognizer.ERROR_NO_MATCH:
+                return "No match found";
+            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                return "RecognitionService busy";
+            case SpeechRecognizer.ERROR_SERVER:
+                return "Server error";
+            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                return "No speech input";
+            default:
+                return "Unknown error";
         }
-
-        Log.e("TextToSpeech", "Message: " + result[0]);
-        return result[0]; // Return the result after the latch is released
     }
 
 

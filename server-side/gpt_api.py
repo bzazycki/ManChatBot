@@ -15,7 +15,7 @@ app = Flask(__name__)
 persistent_context = ""
 
 # Load context from a .txt file (only once during startup)
-def load_persistent_context(file_path):
+def loadPersistentContext(file_path):
     try:
         with open(file_path, 'r') as file:
             return file.read()
@@ -23,10 +23,10 @@ def load_persistent_context(file_path):
         return ""
 
 # Load persistent context at startup
-persistent_context = load_persistent_context("context.txt")
+persistent_context = loadPersistentContext("context.txt")
 
 # Function to get the model from the database
-def get_model():
+def getModel():
     try:
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
@@ -41,7 +41,7 @@ def get_model():
         return None
 
 # Function to get the API key from the database
-def get_api_key():
+def getAPIKey():
     try:
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
@@ -51,6 +51,21 @@ def get_api_key():
         return api_key[0]
     except Exception as e:
         return None
+
+# Function to get the context from the database
+def getContext():
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT context FROM ai LIMIT 1")
+        context = cursor.fetchone()
+        conn.close()
+        if context:
+            return context[0]
+        else:
+            return ""
+    except Exception as e:
+        return ""
 
 # Function to log the chat GPT call to the database
 def log_chat_gpt_call(input_text, output_text, input_tokens, output_tokens):
@@ -66,11 +81,11 @@ def log_chat_gpt_call(input_text, output_text, input_tokens, output_tokens):
 
 # Initialize the OpenAI client with the API key from the database
 client = OpenAI(
-    api_key=get_api_key()
+    api_key=getAPIKey()
 )
 
 @app.route('/getModel', methods=['GET'])
-def get_model_route():
+def getModelRoute():
     """
     API endpoint to get the current model from the database.
     
@@ -86,18 +101,34 @@ def get_model_route():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/getApiKey', methods=['GET'])
-def get_api_key_route():
+def getAPIKeyRoute():
     """
     API endpoint to get the current API key from the database.
     
     @return: JSON response containing the current API key or an error message.
     """
     try:
-        api_key = get_api_key()
+        api_key = getAPIKey()
         if api_key:
             return jsonify({"api_key": api_key}), 200
         else:
             return jsonify({"error": "API key not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getContext', methods=['GET'])
+def get_context_route():
+    """
+    API endpoint to get the current context from the database.
+    
+    @return: JSON response containing the current context or an error message.
+    """
+    try:
+        context = getContext()
+        if context:
+            return jsonify({"context": context}), 200
+        else:
+            return jsonify({"context": ""}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -151,6 +182,31 @@ def update_api_key():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/updateContext', methods=['POST'])
+def update_context():
+    """
+    API endpoint to update the context in the database.
+    
+    @param request: Flask request object containing JSON payload with the new context.
+    @return: JSON response indicating success or error message.
+    """
+    try:
+        data = request.get_json()
+        new_context = data.get("context", "")
+        
+        if not new_context:
+            return jsonify({"error": "No context provided"}), 400
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("UPDATE ai SET context = ? WHERE id = 1", (new_context,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Context updated successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     """
@@ -168,9 +224,10 @@ def chatbot():
 
         user_input = []
 
-        # Include the persistent context in the first request only
-        if persistent_context:
-            user_input.append({"role": "system", "content": persistent_context})
+        # Include the context from the database
+        context = getContext()
+        if context:
+            user_input.append({"role": "system", "content": context})
         
         # Add the user's message
         user_input.append({"role": "user", "content": user_message})
