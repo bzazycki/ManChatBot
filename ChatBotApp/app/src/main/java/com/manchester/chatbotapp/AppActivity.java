@@ -2,7 +2,9 @@ package com.manchester.chatbotapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +22,16 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+/**
+ * The AppActivity Class. This activity contains everything within the actual app.
+ * While standard it would be in good practice to break up the many components and
+ * panels, there are not many different components here to actually keep track of,
+ * so keeping it all together is the design. Different components are stored
+ * as attributes of the activity.
+ */
 public class AppActivity extends AppCompatActivity {
 
     // === *** Attributes *** === //
@@ -52,6 +63,12 @@ public class AppActivity extends AppCompatActivity {
      */
     protected Listener listener;
 
+    /**
+     *
+     */
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
+
     // === *** Constructors *** === //
 
     /**
@@ -70,7 +87,10 @@ public class AppActivity extends AppCompatActivity {
 
     /**
      * Sets up the watcher thread. This will watch the application and if it is ever inactive
-     * for more time than MAX_TIME allows it will switch back to the main screen.
+     * for more time than MAX_TIME allows it will switch back to the main screen. That is all
+     * this thread does. This thread can be safely ignored as it does not interact with any
+     * views, ony activities. Whenever the user touches something on the screen or interacts
+     * with something then the "lastActivity" field should be updated with the system time.
      */
     public void setupThread() {
 
@@ -123,6 +143,13 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.listener = new Listener(this);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    REQUEST_RECORD_AUDIO_PERMISSION);
+        }
 
         // === ENTIRE FRAME === //
 
@@ -183,6 +210,7 @@ public class AppActivity extends AppCompatActivity {
                 if (listener.allowSpeech) {
                     listener.allowSpeech = false;
                     soundButton.setTextColor(Color.RED);
+                    listener.stopSpeaking();
                 } else {
                     listener.allowSpeech = true;
                     soundButton.setTextColor(Color.WHITE);
@@ -294,15 +322,30 @@ public class AppActivity extends AppCompatActivity {
                 new Thread(() -> {
                     // Get the chat response from the backend
                     String output = Backend_Functions.getChatResponse(input);
-                    // Update the chat panel on the main thread
-                    runOnUiThread(() -> logChatOutput(chatPanel, output));
-                    listener.speak(output);
+
+                    // Update the chat panel and speak the output on the main thread
+                    runOnUiThread(() -> {
+                        logChatOutput(chatPanel, output);
+                        listener.speak(output);
+                    });
 
                 }).start();
 
                 lastActivity = System.currentTimeMillis();
 
                 changeAnimation('l');
+
+                // Start listening for speech recognition asynchronously
+                listener.listen(text -> {
+                    if (text != null) {
+                        Log.e("Listener", "Recognized text: " + text);
+
+                        // Update the UI with recognized text
+                        runOnUiThread(() -> logUserInput(chatPanel, "Recognized: " + text));
+                    } else {
+                        Log.e("Listener", "Failed to recognize speech.");
+                    }
+                });
             }
         });
 
@@ -323,7 +366,7 @@ public class AppActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 while (!listener.tts.isSpeaking()) {
-                    Thread.sleep(5);
+                    Thread.sleep(500);
                     this.listener.speak("How can I help you today?");
                 }
                 //String output = this.listener.listen();
