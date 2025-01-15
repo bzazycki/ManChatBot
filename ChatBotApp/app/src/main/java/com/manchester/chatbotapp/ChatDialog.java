@@ -1,7 +1,10 @@
 package com.manchester.chatbotapp;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -15,7 +18,7 @@ public class ChatDialog extends Dialog {
 
     private Context c;
 
-    public ChatDialog(Context c) {
+    public ChatDialog(AppActivity c) {
         super(c);
         this.c = c;
     }
@@ -59,8 +62,11 @@ public class ChatDialog extends Dialog {
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AppCompatActivity) c).finish();
-                System.exit(0);
+                // When the image is clicked, start a new Activity
+                // Start a new activity
+                Intent intent = new Intent(c, MainActivity.class); // Replace 'NewActivity' with your target activity
+                c.startActivity(intent); // Use the context to start the activity
+                dismiss();
             }
         });
     }
