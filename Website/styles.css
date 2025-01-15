@@ -1,8 +1,23 @@
 /* General styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: block;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: url('HoneyComb.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   background-color: #fdf8e4; /* Bee honeycomb background */
 }
 /* Sticky Navigation Bar */
@@ -13,6 +28,7 @@ header {
   padding: 10px 0;
   z-index: 100;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: block;
 }
 nav ul {
   list-style-type: none;
@@ -48,12 +64,17 @@ nav ul li a.active {
 .preferences-page,
 .about-us,
 .admin-page {
+  display: flex;
   padding: 20px;
   background-color: #fff;
-  max-width: 800px;
+  max-width: 75%;
   margin: 50px auto;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
 }
 /* Admin Page */
 .admin-page {
