@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -182,6 +183,7 @@ public class AppActivity extends AppCompatActivity {
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeAnimation('w');
                 ChatDialog chatDialog = new ChatDialog(getThis());
                 chatDialog.show();
             }
@@ -226,11 +228,12 @@ public class AppActivity extends AppCompatActivity {
         // Create the VideoView
         this.animation = new VideoView(this);
 
+        changeAnimation('w');
+
         // Set the video source from the raw resource folder
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-        animation.setVideoURI(videoUri);
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
+        //Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
+        //animation.setVideoURI(videoUri);
+        //animation.start();
 
         verticalLayout.addView(animation);
 
@@ -396,15 +399,28 @@ public class AppActivity extends AppCompatActivity {
                 break;
         }
 
-        // Stop current video
+        // Reset the VideoView
         animation.stopPlayback();
+        animation.suspend();
 
         // Set new video URI
         animation.setVideoURI(videoUri);
 
-        // Start video and ensure loop
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
+        // Set looping explicitly
+        animation.setOnPreparedListener(mp -> {
+            mp.setLooping(true);
+            animation.start();
+            Log.d("VideoDuration", "Duration: " + mp.getDuration());
+        });
+
+        animation.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Log.e("VideoView", "Error: " + what + ", " + extra);
+                return true; // Prevent default error handling
+            }
+        });
+
     }
 
     /**
