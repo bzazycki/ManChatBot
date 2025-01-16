@@ -184,7 +184,7 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeAnimation('w');
-                ChatDialog chatDialog = new ChatDialog(getThis());
+                ChatDialog chatDialog = new ChatDialog(getThis(), chatLog);
                 chatDialog.show();
             }
         });
@@ -229,11 +229,6 @@ public class AppActivity extends AppCompatActivity {
         this.animation = new VideoView(this);
 
         changeAnimation('w');
-
-        // Set the video source from the raw resource folder
-        //Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-        //animation.setVideoURI(videoUri);
-        //animation.start();
 
         verticalLayout.addView(animation);
 
@@ -371,14 +366,14 @@ public class AppActivity extends AppCompatActivity {
                     Thread.sleep(500);
                     this.listener.speak("How can I help you today?");
                 }
-                //String output = this.listener.listen();
-                Log.e("TextToSpeech", "Listened");
             } catch (InterruptedException e) {
 
             }
         }).start();
 
         resetInactivityTimer();
+
+        logChatOutput(chatPanel, "How can I help you today?");
     }
 
     /**
@@ -526,21 +521,21 @@ public class AppActivity extends AppCompatActivity {
     }
 
     // Removes any pending callbacks and reschedules
-    private void resetInactivityTimer() {
+    public void resetInactivityTimer() {
         inactivityHandler.removeCallbacks(inactivityRunnable);
         inactivityHandler.postDelayed(inactivityRunnable, INACTIVITY_TIMEOUT);
     }
 
     private void showInactivityDialog() {
         // Create and show the inactivity dialog
-        InactivityDialog inactivityDialog = new InactivityDialog(this);
+        InactivityDialog inactivityDialog = new InactivityDialog(this, chatLog);
         inactivityDialog.show();
     }
 
     // Handle quit button action, show the chat dialog
     public void onQuitClicked() {
         // Handle quit button action, show the chat dialog
-        ChatDialog chatDialog = new ChatDialog(this); // Use the activity context to instantiate
+        ChatDialog chatDialog = new ChatDialog(this, chatLog); // Use the activity context to instantiate
         chatDialog.show(); // Show the chat dialog
     }
 

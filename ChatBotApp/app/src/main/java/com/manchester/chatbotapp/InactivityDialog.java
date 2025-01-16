@@ -1,8 +1,10 @@
 package com.manchester.chatbotapp;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +19,15 @@ public class InactivityDialog extends Dialog {
     private Button quitButton;
     private Button backButton;
 
+    private AppActivity context;
+
+    protected String chatLog;
+
     // Constructor for InactivityDialog
-    public InactivityDialog(AppActivity activity) {
+    public InactivityDialog(AppActivity activity, String chatLog) {
         super(activity);
+        this.context = activity;
+        this.chatLog = chatLog;
     }
 
     @Override
@@ -40,6 +48,10 @@ public class InactivityDialog extends Dialog {
             if (getContext() instanceof InactivityDialogListener) {
                 ((InactivityDialogListener) getContext()).onQuitClicked();
             }
+
+            ChatDialog chatDialog = new ChatDialog(context, chatLog); // Use the activity context to instantiate
+            chatDialog.show(); // Show the chat dialog
+
             dismiss();
         });
 
@@ -64,11 +76,20 @@ public class InactivityDialog extends Dialog {
         countdownTimer = new CountDownTimer(COUNTDOWN_TIME, INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
+                long secondsLeft = millisUntilFinished / 1000;
                 // Update the message with the remaining time
                 String timeLeft = String.format("You have been inactive for %d seconds. Resetting in %d seconds.",
                         (COUNTDOWN_TIME / 1000) - (millisUntilFinished / 1000),
-                        millisUntilFinished / 1000);
+                        secondsLeft);
                 messageTextView.setText(timeLeft);
+
+                if (secondsLeft <= 0) {
+                    Intent intent = new Intent(context, MainActivity.class); // Replace 'NewActivity' with your target activity
+                    context.startActivity(intent); // Use the context to start the activity
+                    dismiss();
+                    context.finish();
+                    countdownTimer.cancel();
+                }
             }
 
             @Override
@@ -87,7 +108,9 @@ public class InactivityDialog extends Dialog {
         // Cancel the countdown when dialog is dismissed
         if (countdownTimer != null) {
             countdownTimer.cancel();
+            Log.i("Timer", "Countdown Stopped");
         }
+        context.resetInactivityTimer();
         super.dismiss();
     }
 
