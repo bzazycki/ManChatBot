@@ -49,11 +49,6 @@ public class AppActivity extends AppCompatActivity {
     protected long lastActivity;
 
     /**
-     * The max time allowed before ending the session. 2 minutes (120,000 milliseconds)
-     */
-    protected static final long MAX_TIME = 120000;
-
-    /**
      * Stores the chat log so that it can be emailed if needed.
      */
     protected String chatLog = "";
@@ -80,7 +75,7 @@ public class AppActivity extends AppCompatActivity {
      * The Inactivity timeout. Lets the System timeout after this amount of time
      * before the end chat dialog appears.
      */
-    private static final long INACTIVITY_TIMEOUT = 10 * 1000; // 2 minutes
+    private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
 
     /**
      * The Inactivity handler. This works with the inactivity runnable to ensure
