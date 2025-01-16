@@ -80,7 +80,7 @@ public class AppActivity extends AppCompatActivity {
      * The Inactivity timeout. Lets the System timeout after this amount of time
      * before the end chat dialog appears.
      */
-    private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+    private static final long INACTIVITY_TIMEOUT = 10 * 1000; // 2 minutes
 
     /**
      * The Inactivity handler. This works with the inactivity runnable to ensure
@@ -525,26 +525,38 @@ public class AppActivity extends AppCompatActivity {
         resetInactivityTimer();
     }
 
-    // Removes any pending callbacks and reschedule
+    // Removes any pending callbacks and reschedules
     private void resetInactivityTimer() {
         inactivityHandler.removeCallbacks(inactivityRunnable);
-        inactivityHandler.postDelayed(inactivityRunnable,INACTIVITY_TIMEOUT);
+        inactivityHandler.postDelayed(inactivityRunnable, INACTIVITY_TIMEOUT);
     }
 
-    // Shows a dialog to alert user
     private void showInactivityDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Inactivity Alert")
-                .setMessage("You have been inactive for 2 minutes.")
-                .setPositiveButton("Okay", (dialog, which) -> {
-                    // Reset the timer when dialog is dismissed
-                    resetInactivityTimer();
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .show();
+        // Create and show the inactivity dialog
+        InactivityDialog inactivityDialog = new InactivityDialog(this);
+        inactivityDialog.show();
     }
+
+    // Handle quit button action, show the chat dialog
+    public void onQuitClicked() {
+        // Handle quit button action, show the chat dialog
+        ChatDialog chatDialog = new ChatDialog(this); // Use the activity context to instantiate
+        chatDialog.show(); // Show the chat dialog
+    }
+
+    public void onBackClicked() {
+        // Handle back button action, reset the inactivity timer
+        resetInactivityTimer();
+    }
+
+    // Handle inactivity timeout, reset the app
+    public void onInactivityTimeout() {
+        Intent intent = new Intent(this, MainActivity.class); // Use 'this' for the current activity context
+        startActivity(intent); // Start the target activity
+        finish(); // Finish the current activity to reset the app
+    }
+
+
 
     /**
      * On the destruction of this, remove all of the callbacks from the
