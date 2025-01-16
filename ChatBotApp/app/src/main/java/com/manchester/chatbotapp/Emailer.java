@@ -8,74 +8,54 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 /**
  * This class handles all of the required emailing that is used for the chat history.
  */
-public class Emailer extends Activity {
+public class Emailer  {
 
     /**
-     * The email address that is being sent to.
+     * Makes a call to the server to send an email to the user. Will return
+     * if the email successfully sent.
      */
-    private String email;
+    public static boolean sendEmail(String emailAddress, String message) {
+        String flaskURL = "http://34.236.100.216/sendEmail";
+        try {
+            URL url = new URL(flaskURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            //connection.setRequestProperty("Authorization", "Auth123");
+            //connection.setRequestProperty("Location", "Manchester");
+            connection.setDoOutput(true);
 
-    /**
-     * The message that is sent with the email. This will be the chatlog history.
-     */
-    private String message;
+            String jsonInputString = String.format("{\"email\": \"%s\", \"message\": \"%s\"}", emailAddress, message);
 
-    /**
-     * The subject of the email that is being sent.
-     */
-    private static final String SUBJECT = "Chatbot Message Log";
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            } catch (Exception e) {
+                return false;
+            }
 
-    /**
-     * The Emailer Constructor.
-     * @param email the email address.
-     * @param message the message to be sent.
-     */
-    public Emailer(String email, String message) {
-        super();
-        this.email = email;
-        this.message = message;
-
-    }
-
-    /**
-     * When This is created it will send the email then destroy itself.
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     *
-     */
-    @Override
-    protected  void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        sendEmail();
-
-        finish();
-    }
-
-    /**
-     * Does all of the required work to send the email using the native Android libraries.
-     */
-    private void sendEmail() {
-
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-
-        emailIntent.setData(Uri.parse("mailto:"));
-
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, message);
-
-        if (emailIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(emailIntent);
-        } else {
-            Log.e("Emailer", "No email apps installed on this devce");
+        } catch (Exception e) {
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String stack = "";
+            for (StackTraceElement s : stackTrace) {
+                stack += s.toString() + "\n";
+            }
+            return false;
         }
 
+        return true;
     }
+
 
 
 }
