@@ -24,12 +24,24 @@ body {
 header {
   position: sticky;
   top: 0;
-  background-color: #000;
   padding: 10px 0;
   z-index: 100;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: block;
 }
+
+header.yellow {
+  background-color: #ffe571;
+}
+
+header.black {
+  background-color: #000;
+}
+
+header.gold {
+  background-color: #ffc400;
+}
+
 nav ul {
   list-style-type: none;
   text-align: center;

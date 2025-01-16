@@ -1,20 +1,18 @@
 package com.manchester.chatbotapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< HEAD
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
-=======
+
+import android.os.Handler;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.Manifest;
-import android.net.Uri;
-import android.os.Bundle;
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -22,22 +20,11 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< HEAD
 import android.widget.ImageView;
-=======
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-<<<<<<< HEAD
-import android.widget.Toast;
-import android.widget.VideoView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.WidgetContainer;
-
-=======
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +38,6 @@ import androidx.core.content.ContextCompat;
  * so keeping it all together is the design. Different components are stored
  * as attributes of the activity.
  */
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
 public class AppActivity extends AppCompatActivity {
 
     // === *** Attributes *** === //
@@ -83,15 +69,29 @@ public class AppActivity extends AppCompatActivity {
      */
     protected Listener listener;
 
-<<<<<<< HEAD
-=======
     /**
-     *
+     * The code to ensure that the application has access to the microphone.
+     * If it does not have access to the microphone then it needs to ask for
+     * it.
      */
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
+    /**
+     * The Inactivity timeout. Lets the System timeout after this amount of time
+     * before the end chat dialog appears.
+     */
+    private static final long INACTIVITY_TIMEOUT = 10 * 1000; // 2 minutes
 
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
+    /**
+     * The Inactivity handler. This works with the inactivity runnable to ensure
+     * that the system can time out when it has not been used in a while.
+     */
+    private Handler inactivityHandler;
+    private Runnable inactivityRunnable;
+
+    private EditText userTextInput;
+
+
     // === *** Constructors *** === //
 
     /**
@@ -102,61 +102,9 @@ public class AppActivity extends AppCompatActivity {
 
         lastActivity = System.currentTimeMillis();
 
-        setupThread();
-
     }
 
     // === *** Methods *** === //
-
-    /**
-     * Sets up the watcher thread. This will watch the application and if it is ever inactive
-<<<<<<< HEAD
-     * for more time than MAX_TIME allows it will switch back to the main screen.
-=======
-     * for more time than MAX_TIME allows it will switch back to the main screen. That is all
-     * this thread does. This thread can be safely ignored as it does not interact with any
-     * views, ony activities. Whenever the user touches something on the screen or interacts
-     * with something then the "lastActivity" field should be updated with the system time.
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
-     */
-    public void setupThread() {
-
-        Thread watcher = new Thread(() -> {
-
-            try {
-
-                while (true) {
-                    Thread.sleep(1000);
-
-                    long current = System.currentTimeMillis();
-
-                    long timeSince = current - lastActivity;
-
-                    System.out.println(timeSince);
-
-                    if (timeSince > MAX_TIME) {
-
-                        Intent intent = new Intent(AppActivity.this, MainActivity.class); // Replace NewActivity with the target Activity
-                        startActivity(intent);
-
-                        finish(); // Ends this activity.
-
-                        break;
-
-                    }
-                }
-
-            } catch (Exception e) {
-                // On a failure, it should switch back the new intent.
-                Intent intent = new Intent(AppActivity.this, MainActivity.class); // Replace NewActivity with the target Activity
-                startActivity(intent);
-            }
-
-        });
-
-        watcher.start();
-
-    }
 
     /**
      * Overrides the create method to show the graphics as they appear.
@@ -169,10 +117,15 @@ public class AppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        inactivityHandler = new Handler();
+        inactivityRunnable = new Runnable() {
+            public void run() {
+                showInactivityDialog();
+            }
+        };
+
         this.listener = new Listener(this);
 
-<<<<<<< HEAD
-=======
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -180,7 +133,6 @@ public class AppActivity extends AppCompatActivity {
                     REQUEST_RECORD_AUDIO_PERMISSION);
         }
 
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
         // === ENTIRE FRAME === //
 
         // Make the app fullscreen by removing the title bar and status bar
@@ -196,8 +148,11 @@ public class AppActivity extends AppCompatActivity {
 
         // Left frame: Image
         RelativeLayout leftLayout = new RelativeLayout(this);
-        leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
+        LinearLayout.LayoutParams leftLayoutParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f); // 50% width
+        leftLayout.setLayoutParams(leftLayoutParams);
+        leftLayoutParams.setMargins(0, 0, dpToPx(8), 0); // Add margin on the right side of left layout
+        leftLayout.setLayoutParams(leftLayoutParams);
 
         // Create a vertical LinearLayout to hold the VideoView and the button row
         LinearLayout verticalLayout = new LinearLayout(this);
@@ -210,59 +165,62 @@ public class AppActivity extends AppCompatActivity {
         buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
         buttonLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        buttonLayout.setWeightSum(3);  // Ensure buttons take equal space
+        buttonLayout.setWeightSum(2);  // Ensure buttons take equal space
 
         // Create the first button
         Button endChatButton = new Button(this);
-        endChatButton.setText("End Chat");
-        endChatButton.setBackgroundColor(Color.parseColor("#FFD700"));
-        endChatButton.setTextColor(getResources().getColor(android.R.color.black));
-        endChatButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+        endChatButton.setText("END CHAT");
+        endChatButton.setBackground(getDrawable(R.drawable.rounded_button));
+        endChatButton.setTextColor(getResources().getColor(android.R.color.white));
+        endChatButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+        // Set smaller size and margins
+        LinearLayout.LayoutParams endChatParams = new LinearLayout.LayoutParams(
+                dpToPx(120), dpToPx(48)); // Smaller size (width: 120dp, height: 48dp)
+        endChatParams.setMargins(dpToPx(16), dpToPx(8), dpToPx(16), dpToPx(8)); // Add margins
+        endChatButton.setLayoutParams(endChatParams);
 
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeAnimation('w');
                 ChatDialog chatDialog = new ChatDialog(getThis());
                 chatDialog.show();
             }
         });
 
-        // Create the second button
-        Button soundButton = new Button(this);
-        soundButton.setText("Sound");
-        soundButton.setBackgroundColor(getResources().getColor(android.R.color.black));
-        soundButton.setTextColor(getResources().getColor(android.R.color.white));
-        soundButton.setTextColor(getResources().getColor(android.R.color.white));
-        soundButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-        soundButton.setOnClickListener(new View.OnClickListener() {
+        // Create the ImageView for sound toggle
+        final ImageView soundImageView = new ImageView(this);
+
+        // Set the initial image for the sound icon
+        soundImageView.setImageResource(R.drawable.volume_on);
+
+        // Add space between buttons by adding padding or margins
+        LinearLayout.LayoutParams soundButtonParams = new LinearLayout.LayoutParams(
+                dpToPx(48), dpToPx(48)); // Adjust size
+        soundButtonParams.setMargins(dpToPx(16), 0, 0, 0); // Add left margin for spacing
+        soundImageView.setLayoutParams(soundButtonParams);
+
+        // Set onClickListener to toggle sound state
+        soundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener.allowSpeech) {
                     listener.allowSpeech = false;
-                    soundButton.setTextColor(Color.RED);
-<<<<<<< HEAD
-=======
+                    soundImageView.setImageResource(R.drawable.volume_off);
                     listener.stopSpeaking();
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
                 } else {
                     listener.allowSpeech = true;
-                    soundButton.setTextColor(Color.WHITE);
+                    soundImageView.setImageResource(R.drawable.volume_on);
                 }
             }
         });
 
-
-        // Create the third button
-        Button settingsButton = new Button(this);
-        settingsButton.setText("Settings");
-        settingsButton.setBackgroundColor(Color.parseColor("#FFD700"));
-        settingsButton.setTextColor(getResources().getColor(android.R.color.black));
-        settingsButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-
         // Add the buttons to the horizontal button layout
         buttonLayout.addView(endChatButton);
-        buttonLayout.addView(soundButton);
-        buttonLayout.addView(settingsButton);
+
+        // Add the ImageView to the buttonLayout
+        buttonLayout.addView(soundImageView);
 
         // Take 1 part of the available space
         verticalLayout.addView(buttonLayout);
@@ -270,11 +228,12 @@ public class AppActivity extends AppCompatActivity {
         // Create the VideoView
         this.animation = new VideoView(this);
 
+        changeAnimation('w');
+
         // Set the video source from the raw resource folder
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-        animation.setVideoURI(videoUri);
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
+        //Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
+        //animation.setVideoURI(videoUri);
+        //animation.start();
 
         verticalLayout.addView(animation);
 
@@ -285,8 +244,11 @@ public class AppActivity extends AppCompatActivity {
 
         // Right frame: TextBox and Button
         RelativeLayout rightLayout = new RelativeLayout(this);
-        rightLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
+        LinearLayout.LayoutParams rightLayoutParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f); // 50% width
+        rightLayout.setLayoutParams(rightLayoutParams);
+        rightLayoutParams.setMargins(dpToPx(8), 0, 0, 0); // Add margin on the left side
+        rightLayout.setLayoutParams(rightLayoutParams);
 
         // Panel above the input
         LinearLayout chatPanel = new LinearLayout(this);
@@ -309,22 +271,22 @@ public class AppActivity extends AppCompatActivity {
         inputContainerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         inputContainer.setLayoutParams(inputContainerParams);
 
-
         // The Edit Text, the input
-        EditText editText = new EditText(this);
-        editText.setHint("Enter your thoughts..."); // Hint text for input field
-        editText.setBackgroundColor(getResources().getColor(android.R.color.white)); // White background
-        editText.setPadding(16, 16, 16, 16);
-        editText.setTextColor(getResources().getColor(android.R.color.black));
-        editText.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-        editText.setElevation(8); // Slight shadow for better visibility
+        userTextInput = new EditText(this);
+        userTextInput.setHint("Enter your thoughts..."); // Hint text for input field
+        userTextInput.setBackground(getDrawable(R.drawable.rounded_edit_text)); // Rounded background
+        userTextInput.setPadding(16, 16, 16, 16);
+        userTextInput.setTextColor(getResources().getColor(android.R.color.black));
+        userTextInput.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        userTextInput.setElevation(8); // Slight shadow for better visibility
         LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f); // Weight of 1 for proportional sizing
-        editText.setLayoutParams(editTextParams);
+        userTextInput.setLayoutParams(editTextParams);
 
-        // Button to submit text
+        // Button to submit text (send arrow)
         Button submitButton = new Button(this);
-        submitButton.setText("Send");
+        submitButton.setText("➤");
+        submitButton.setTextSize(24); // Increase text size for the arrow
         submitButton.setBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
         submitButton.setTextColor(getResources().getColor(android.R.color.white));
         submitButton.setElevation(8); // Slight shadow
@@ -335,8 +297,8 @@ public class AppActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get user input and clear the EditText
-                String input = editText.getText().toString().trim();
+                // Handle submit action
+                String input = userTextInput.getText().toString().trim();
 
                 changeAnimation('t');
 
@@ -344,7 +306,7 @@ public class AppActivity extends AppCompatActivity {
                     return;
                 }
 
-                editText.setText("");
+                userTextInput.setText("");
 
                 hideKeyboard(view);
 
@@ -354,15 +316,7 @@ public class AppActivity extends AppCompatActivity {
                 // Run the network call on a background thread
                 new Thread(() -> {
                     // Get the chat response from the backend
-                    String output = Backend_Functions.getChatResponse(input);
-<<<<<<< HEAD
-                    // Update the chat panel on the main thread
-                    runOnUiThread(() -> logChatOutput(chatPanel, output));
-                    listener.speak(output);
-
-                    String text = listener.listen();
-                    Log.e("ListenerInput", text);
-=======
+                    String output = Backend_Functions.getChatResponse(chatLog, input);
 
                     // Update the chat panel and speak the output on the main thread
                     runOnUiThread(() -> {
@@ -370,34 +324,36 @@ public class AppActivity extends AppCompatActivity {
                         listener.speak(output);
                     });
 
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
                 }).start();
 
                 lastActivity = System.currentTimeMillis();
 
                 changeAnimation('l');
-<<<<<<< HEAD
-=======
+            }
+        });
 
-                // Start listening for speech recognition asynchronously
-                listener.listen(text -> {
-                    if (text != null) {
-                        Log.e("Listener", "Recognized text: " + text);
+        // Mic Button with Image
+        Button listenButton = new Button(this);
+        listenButton.setBackgroundResource(R.drawable.microphone); // Set an image for the mic button
+        listenButton.setTextColor(getResources().getColor(android.R.color.white));
+        listenButton.setElevation(8); // Slight shadow
 
-                        // Update the UI with recognized text
-                        runOnUiThread(() -> logUserInput(chatPanel, "Recognized: " + text));
-                    } else {
-                        Log.e("Listener", "Failed to recognize speech.");
-                    }
-                });
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
+        LinearLayout.LayoutParams lButtonParam = new LinearLayout.LayoutParams(
+                80, 80); // Width and Height
+
+        lButtonParam.setMargins(16, 0, 0, 0); // Add margin to separate from EditText
+        listenButton.setLayoutParams(lButtonParam);
+        listenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startListening();
             }
         });
 
         // Add panel, EditText, and Button to the rightLayout
-         // Add the EditText at the bottom
-        inputContainer.addView(editText); // Add the Button next to the EditText
+        inputContainer.addView(userTextInput); // Add the Button next to the EditText
         inputContainer.addView(submitButton); // Panel above the input
+        inputContainer.addView(listenButton);
         rightLayout.addView(scrollView);
         rightLayout.addView(inputContainer);
 
@@ -408,14 +364,11 @@ public class AppActivity extends AppCompatActivity {
         // Set the LinearLayout as the content view
         setContentView(mainLayout);
 
+
         new Thread(() -> {
             try {
                 while (!listener.tts.isSpeaking()) {
-<<<<<<< HEAD
-                    Thread.sleep(5);
-=======
                     Thread.sleep(500);
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
                     this.listener.speak("How can I help you today?");
                 }
                 //String output = this.listener.listen();
@@ -425,6 +378,7 @@ public class AppActivity extends AppCompatActivity {
             }
         }).start();
 
+        resetInactivityTimer();
     }
 
     /**
@@ -432,26 +386,6 @@ public class AppActivity extends AppCompatActivity {
      * @param c the character that determines what resource to use.
      */
     public void changeAnimation(Character c) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        switch (c) {
-            case 'w':
-                Uri waveUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-                animation.setVideoURI(waveUri);
-                break;
-            case 't':
-                Uri talkUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
-                animation.setVideoURI(talkUri);
-                break;
-            case 'l':
-                Uri listenUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
-                animation.setVideoURI(listenUri);
-                break;
-        }
-
-=======
-=======
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
         Uri videoUri = null;
         switch (c) {
             case 'w':
@@ -464,21 +398,48 @@ public class AppActivity extends AppCompatActivity {
                 videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
                 break;
         }
-        
-        // Stop current video
+
+        // Reset the VideoView
         animation.stopPlayback();
-        
+        animation.suspend();
+
         // Set new video URI
         animation.setVideoURI(videoUri);
-        
-        // Start video and ensure loop
-<<<<<<< HEAD
->>>>>>> 5be86ba720d54d33ba9bc7fbac97988dd4f93954
-=======
->>>>>>> c2d362e612f7de7e100a6d915759af5c60251393
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
+
+        // Set looping explicitly
+        animation.setOnPreparedListener(mp -> {
+            mp.setLooping(true);
+            animation.start();
+            Log.d("VideoDuration", "Duration: " + mp.getDuration());
+        });
+
+        animation.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Log.e("VideoView", "Error: " + what + ", " + extra);
+                return true; // Prevent default error handling
+            }
+        });
+
     }
+
+    /**
+     * Starts listening and then puts the text into the userInputText
+     */
+    private void startListening() {
+        // Start listening for speech recognition asynchronously
+        listener.listen(text -> {
+            if (text != null) {
+                Log.e("Listener", "Recognized text: " + text);
+
+                // Update the UI with recognized text
+                userTextInput.setText(text);
+            } else {
+                Log.e("Listener", "Failed to recognize speech.");
+            }
+        });
+    }
+
 
     /**
      * Gets the App Activity Object.
@@ -514,7 +475,7 @@ public class AppActivity extends AppCompatActivity {
         container.addView(bubble);
 
         // Update chat log
-        chatLog += "You asked: " + text + "\n\n";
+        chatLog += "User asked: " + text + "   ";
     }
 
     /**
@@ -543,7 +504,7 @@ public class AppActivity extends AppCompatActivity {
         container.addView(bubble);
 
         // Update chat log
-        chatLog += "Chatbot responded: " + text + "\n\n";
+        chatLog += "Chat responded: " + text + "   ";
     }
 
     /**
@@ -557,5 +518,61 @@ public class AppActivity extends AppCompatActivity {
         }
     }
 
+    // Resets timer on any user interaction
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        resetInactivityTimer();
+    }
 
+    // Removes any pending callbacks and reschedules
+    private void resetInactivityTimer() {
+        inactivityHandler.removeCallbacks(inactivityRunnable);
+        inactivityHandler.postDelayed(inactivityRunnable, INACTIVITY_TIMEOUT);
+    }
+
+    private void showInactivityDialog() {
+        // Create and show the inactivity dialog
+        InactivityDialog inactivityDialog = new InactivityDialog(this);
+        inactivityDialog.show();
+    }
+
+    // Handle quit button action, show the chat dialog
+    public void onQuitClicked() {
+        // Handle quit button action, show the chat dialog
+        ChatDialog chatDialog = new ChatDialog(this); // Use the activity context to instantiate
+        chatDialog.show(); // Show the chat dialog
+    }
+
+    public void onBackClicked() {
+        // Handle back button action, reset the inactivity timer
+        resetInactivityTimer();
+    }
+
+    // Handle inactivity timeout, reset the app
+    public void onInactivityTimeout() {
+        Intent intent = new Intent(this, MainActivity.class); // Use 'this' for the current activity context
+        startActivity(intent); // Start the target activity
+        finish(); // Finish the current activity to reset the app
+    }
+
+
+
+    /**
+     * On the destruction of this, remove all of the callbacks from the
+     * inactivity handler so that it does not popup after the activity
+     * has ended. This is an overridden method from AppCompatActivity.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Clean up the handler to avoid memory leaks
+        inactivityHandler.removeCallbacks(inactivityRunnable);
+    }
+
+    // Helper method to convert dp to pixels
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
 }

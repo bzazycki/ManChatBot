@@ -7,6 +7,9 @@ from flask import Flask, request, jsonify
 from openai import OpenAI
 import os
 import sqlite3
+import json
+import traceback
+from datetime import datetime
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -68,21 +71,36 @@ def getContext():
         return ""
 
 # Function to log the chat GPT call to the database
-def log_chat_gpt_call(input_text, output_text, input_tokens, output_tokens):
+def dbLog(user_message, completion):
     try:
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO history (input, output, input_tokens, output_tokens) VALUES (?, ?, ?, ?)",
-                       (input_text, output_text, input_tokens, output_tokens))
+        timestamp = datetime.now().isoformat()
+        response_json = json.dumps(completion, default=str)
+        cursor.execute("INSERT INTO history (input, output, timestamp) VALUES (?, ?, ?)",
+                       (user_message, response_json, timestamp))
         conn.commit()
         conn.close()
+        print("Data logged successfully")  # Debug print
     except Exception as e:
         print(f"Error logging chat GPT call: {e}")
+        traceback.print_exc()  # Print the full traceback for debugging
 
 # Initialize the OpenAI client with the API key from the database
 client = OpenAI(
     api_key=getAPIKey()
 )
+
+def hash_api_key(api_key):
+    """
+    Hash the API key so that everything besides the 'sk-proj' prefix and the last four characters are '*'.
+    
+    @param api_key: The original API key.
+    @return: The hashed API key.
+    """
+    if api_key.startswith("sk-proj") and len(api_key) > 10:
+        return "sk-proj" + "*" * (len(api_key) - 10) + api_key[-4:]
+    return "*" * len(api_key)
 
 @app.route('/getModel', methods=['GET'])
 def getModelRoute():
@@ -92,7 +110,7 @@ def getModelRoute():
     @return: JSON response containing the current model or an error message.
     """
     try:
-        model = get_model()
+        model = getModel()
         if model:
             return jsonify({"model": model}), 200
         else:
@@ -110,7 +128,8 @@ def getAPIKeyRoute():
     try:
         api_key = getAPIKey()
         if api_key:
-            return jsonify({"api_key": api_key}), 200
+            hashed_api_key = hash_api_key(api_key)
+            return jsonify({"api_key": hashed_api_key}), 200
         else:
             return jsonify({"error": "API key not found"}), 404
     except Exception as e:
@@ -234,17 +253,15 @@ def chatbot():
 
         # Call the OpenAI API
         completion = client.chat.completions.create(
-            model=get_model(),
-            messages=user_input
+            model=getModel(),
+            messages=user_input,
         )
 
         # Extract the AI response
         ai_response = completion.choices[0].message.content
         
         # Log the chat GPT call to the database
-        input_tokens = len(user_message.split())
-        output_tokens = len(ai_response.split())
-        log_chat_gpt_call(user_message, ai_response, input_tokens, output_tokens)
+        dbLog(user_message, completion)
         
         # Return the AI response
         return ai_response
@@ -270,7 +287,7 @@ def login():
 
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT 1 FROM account WHERE username = ? AND password = ?", (username, password))
+        cursor.execute("SELECT 1 FROM account WHERE user = ? AND pass = ?", (username, password))
         if cursor.fetchone():
             return jsonify({"valid": True}), 200
         else:
