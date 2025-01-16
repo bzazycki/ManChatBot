@@ -10,6 +10,9 @@ import sqlite3
 import json
 import traceback
 from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -69,6 +72,54 @@ def getContext():
             return ""
     except Exception as e:
         return ""
+
+# Function to get the email user from the database
+def getEmailUser():
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT emailUser FROM ai LIMIT 1")
+        email_user = cursor.fetchone()
+        conn.close()
+        return email_user[0]
+    except Exception as e:
+        return None
+
+# Function to get the email password from the database
+def getEmailPass():
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT emailPass FROM ai LIMIT 1")
+        email_pass = cursor.fetchone()
+        conn.close()
+        return email_pass[0]
+    except Exception as e:
+        return None
+
+# Function to set the email user in the database
+def setEmailUser(email_user):
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("UPDATE ai SET emailUser = ? WHERE id = 1", (email_user,))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error setting email user: {e}")
+        traceback.print_exc()
+
+# Function to set the email password in the database
+def setEmailPass(email_pass):
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("UPDATE ai SET emailPass = ? WHERE id = 1", (email_pass,))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error setting email password: {e}")
+        traceback.print_exc()
 
 # Function to log the chat GPT call to the database
 def dbLog(user_message, completion):
@@ -292,6 +343,113 @@ def login():
             return jsonify({"valid": True}), 200
         else:
             return jsonify({"valid": False}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/sendEmail', methods=['POST'])
+def send_email():
+    """
+    API endpoint to send an email.
+    
+    @param request: Flask request object containing JSON payload with 'to_email' and 'message'.
+    @return: JSON response indicating success or error message.
+    """
+    try:
+        data = request.get_json()
+        to_email = data.get("to_email", "")
+        message_content = data.get("message", "")
+        
+        if not to_email or not message_content:
+            return jsonify({"error": "Missing email or message"}), 400
+
+        sender_email = getEmailUser()
+        sender_password = getEmailPass()
+
+        emailSubject = "Your ManChatBot Chat"
+        smtpServer = "smtp.gmail.com"
+        smtpPort = 587
+        # Create the email
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = to_email
+        msg['Subject'] = emailSubject
+        msg.attach(MIMEText(message_content, 'plain'))
+
+        # Send the email
+        server = smtplib.SMTP(smtpServer, smtpPort)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, to_email, msg.as_string())
+        server.quit()
+
+        return jsonify({"message": "Email sent successfully"}), 200
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        traceback.print_exc()  # Print the full traceback for debugging
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getUser', methods=['GET'])
+def get_user_route():
+    """
+    API endpoint to get the email user from the database.
+    
+    @return: JSON response containing the email user or an error message.
+    """
+    try:
+        email_user = getEmailUser()
+        if email_user:
+            return jsonify({"email_user": email_user}), 200
+        else:
+            return jsonify({"error": "Email user not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getPass', methods=['GET'])
+def get_pass_route():
+    """
+    API endpoint to get the email password from the database.
+    
+    @return: JSON response containing the email password or an error message.
+    """
+    try:
+        email_pass = getEmailPass()
+        if email_pass:
+            return jsonify({"email_pass": email_pass}), 200
+        else:
+            return jsonify({"error": "Email password not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getEmailUser', methods=['GET'])
+def get_email_user_route():
+    """
+    API endpoint to get the email user from the database.
+    
+    @return: JSON response containing the email user or an error message.
+    """
+    try:
+        email_user = getEmailUser()
+        if email_user:
+            return jsonify({"email_user": email_user}), 200
+        else:
+            return jsonify({"error": "Email user not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getEmailPass', methods=['GET'])
+def get_email_pass_route():
+    """
+    API endpoint to get the email password from the database.
+    
+    @return: JSON response containing the email password or an error message.
+    """
+    try:
+        
+        email_pass = getEmailPass()
+        if email_pass:
+            return jsonify({"email_pass": email_pass}), 200
+        else:
+            return jsonify({"error": "Email password not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
