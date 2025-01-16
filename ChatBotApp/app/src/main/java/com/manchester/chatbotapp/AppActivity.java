@@ -364,7 +364,7 @@ public class AppActivity extends AppCompatActivity {
             try {
                 while (!listener.tts.isSpeaking()) {
                     Thread.sleep(500);
-                    this.listener.speak("How can I help you today?");
+                    this.listener.speak("Hi! My name is Manny, how can I help you today?");
                 }
             } catch (InterruptedException e) {
 
@@ -373,7 +373,7 @@ public class AppActivity extends AppCompatActivity {
 
         resetInactivityTimer();
 
-        logChatOutput(chatPanel, "How can I help you today?");
+        logChatOutput(chatPanel, "Hi! My name is Manny, how can I help you today?");
     }
 
     /**
