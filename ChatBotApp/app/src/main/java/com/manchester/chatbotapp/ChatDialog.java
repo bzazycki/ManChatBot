@@ -49,7 +49,9 @@ public class ChatDialog extends Dialog {
                 String email = emailInput.getText().toString().trim();
                 if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(c, "Email sent to: " + email, Toast.LENGTH_SHORT).show();
-                    Emailer.sendEmail(email, message);
+                    new Thread(() -> {
+                        Emailer.sendEmail(email, message);
+                    }).start();
                 } else {
                     Toast.makeText(c, "Invalid email. Please try again.", Toast.LENGTH_SHORT).show();
                 }

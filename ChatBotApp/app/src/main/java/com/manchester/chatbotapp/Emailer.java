@@ -41,8 +41,21 @@ public class Emailer  {
                 byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             } catch (Exception e) {
+                Log.e("Emailer", e.toString());
                 return false;
             }
+
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                Log.e("Emailer", response.toString());
+            }
+
+            Log.i("Emailer", "Email Supposedly sent successfully sent to " + emailAddress);
 
         } catch (Exception e) {
             StackTraceElement[] stackTrace = e.getStackTrace();
@@ -50,6 +63,7 @@ public class Emailer  {
             for (StackTraceElement s : stackTrace) {
                 stack += s.toString() + "\n";
             }
+            Log.e("Emailer", stack);
             return false;
         }
 
