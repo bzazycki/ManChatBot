@@ -391,36 +391,38 @@ public class AppActivity extends AppCompatActivity {
             case 'w':
                 videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
                 break;
-            case 't':
+            case 'l':
                 videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beetalk);
                 break;
-            case 'l':
+            case 't':
                 videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beelisten);
                 break;
+            default:
+                Log.e("changeAnimation", "Unknown character: " + c);
+                return;
         }
 
         // Reset the VideoView
         animation.stopPlayback();
         animation.suspend();
 
-        // Set new video URI
-        animation.setVideoURI(videoUri);
+        if (videoUri != null) {
+            animation.setVideoURI(videoUri);
 
-        // Set looping explicitly
-        animation.setOnPreparedListener(mp -> {
-            mp.setLooping(true);
-            animation.start();
-            Log.d("VideoDuration", "Duration: " + mp.getDuration());
-        });
+            // Add a completion listener to loop manually
+            animation.setOnCompletionListener(mp -> {
+                Log.d("VideoLoop", "Restarting video playback for manual loop");
+                animation.start(); // Restart the video
+            });
 
-        animation.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Log.e("VideoView", "Error: " + what + ", " + extra);
-                return true; // Prevent default error handling
-            }
-        });
+            // Start the video after it's prepared
+            animation.setOnPreparedListener(mp -> animation.start());
 
+            animation.setOnErrorListener((mp, what, extra) -> {
+                Log.e("VideoError", "Error during video playback: " + what + ", " + extra);
+                return true; // Error handled
+            });
+        }
     }
 
     /**
