@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ChatDialog extends Dialog {
 
-    private Context c;
+    private AppActivity c;
 
     protected String message;
 
@@ -47,10 +47,15 @@ public class ChatDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 String email = emailInput.getText().toString().trim();
+                Toast.makeText(c, "Email sent to: " + email, Toast.LENGTH_SHORT).show();
                 if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(c, "Email sent to: " + email, Toast.LENGTH_SHORT).show();
                     new Thread(() -> {
                         Emailer.sendEmail(email, message);
+                        Intent intent = new Intent(c, MainActivity.class); // Replace 'NewActivity' with your target activity
+                        c.startActivity(intent); // Use the context to start the activity
+                        c.finish();
+                        dismiss();
+
                     }).start();
                 } else {
                     Toast.makeText(c, "Invalid email. Please try again.", Toast.LENGTH_SHORT).show();
