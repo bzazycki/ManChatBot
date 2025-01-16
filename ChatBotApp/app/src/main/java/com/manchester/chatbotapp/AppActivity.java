@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -79,7 +80,7 @@ public class AppActivity extends AppCompatActivity {
      * The Inactivity timeout. Lets the System timeout after this amount of time
      * before the end chat dialog appears.
      */
-    private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+    private static final long INACTIVITY_TIMEOUT = 10 * 1000; // 2 minutes
 
     /**
      * The Inactivity handler. This works with the inactivity runnable to ensure
@@ -147,8 +148,11 @@ public class AppActivity extends AppCompatActivity {
 
         // Left frame: Image
         RelativeLayout leftLayout = new RelativeLayout(this);
-        leftLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
+        LinearLayout.LayoutParams leftLayoutParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f); // 50% width
+        leftLayout.setLayoutParams(leftLayoutParams);
+        leftLayoutParams.setMargins(0, 0, dpToPx(8), 0); // Add margin on the right side of left layout
+        leftLayout.setLayoutParams(leftLayoutParams);
 
         // Create a vertical LinearLayout to hold the VideoView and the button row
         LinearLayout verticalLayout = new LinearLayout(this);
@@ -179,7 +183,8 @@ public class AppActivity extends AppCompatActivity {
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatDialog chatDialog = new ChatDialog(getThis());
+                changeAnimation('w');
+                ChatDialog chatDialog = new ChatDialog(getThis(), chatLog);
                 chatDialog.show();
             }
         });
@@ -223,11 +228,7 @@ public class AppActivity extends AppCompatActivity {
         // Create the VideoView
         this.animation = new VideoView(this);
 
-        // Set the video source from the raw resource folder
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.beewave);
-        animation.setVideoURI(videoUri);
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
+        changeAnimation('w');
 
         verticalLayout.addView(animation);
 
@@ -238,8 +239,11 @@ public class AppActivity extends AppCompatActivity {
 
         // Right frame: TextBox and Button
         RelativeLayout rightLayout = new RelativeLayout(this);
-        rightLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)); // 50% width
+        LinearLayout.LayoutParams rightLayoutParams = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f); // 50% width
+        rightLayout.setLayoutParams(rightLayoutParams);
+        rightLayoutParams.setMargins(dpToPx(8), 0, 0, 0); // Add margin on the left side
+        rightLayout.setLayoutParams(rightLayoutParams);
 
         // Panel above the input
         LinearLayout chatPanel = new LinearLayout(this);
@@ -362,14 +366,14 @@ public class AppActivity extends AppCompatActivity {
                     Thread.sleep(500);
                     this.listener.speak("How can I help you today?");
                 }
-                //String output = this.listener.listen();
-                Log.e("TextToSpeech", "Listened");
             } catch (InterruptedException e) {
 
             }
         }).start();
 
         resetInactivityTimer();
+
+        logChatOutput(chatPanel, "How can I help you today?");
     }
 
     /**
@@ -390,15 +394,28 @@ public class AppActivity extends AppCompatActivity {
                 break;
         }
 
-        // Stop current video
+        // Reset the VideoView
         animation.stopPlayback();
+        animation.suspend();
 
         // Set new video URI
         animation.setVideoURI(videoUri);
 
-        // Start video and ensure loop
-        animation.start();
-        animation.setOnCompletionListener(mp -> animation.start());
+        // Set looping explicitly
+        animation.setOnPreparedListener(mp -> {
+            mp.setLooping(true);
+            animation.start();
+            Log.d("VideoDuration", "Duration: " + mp.getDuration());
+        });
+
+        animation.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Log.e("VideoView", "Error: " + what + ", " + extra);
+                return true; // Prevent default error handling
+            }
+        });
+
     }
 
     /**
@@ -503,26 +520,38 @@ public class AppActivity extends AppCompatActivity {
         resetInactivityTimer();
     }
 
-    // Removes any pending callbacks and reschedule
-    private void resetInactivityTimer() {
+    // Removes any pending callbacks and reschedules
+    public void resetInactivityTimer() {
         inactivityHandler.removeCallbacks(inactivityRunnable);
-        inactivityHandler.postDelayed(inactivityRunnable,INACTIVITY_TIMEOUT);
+        inactivityHandler.postDelayed(inactivityRunnable, INACTIVITY_TIMEOUT);
     }
 
-    // Shows a dialog to alert user
     private void showInactivityDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Inactivity Alert")
-                .setMessage("You have been inactive for 2 minutes.")
-                .setPositiveButton("Okay", (dialog, which) -> {
-                    // Reset the timer when dialog is dismissed
-                    resetInactivityTimer();
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .show();
+        // Create and show the inactivity dialog
+        InactivityDialog inactivityDialog = new InactivityDialog(this, chatLog);
+        inactivityDialog.show();
     }
+
+    // Handle quit button action, show the chat dialog
+    public void onQuitClicked() {
+        // Handle quit button action, show the chat dialog
+        ChatDialog chatDialog = new ChatDialog(this, chatLog); // Use the activity context to instantiate
+        chatDialog.show(); // Show the chat dialog
+    }
+
+    public void onBackClicked() {
+        // Handle back button action, reset the inactivity timer
+        resetInactivityTimer();
+    }
+
+    // Handle inactivity timeout, reset the app
+    public void onInactivityTimeout() {
+        Intent intent = new Intent(this, MainActivity.class); // Use 'this' for the current activity context
+        startActivity(intent); // Start the target activity
+        finish(); // Finish the current activity to reset the app
+    }
+
+
 
     /**
      * On the destruction of this, remove all of the callbacks from the

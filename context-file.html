@@ -5,44 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Context Page</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Link to the external JavaScript file -->
+  <script src="script.js"></script>
+  <style>
+    /* Unified container for all sections */
+    .content-container {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 30px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 1200px;
+      box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    h1, h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .current-api, .current-model {
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    form {
+      margin-bottom: 40px;
+    }
+
+    input[type="text"], select, textarea {
+      width: calc(100% - 40px); /* Fit within borders, accounting for padding */
+      padding: 15px;
+      margin: 10px auto; /* Center within container */
+      display: block; /* Ensure consistent centering */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box; /* Include padding in width */
+    }
+
+    textarea {
+      height: 800px; /* Large textarea for more content */
+      resize: vertical;
+    }
+
+    button {
+      background-color: #000;
+      color: #ffc107;
+      border: none;
+      padding: 15px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      margin: 0 auto; /* Center button */
+      display: block;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+
+    .warning {
+      font-size: 14px;
+      color: red;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
   <header>
     <nav>
       <ul>
         <li><a href="index.html">Hive</a></li>
-        <li><a href="preferences.html">Buzz Settings</a></li>
-        <li><a href="aboutus.html">About the Hive</a></li>
-        <li><a href="admin.html">Admin</a></li>
+        <li><a href="preferences.html">Hive Settings</a></li>
+        <li><a href="admin.html" class="active">Admin</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="context-page">
-    <h1>Welcome, Admin!</h1>
-    <p>Please enter your message or notes below:</p>
-    <form id="contextForm">
-      <div class="form-group">
-        <textarea id="adminMessage" name="adminMessage" rows="10" cols="50" placeholder="Type your message here..." required></textarea>
+  <main>
+    <!-- Unified Content Container -->
+    <div class="content-container">
+      <h1>Welcome, Admin!</h1>
+
+      <!-- API Key Management Section -->
+      <div class="api-section">
+        <h2>API Key Management</h2>
+        <p>Below is the current API key. You can change it if necessary, but be cautious as this may affect system functionality.</p>
+        <div class="current-api" id="currentApiKey">
+          <!-- This will be updated with the masked API key -->
+        </div>
+        <form id="apiKeyForm">
+          <label for="newApiKey">Enter New API Key:</label>
+          <input
+            type="text"
+            id="newApiKey"
+            placeholder="Enter new API key"
+            required
+          />
+          <p class="warning">
+            Warning: Changing the API key will update the system configuration. Ensure this is intentional.
+          </p>
+          <button type="submit">Submit New API Key</button>
+        </form>
       </div>
-      <div class="button-group">
-        <button type="submit" class="btn-submit">Submit</button>
+
+      <!-- GPT Model Management Section -->
+      <div class="model-section">
+        <h2>GPT Model Management</h2>
+        <p>Below is the current GPT model. Use the dropdown menu to select a new model.</p>
+        <div class="current-model" id="currentModel">
+          gpt-3.5-turbo
+        </div>
+        <form id="modelForm">
+          <label for="newModel">Select a New GPT Model:</label>
+          <select id="newModel" required>
+            <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
+            <option value="gpt-4">gpt-4</option>
+            <option value="gpt-4-32k">gpt-4-32k</option>
+          </select>
+          <p class="warning">
+            Warning: Changing the GPT model may affect performance and cost. Ensure this is the desired configuration.
+          </p>
+          <button type="submit">Submit New Model</button>
+        </form>
       </div>
-    </form>
-  </section>
+
+      <!-- Context File Editor Section -->
+      <div class="context-editor-section">
+        <h2>Context File Editor</h2>
+        <p>Please enter your message or notes below:</p>
+        <form id="contextForm">
+          <textarea
+            id="adminMessage"
+            name="adminMessage"
+            placeholder="Loading context..."
+            required
+          ></textarea>
+          <button type="submit" class="btn-submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </main>
 
   <footer>
-    <p>&copy; 2025 Bee Hive</p>
+    <p>&copy; 2025 Hive Admin Portal</p>
   </footer>
 
-  <script>
-    document.getElementById("contextForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent the default form submission
-      const message = document.getElementById("adminMessage").value;
-
-      // You can customize the behavior here, such as saving the message or displaying a confirmation.
-      alert("Message submitted: " + message);
-    });
-  </script>
+  <!-- Link to the external JavaScript file -->
+  <script src="script.js"></script>
 </body>
 </html>

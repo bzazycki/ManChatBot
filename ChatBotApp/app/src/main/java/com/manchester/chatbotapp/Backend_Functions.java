@@ -40,7 +40,7 @@ public class Backend_Functions {
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
-                return parseOutput(response.toString());
+                return response.toString();
             }
         } catch (Exception e) {
             StackTraceElement[] stackTrace = e.getStackTrace();
@@ -53,14 +53,4 @@ public class Backend_Functions {
         }
     }
 
-    /**
-     * Takes the input, and parses it so that a vaild nonclipped response is always
-     * given.
-     * @param output the output from the HTTP request.
-     * @return the trimmed and formatted response.
-     */
-    private static String parseOutput(String output) {
-
-        return output;
-    }
 }

@@ -18,9 +18,12 @@ public class ChatDialog extends Dialog {
 
     private Context c;
 
-    public ChatDialog(AppActivity c) {
+    protected String message;
+
+    public ChatDialog(AppActivity c, String message) {
         super(c, R.style.DialogTheme);
         this.c = c;
+        this.message = message;
     }
 
     @Override
@@ -46,6 +49,7 @@ public class ChatDialog extends Dialog {
                 String email = emailInput.getText().toString().trim();
                 if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(c, "Email sent to: " + email, Toast.LENGTH_SHORT).show();
+                    Emailer.sendEmail(email, message);
                 } else {
                     Toast.makeText(c, "Invalid email. Please try again.", Toast.LENGTH_SHORT).show();
                 }

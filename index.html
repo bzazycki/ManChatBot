@@ -1,35 +1,81 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to the Hive - Manchester Bee</title>
+  <title>Welcome to the Hive - Admin Portal</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Unified border styling */
+    .content-container {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .content-container h1, .content-container h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .content-container p {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 10px 0;
+      text-align: justify;
+    }
+    .cta-button {
+      display: block;
+      width: fit-content;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #ffc107;
+      background-color: #000;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .cta-button:hover {
+      background-color: #333;
+    }
+  </style>
 </head>
 <body>
-  <div class = "container">
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html" class="active">Hive</a></li>
-        <li><a href="preferences.html">Buzz Settings</a></li>
-        <li><a href="aboutus.html">About the Hive</a></li>
-        <li><a href="admin.html">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="container">
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Hive</a></li>
+          <li><a href="preferences.html">Hive Settings</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <main>
-  <section class="landing-page">
-    <h1>Welcome to the Hive</h1>
-    <p>Join the buzz and be part of Manchester's vibrant community.</p>
-    <a href="aboutus.html" class="cta-button">Discover the Hive</a>
-  </section>
-  </main>
+    <main>
+      <!-- Unified content container for both sections -->
+      <div class="content-container">
+        <!-- Welcome Section -->
+        <h1>Welcome to the Hive</h1>
+        <p>Your centralized hub for managing the ChatGPT-based assistant platform. This tool supports organizations in empowering communities and improving outreach efforts for vulnerable populations.</p>
 
-  <footer>
-    <p>&copy; 2025 Bee Hive</p>
-  </footer>
+        <!-- About Section -->
+        <h2>About the Hive</h2>
+        <p>The Hive is an admin portal designed for organizations to configure and manage their AI-powered chatbot solutions. Tailored for assisting underserved populations, such as homeless individuals, this platform allows seamless control over themes, notifications, and system configurations. By streamlining chatbot management, we aim to enhance communication and deliver impactful assistance.</p>
+
+        <!-- Call-to-Action Button -->
+        <a href="preferences.html" class="cta-button">Go to Chatbot Settings</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Hive Admin Portal</p>
+    </footer>
   </div>
 </body>
 </html>
