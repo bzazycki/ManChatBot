@@ -3,44 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buzz Settings - Manchester Bee</title>
+  <title>Buzz Settings - Hive</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Keep the original formatting and style */
+    .preferences-page {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select, input[type="checkbox"], button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #000;
+      color: #ffc107;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+  </style>
 </head>
 <body>
-  <div class = "container">
+  <div class="container">
     <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Hive</a></li>
-        <li><a href="preferences.html" class="active">Buzz Settings</a></li>
-        <li><a href="aboutus.html">About the Hive</a></li>
-        <li><a href="admin.html">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Hive</a></li>
+          <li><a href="preferences.html" class="active">Hive Settings</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <main>
-  <section class="preferences-page">
-    <h1>Buzz Settings</h1>
-    <form>
-      <label for="theme">Choose Your Hive Theme:</label>
-      <select id="theme" name="theme">
-        <option value="yellow">Yellow (Classic)</option>
-        <option value="black">Black (Night)</option>
-        <option value="gold">Gold (Premium)</option>
-      </select>
+    <main>
+      <section class="preferences-page">
+        <h1>Hive Settings</h1>
+        <form id="settingsForm">
+          <label for="theme">Choose Your Hive Theme:</label>
+          <select id="theme" name="theme">
+            <option value="yellow">Yellow (Classic)</option>
+            <option value="black">Black (Night)</option>
+            <option value="gold">Gold (Premium)</option>
+          </select>
 
-      <label for="notifications">Enable Hive Alerts:</label>
-      <input type="checkbox" id="notifications" name="notifications" checked>
+          <label for="notifications">Enable Hive Alerts:</label>
+          <input type="checkbox" id="notifications" name="notifications" checked>
 
-      <button type="submit">Save Settings</button>
-    </form>
-  </section>
-  </main>
+          <button type="submit">Save Settings</button>
+        </form>
 
-  <footer>
-    <p>&copy; 2025 Bee Hive</p>
-  </footer>
+        <p id="statusMessage" style="color: green; font-weight: bold; display: none;">
+          Settings saved successfully!
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Bee Hive</p>
+    </footer>
   </div>
+
+  <script>
+    // Function to load saved settings
+    function loadSettings() {
+      const savedTheme = localStorage.getItem('hiveTheme');
+      const savedNotifications = localStorage.getItem('hiveNotifications');
+
+      // If a theme is saved, set it in the dropdown
+      if (savedTheme) {
+        document.getElementById('theme').value = savedTheme;
+        document.body.style.backgroundColor = savedTheme;  // Change background color
+      }
+
+      // If notifications setting is saved, apply it to the checkbox
+      if (savedNotifications !== null) {
+        document.getElementById('notifications').checked = savedNotifications === 'true';
+      }
+    }
+
+    // Function to save settings
+    function saveSettings(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get the selected theme and notification preference
+      const selectedTheme = document.getElementById('theme').value;
+      const notificationsEnabled = document.getElementById('notifications').checked;
+
+      // Save settings in localStorage
+      localStorage.setItem('hiveTheme', selectedTheme);
+      localStorage.setItem('hiveNotifications', notificationsEnabled);
+
+      // Change the background color of the page based on the selected theme
+      document.body.style.backgroundColor = selectedTheme;
+
+      // Display feedback message
+      const statusMessage = document.getElementById('statusMessage');
+      statusMessage.style.display = 'block';
+      setTimeout(() => {
+        statusMessage.style.display = 'none';
+      }, 3000);
+    }
+
+    // Load settings when the page loads
+    document.addEventListener('DOMContentLoaded', loadSettings);
+
+    // Add event listener to the form to save settings
+    document.getElementById('settingsForm').addEventListener('submit', saveSettings);
+  </script>
 </body>
 </html>
