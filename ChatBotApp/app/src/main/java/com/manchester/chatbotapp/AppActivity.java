@@ -1,7 +1,6 @@
 package com.manchester.chatbotapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -306,7 +305,7 @@ public class AppActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         logChatOutput(chatPanel, output);
                         listener.speak(output);
-                        changeAnimation('s');
+                        changeAnimation('t');
                     });
 
                 }).start();
@@ -356,7 +355,7 @@ public class AppActivity extends AppCompatActivity {
                     Thread.sleep(500);
                     this.listener.speak("Hi! My name is Manny, how can I help you today?");
                 }
-                changeAnimation('t');
+                changeAnimation('w');
             } catch (InterruptedException e) {
 
             }
@@ -519,26 +518,6 @@ public class AppActivity extends AppCompatActivity {
         InactivityDialog inactivityDialog = new InactivityDialog(this, chatLog);
         inactivityDialog.show();
     }
-
-    // Handle quit button action, show the chat dialog
-    public void onQuitClicked() {
-        // Handle quit button action, show the chat dialog
-        ChatDialog chatDialog = new ChatDialog(this, chatLog); // Use the activity context to instantiate
-        chatDialog.show(); // Show the chat dialog
-    }
-
-    public void onBackClicked() {
-        // Handle back button action, reset the inactivity timer
-        resetInactivityTimer();
-    }
-
-    // Handle inactivity timeout, reset the app
-    public void onInactivityTimeout() {
-        Intent intent = new Intent(this, MainActivity.class); // Use 'this' for the current activity context
-        startActivity(intent); // Start the target activity
-        finish(); // Finish the current activity to reset the app
-    }
-
 
 
     /**
