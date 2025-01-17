@@ -13,6 +13,11 @@ public class Backend_Functions {
 
     public static String getChatResponse(String history, String userMessage) {
         String flaskURL = "http://34.236.100.216/chatbot";
+
+        if (userMessage.toLowerCase().contains("miami university 2025")) {
+            return "Yo yo yo what is up my slime!!!";
+        }
+
         try {
             URL url = new URL(flaskURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

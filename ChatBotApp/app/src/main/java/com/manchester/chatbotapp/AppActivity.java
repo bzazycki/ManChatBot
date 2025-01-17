@@ -1,9 +1,7 @@
 package com.manchester.chatbotapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -222,10 +220,8 @@ public class AppActivity extends AppCompatActivity {
 
         // Create the VideoView
         this.animation = new VideoView(this);
-
-        changeAnimation('w');
-
         verticalLayout.addView(animation);
+        changeAnimation('w');
 
         // Add the vertical layout (with VideoView and buttons) to the leftLayout
         leftLayout.addView(verticalLayout);
@@ -290,8 +286,6 @@ public class AppActivity extends AppCompatActivity {
                 // Handle submit action
                 String input = userTextInput.getText().toString().trim();
 
-                changeAnimation('t');
-
                 if (input.isBlank() || input.isEmpty()) {
                     return;
                 }
@@ -312,13 +306,13 @@ public class AppActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         logChatOutput(chatPanel, output);
                         listener.speak(output);
+                        changeAnimation('s');
                     });
 
                 }).start();
 
                 lastActivity = System.currentTimeMillis();
 
-                changeAnimation('l');
             }
         });
 
@@ -336,6 +330,7 @@ public class AppActivity extends AppCompatActivity {
         listenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changeAnimation('l');
                 startListening();
             }
         });
@@ -361,6 +356,7 @@ public class AppActivity extends AppCompatActivity {
                     Thread.sleep(500);
                     this.listener.speak("Hi! My name is Manny, how can I help you today?");
                 }
+                changeAnimation('t');
             } catch (InterruptedException e) {
 
             }
@@ -391,24 +387,20 @@ public class AppActivity extends AppCompatActivity {
 
         // Reset the VideoView
         animation.stopPlayback();
-        animation.suspend();
+        animation.seekTo(0);
 
         // Set new video URI
         animation.setVideoURI(videoUri);
 
         // Set looping explicitly
         animation.setOnPreparedListener(mp -> {
-            mp.setLooping(true);
             animation.start();
-            Log.d("VideoDuration", "Duration: " + mp.getDuration());
-        });
-
-        animation.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Log.e("VideoView", "Error: " + what + ", " + extra);
-                return true; // Prevent default error handling
-            }
+            animation.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    animation.start();
+                }
+            });
         });
 
     }
@@ -424,6 +416,7 @@ public class AppActivity extends AppCompatActivity {
 
                 // Update the UI with recognized text
                 userTextInput.setText(text);
+                changeAnimation('w');
             } else {
                 Log.e("Listener", "Failed to recognize speech.");
             }
