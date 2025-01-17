@@ -6,7 +6,7 @@
   <title>Admin Context Page</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Link to the external JavaScript file -->
-  <script src="script.js"></script>
+  <script src="API.js"></script>
   <style>
     /* Unified container for all sections */
     .content-container {
@@ -61,7 +61,7 @@
     }
 
     textarea {
-      height: 800px; /* Large textarea for more content */
+      height: 200px; /* Shorter textarea for context */
       resize: vertical;
     }
 
@@ -86,6 +86,47 @@
       font-size: 14px;
       color: red;
       margin-bottom: 20px;
+      font-weight: bold; /* Add this line */
+    }
+
+    .section {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #f5f5f5;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header input[type="text"] {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .section-content {
+      margin-top: 10px;
+    }
+
+    .add-section-btn {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      display: block;
+      margin: 20px auto;
+    }
+
+    .add-section-btn:hover {
+      background-color: #218838;
     }
   </style>
 </head>
@@ -110,7 +151,7 @@
         <h2>API Key Management</h2>
         <p>Below is the current API key. You can change it if necessary, but be cautious as this may affect system functionality.</p>
         <div class="current-api" id="currentApiKey">
-          <!-- This will be updated with the masked API key -->
+          <!-- This will be updated with the API key -->
         </div>
         <form id="apiKeyForm">
           <label for="newApiKey">Enter New API Key:</label>
@@ -126,20 +167,20 @@
           <button type="submit">Submit New API Key</button>
         </form>
       </div>
+    </div> <!-- End of first content container -->
 
-      <!-- GPT Model Management Section -->
+    <!-- New Content Container for GPT Model Management -->
+    <div class="content-container">
       <div class="model-section">
         <h2>GPT Model Management</h2>
         <p>Below is the current GPT model. Use the dropdown menu to select a new model.</p>
         <div class="current-model" id="currentModel">
-          gpt-3.5-turbo
+          <!-- This will be updated with the current model -->
         </div>
         <form id="modelForm">
           <label for="newModel">Select a New GPT Model:</label>
           <select id="newModel" required>
-            <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
-            <option value="gpt-4">gpt-4</option>
-            <option value="gpt-4-32k">gpt-4-32k</option>
+            <!-- Options will be populated dynamically -->
           </select>
           <p class="warning">
             Warning: Changing the GPT model may affect performance and cost. Ensure this is the desired configuration.
@@ -147,29 +188,72 @@
           <button type="submit">Submit New Model</button>
         </form>
       </div>
+    </div> <!-- End of second content container -->
 
-      <!-- Context File Editor Section -->
+    <!-- Context File Editor Section -->
+    <div class="content-container">
       <div class="context-editor-section">
         <h2>Context File Editor</h2>
         <p>Please enter your message or notes below:</p>
         <form id="contextForm">
-          <textarea
-            id="adminMessage"
-            name="adminMessage"
-            placeholder="Loading context..."
-            required
-          ></textarea>
+          <div id="sectionsContainer">
+            <!-- Sections will be added here dynamically -->
+          </div>
+          <button type="button" class="add-section-btn" onclick="addSection()">+ Add Section</button>
           <button type="submit" class="btn-submit">Submit</button>
         </form>
       </div>
-    </div>
+    </div> <!-- End of third content container -->
   </main>
 
   <footer>
     <p>&copy; 2025 Hive Admin Portal</p>
   </footer>
 
-  <!-- Link to the external JavaScript file -->
-  <script src="script.js"></script>
+  <script>
+    function addSection() {
+      const sectionContainer = document.createElement('div');
+      sectionContainer.className = 'section';
+
+      const sectionHeader = document.createElement('div');
+      sectionHeader.className = 'section-header';
+
+      const activeLabel = document.createElement('label');
+      activeLabel.textContent = 'Active:';
+
+      const activeCheckbox = document.createElement('input');
+      activeCheckbox.type = 'checkbox';
+      activeCheckbox.checked = true;
+
+      const headerLabel = document.createElement('label');
+      headerLabel.textContent = 'Header:';
+
+      const headerInput = document.createElement('input');
+      headerInput.type = 'text';
+      headerInput.placeholder = 'Header text';
+
+      sectionHeader.appendChild(activeLabel);
+      sectionHeader.appendChild(activeCheckbox);
+      sectionHeader.appendChild(headerLabel);
+      sectionHeader.appendChild(headerInput);
+
+      const sectionContent = document.createElement('div');
+      sectionContent.className = 'section-content';
+
+      const contentLabel = document.createElement('label');
+      contentLabel.textContent = 'Content:';
+
+      const contentTextarea = document.createElement('textarea');
+      contentTextarea.placeholder = 'Information';
+
+      sectionContent.appendChild(contentLabel);
+      sectionContent.appendChild(contentTextarea);
+
+      sectionContainer.appendChild(sectionHeader);
+      sectionContainer.appendChild(sectionContent);
+
+      document.getElementById('sectionsContainer').appendChild(sectionContainer);
+    }
+  </script>
 </body>
 </html>

@@ -20,6 +20,7 @@ body {
   background-attachment: fixed;
   background-color: #fdf8e4; /* Bee honeycomb background */
 }
+
 /* Sticky Navigation Bar */
 header {
   position: sticky;
@@ -28,18 +29,7 @@ header {
   z-index: 100;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: block;
-}
-
-header.yellow {
-  background-color: #ffe571;
-}
-
-header.black {
-  background-color: #000;
-}
-
-header.gold {
-  background-color: #ffc400;
+  background-color: #000; /* Set background to black */
 }
 
 nav ul {
@@ -50,9 +40,11 @@ nav ul {
   display: flex;
   justify-content: center;
 }
+
 nav ul li {
   margin-right: 30px;
 }
+
 nav ul li a {
   color: #ffc107; /* Bee yellow */
   text-decoration: none;
@@ -63,14 +55,17 @@ nav ul li a {
   letter-spacing: 1px;
   transition: color 0.3s, transform 0.3s;
 }
+
 nav ul li a:hover,
 nav ul li a:focus {
   color: #fff; /* Highlight on hover */
   transform: scale(1.1);
 }
+
 nav ul li a.active {
   color: #fff;
 }
+
 /* Page Containers */
 .landing-page,
 .preferences-page,
@@ -88,19 +83,23 @@ nav ul li a.active {
   align-items: center;
   align-content: center;
 }
+
 /* Admin Page */
 .admin-page {
   max-width: 400px;
   text-align: center;
 }
+
 .admin-page h1 {
   color: #ffc107;
   margin-bottom: 20px;
 }
+
 .admin-page .form-group {
   margin-bottom: 15px;
   text-align: left;
 }
+
 .admin-page label {
   display: block;
   font-size: 14px;
@@ -108,6 +107,7 @@ nav ul li a.active {
   color: #333;
   margin-bottom: 5px;
 }
+
 .admin-page input {
   width: 100%;
   padding: 10px;
@@ -116,14 +116,17 @@ nav ul li a.active {
   border-radius: 5px;
   box-sizing: border-box;
 }
+
 .admin-page input:focus {
   border-color: #ffc107;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
+
 .admin-page .button-group {
   margin-top: 20px;
 }
+
 .admin-page .btn-login {
   background-color: #000;
   color: #ffc107;
@@ -134,12 +137,15 @@ nav ul li a.active {
   border-radius: 5px;
   transition: background-color 0.3s;
 }
+
 .admin-page .btn-login:hover {
   background-color: #333;
 }
+
 .admin-page .links {
   margin-top: 20px;
 }
+
 .admin-page .links a {
   display: block;
   color: #000;
@@ -148,9 +154,11 @@ nav ul li a.active {
   margin-top: 10px;
   transition: color 0.3s;
 }
+
 .admin-page .links a:hover {
   color: #ffc107;
 }
+
 /* Footer */
 footer {
   background-color: #000;
@@ -158,6 +166,7 @@ footer {
   text-align: center;
   padding: 10px 0;
 }
+
 /* Forgot Password Page */
 .forgot-password-page {
   max-width: 400px;
@@ -168,25 +177,31 @@ footer {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+
 .forgot-password-page h1 {
   color: #ffc107;
   margin-bottom: 10px;
 }
+
 .forgot-password-page p {
   font-size: 14px;
   color: #333;
   margin-bottom: 20px;
 }
+
 .forgot-password-page form {
   text-align: left;
 }
+
 .forgot-password-page .form-group {
   margin-bottom: 15px;
 }
+
 .forgot-password-page .btn-login {
   width: 100%;
   margin-top: 15px;
 }
+
 /* Create Account Page */
 .create-account-page {
   max-width: 600px;
@@ -196,25 +211,30 @@ footer {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .create-account-page h2 {
   color: #ffc107;
   font-size: 28px;
   text-align: center;
   margin-bottom: 20px;
 }
+
 .create-account-page form {
   display: flex;
   flex-direction: column;
 }
+
 .create-account-page .form-group {
   margin-bottom: 20px;
 }
+
 .create-account-page label {
   font-size: 14px;
   font-weight: bold;
   color: #333;
   margin-bottom: 8px;
 }
+
 .create-account-page input {
   padding: 10px;
   font-size: 14px;
@@ -223,11 +243,13 @@ footer {
   box-sizing: border-box;
   width: 100%;
 }
+
 .create-account-page input:focus {
   border-color: #ffc107;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
+
 .create-account-page button {
   background-color: #000;
   color: #ffc107;
@@ -239,21 +261,26 @@ footer {
   transition: background-color 0.3s;
   width: 100%;
 }
+
 .create-account-page button:hover {
   background-color: #333;
 }
+
 .create-account-page .link-container {
   text-align: center;
   margin-top: 20px;
 }
+
 .create-account-page .link-container a {
   color: #000;
   text-decoration: none;
   font-size: 14px;
 }
+
 .create-account-page .link-container a:hover {
   color: #ffc107;
 }
+
 /* Context File Page */
 .context-page {
   max-width: 600px;
@@ -263,12 +290,14 @@ footer {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .context-page h1 {
   color: #ffc107;
   text-align: center;
   margin-bottom: 20px;
   font-size: 28px;
 }
+
 .context-page textarea {
   width: 100%;
   height: 150px;
@@ -279,11 +308,13 @@ footer {
   box-sizing: border-box;
   margin-bottom: 20px;
 }
+
 .context-page textarea:focus {
   border-color: #ffc107;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
+
 .context-page button {
   background-color: #000;
   color: #ffc107;
@@ -294,7 +325,74 @@ footer {
   border-radius: 5px;
   transition: background-color 0.3s;
 }
+
 .context-page button:hover {
   background-color: #333;
 }
 
+/* Keep the original formatting and style */
+.preferences-page {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+/* Theme-specific styles */
+.theme-yellow {
+  background-color: #fff9c4;
+  border-color: #ffd54f;
+}
+
+.theme-black {
+  background-color: #424242;
+  border-color: #212121;
+  color: #ffffff;
+}
+
+.theme-black select,
+.theme-black button {
+  background-color: #616161;
+  color: #ffffff;
+}
+
+.theme-black button {
+  background-color: #ffc107;
+  color: #000000;
+}
+
+.theme-gold {
+  background-color: #fff8e1;
+  border-color: #ffd700;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+select, input[type="checkbox"], button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #000;
+  color: #ffc107;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #333;
+}
