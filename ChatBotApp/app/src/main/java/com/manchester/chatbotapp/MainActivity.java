@@ -12,10 +12,19 @@ import android.widget.ImageView;
 
 /**
  * The main activity. This is the entry point for the entire application. The onCreate
- * function is called when it is created.
+ * function is called when it is created. This main activity is started on timeouts and
+ * when the user quits. The only thing that it does is contain the "Press For Help" button.
  */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Overrides the onCreate method to generate the graphics. This method creates all required
+     * graphics for the entire system. A very simple class that assigns a click function to a
+     * button so that the AppActivity can start.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +57,5 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the ImageView as the content view
         setContentView(imageView);
-
     }
 }

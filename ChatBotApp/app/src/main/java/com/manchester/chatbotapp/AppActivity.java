@@ -79,8 +79,17 @@ public class AppActivity extends AppCompatActivity {
      * that the system can time out when it has not been used in a while.
      */
     private Handler inactivityHandler;
+
+    /**
+     * The inactivity runnable, this is fed to the inactivity handler so it knows
+     * what to do when the user does not click anything for a specified amount of time.
+     */
     private Runnable inactivityRunnable;
 
+    /**
+     * The keystone of the project revolves around manipulation of this text box.
+     * The text box will be added to and sent from the.
+     */
     private EditText userTextInput;
 
 
