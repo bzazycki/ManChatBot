@@ -78,8 +78,7 @@ public class InactivityDialog extends Dialog {
             public void onTick(long millisUntilFinished) {
                 long secondsLeft = millisUntilFinished / 1000;
                 // Update the message with the remaining time
-                String timeLeft = String.format("You have been inactive for %d seconds. Resetting in %d seconds.",
-                        (COUNTDOWN_TIME / 1000) - (millisUntilFinished / 1000),
+                String timeLeft = String.format("Your session is about to expire! \n\n 00:%d",
                         secondsLeft);
                 messageTextView.setText(timeLeft);
 

@@ -1,51 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="@drawable/dialog_background">
+    android:background="@drawable/dialog_background"
+    android:padding="16dp">
 
     <!-- Timer Countdown Text -->
+
+    <!-- Quit Button -->
+
+    <!-- Back Button -->
+
     <TextView
         android:id="@+id/messageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="You have been inactive for 2 minutes. Resetting in 60 seconds."
-        android:textSize="18sp"
+        android:fontFamily="monospace"
         android:gravity="center"
+        android:text="Your session is about to expire! \n\n 00:60"
         android:textAlignment="center"
-        android:fontFamily="monospace" />
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Quit Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/quit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/messageTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:minWidth="100dp"
         android:minHeight="60dp"
         android:text="Quit"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@android:color/white" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!-- Back Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/messageTextView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/darker_gray"
         android:minWidth="100dp"
         android:minHeight="60dp"
         android:text="Back"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
-        android:backgroundTint="@android:color/darker_gray"
-        android:textColor="@android:color/white" />
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/quit_button"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/messageTextView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="136dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="7dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageTextView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/warning_symbol" />
+</androidx.constraintlayout.widget.ConstraintLayout>
