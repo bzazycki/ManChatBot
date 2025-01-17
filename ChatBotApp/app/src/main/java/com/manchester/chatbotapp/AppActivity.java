@@ -355,9 +355,8 @@ public class AppActivity extends AppCompatActivity {
                     Thread.sleep(500);
                     this.listener.speak("Hi! My name is Manny, how can I help you today?");
                 }
-                changeAnimation('w');
             } catch (InterruptedException e) {
-
+                Log.e("Speaking thread error", e.toString());
             }
         }).start();
 
@@ -415,7 +414,7 @@ public class AppActivity extends AppCompatActivity {
 
                 // Update the UI with recognized text
                 userTextInput.setText(text);
-                changeAnimation('w');
+                //changeAnimation('w');
             } else {
                 Log.e("Listener", "Failed to recognize speech.");
             }
