@@ -1,5 +1,5 @@
 """
-Author: Ethan Armbruster
+Author: Ethan Armbruster, Zach Clouse
 Contact Email: armbrue2@miamioh.edu
 """
 
@@ -16,20 +16,6 @@ from email.mime.multipart import MIMEMultipart
 
 # Initialize Flask app
 app = Flask(__name__)
-
-# Global variable to store persistent context
-persistent_context = ""
-
-# Load context from a .txt file (only once during startup)
-def loadPersistentContext(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            return file.read()
-    except FileNotFoundError:
-        return ""
-
-# Load persistent context at startup
-persistent_context = loadPersistentContext("context.txt")
 
 # Function to get the model from the database
 def getModel():
@@ -58,20 +44,23 @@ def getAPIKey():
     except Exception as e:
         return None
 
-# Function to get the context from the database
-def getContext():
+
+
+# Function to log the chat GPT call to the database
+def dbLog(user_message, completion):
     try:
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT context FROM ai LIMIT 1")
-        context = cursor.fetchone()
+        timestamp = datetime.now().isoformat()
+        response_json = json.dumps(completion, default=str)
+        cursor.execute("INSERT INTO history (input, output, timestamp) VALUES (?, ?, ?)",
+                       (user_message, response_json, timestamp))
+        conn.commit()
         conn.close()
-        if context:
-            return context[0]
-        else:
-            return ""
+        print("Data logged successfully")  # Debug print
     except Exception as e:
-        return ""
+        print(f"Error logging chat GPT call: {e}")
+        traceback.print_exc()  # Print the full traceback for debugging
 
 # Function to get the email user from the database
 def getEmailUser():
@@ -121,22 +110,6 @@ def setEmailPass(email_pass):
         print(f"Error setting email password: {e}")
         traceback.print_exc()
 
-# Function to log the chat GPT call to the database
-def dbLog(user_message, completion):
-    try:
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        timestamp = datetime.now().isoformat()
-        response_json = json.dumps(completion, default=str)
-        cursor.execute("INSERT INTO history (input, output, timestamp) VALUES (?, ?, ?)",
-                       (user_message, response_json, timestamp))
-        conn.commit()
-        conn.close()
-        print("Data logged successfully")  # Debug print
-    except Exception as e:
-        print(f"Error logging chat GPT call: {e}")
-        traceback.print_exc()  # Print the full traceback for debugging
-
 # Initialize the OpenAI client with the API key from the database
 client = OpenAI(
     api_key=getAPIKey()
@@ -169,7 +142,7 @@ def getModelRoute():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/getApiKey', methods=['GET'])
+@app.route('/getAPIKey', methods=['GET'])
 def getAPIKeyRoute():
     """
     API endpoint to get the current API key from the database.
@@ -178,29 +151,14 @@ def getAPIKeyRoute():
     """
     try:
         api_key = getAPIKey()
-        if api_key:
+        if (api_key):
             hashed_api_key = hash_api_key(api_key)
-            return jsonify({"api_key": hashed_api_key}), 200
+            return jsonify({"apiKey": hashed_api_key}), 200
         else:
             return jsonify({"error": "API key not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/getContext', methods=['GET'])
-def get_context_route():
-    """
-    API endpoint to get the current context from the database.
-    
-    @return: JSON response containing the current context or an error message.
-    """
-    try:
-        context = getContext()
-        if context:
-            return jsonify({"context": context}), 200
-        else:
-            return jsonify({"context": ""}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 @app.route('/updateModel', methods=['POST'])
 def update_model():
@@ -227,7 +185,7 @@ def update_model():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/updateApiKey', methods=['POST'])
+@app.route('/updateAPIKey', methods=['POST'])
 def update_api_key():
     """
     API endpoint to update the API key in the database.
@@ -252,28 +210,99 @@ def update_api_key():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/updateContext', methods=['POST'])
-def update_context():
+@app.route('/upsertContextSection', methods=['POST'])
+def upsertContextSection():
     """
-    API endpoint to update the context in the database.
+    API endpoint to update a context section if it exists, or create a new one if it doesn't.
     
-    @param request: Flask request object containing JSON payload with the new context.
+    @param request: Flask request object containing JSON payload with id, contextHeader, active, and contextText.
     @return: JSON response indicating success or error message.
     """
     try:
         data = request.get_json()
-        new_context = data.get("context", "")
+        context_id = data.get("id", None)
+        context_header = data.get("contextHeader", "")
+        active = data.get("active", False)
+        context_text = data.get("contextText", "")
         
-        if not new_context:
-            return jsonify({"error": "No context provided"}), 400
+        if not context_header or not context_text:
+            return jsonify({"error": "Missing contextHeader or contextText"}), 400
 
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
-        cursor.execute("UPDATE ai SET context = ? WHERE id = 1", (new_context,))
+
+        if context_id is not None:
+            cursor.execute("SELECT 1 FROM context WHERE id = ?", (context_id,))
+            if cursor.fetchone():
+                cursor.execute("UPDATE context SET contextHeader = ?, active = ?, contextText = ? WHERE id = ?",
+                               (context_header, active, context_text, context_id))
+            else:
+                cursor.execute("INSERT INTO context (contextHeader, active, contextText) VALUES (?, ?, ?)",
+                               (context_header, active, context_text))
+        else:
+            cursor.execute("INSERT INTO context (contextHeader, active, contextText) VALUES (?, ?, ?)",
+                           (context_header, active, context_text))
+
         conn.commit()
         conn.close()
 
-        return jsonify({"message": "Context updated successfully"}), 200
+        return jsonify({"message": "Context section upserted successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/getContextSections', methods=['GET'])
+def getContextSections():
+    """
+    API endpoint to get context sections from the database.
+    
+    @param getAll: Boolean query parameter to determine if all context sections should be returned or only active ones.
+    @return: JSON response containing the list of context sections or an error message.
+    """
+    try:
+        get_all = request.args.get('getAll', 'false').lower() == 'true'
+        
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        
+        if get_all:
+            cursor.execute("SELECT id, contextHeader, active, contextText FROM context")
+        else:
+            cursor.execute("SELECT id, contextHeader, active, contextText FROM context WHERE active = 1")
+        
+        context_sections = cursor.fetchall()
+        conn.close()
+
+        context_list = [
+            {"id": row[0], "contextHeader": row[1], "active": row[2], "contextText": row[3]}
+            for row in context_sections
+        ]
+
+        return jsonify({"contextSections": context_list}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/removeContextSection', methods=['DELETE'])
+def removeContextSection():
+    """
+    API endpoint to remove a context section from the database.
+    
+    @param request: Flask request object containing JSON payload with the context section ID.
+    @return: JSON response indicating success or error message.
+    """
+    try:
+        data = request.get_json()
+        context_id = data.get("id", None)
+        
+        if context_id is None:
+            return jsonify({"error": "No context ID provided"}), 400
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM context WHERE id = ?", (context_id,))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Context section removed successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -294,10 +323,13 @@ def chatbot():
 
         user_input = []
 
-        # Include the context from the database
-        context = getContext()
-        if context:
-            user_input.append({"role": "system", "content": context})
+        # Include the active context sections from the database
+        response = getContextSections()
+        if response.status_code == 200:
+            context_sections = response.get_json().get("contextSections", [])
+            for section in context_sections:
+                if section["active"]:
+                    user_input.append({"role": "system", "content": section["contextText"]})
         
         # Add the user's message
         user_input.append({"role": "user", "content": user_message})
@@ -346,6 +378,20 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/getAvailableModels', methods=['GET'])
+def getAvailableModels():
+    """
+    API endpoint to get a list of all available models from the OpenAI API.
+    
+    @return: JSON response containing the list of available models or an error message.
+    """
+    try:
+        models = client.models.list()
+        models_list = [model.id for model in models.data]
+        return jsonify({"models": models_list}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 @app.route('/sendEmail', methods=['POST'])
 def send_email():
     """
@@ -356,7 +402,7 @@ def send_email():
     """
     try:
         data = request.get_json()
-        to_email = data.get("to_email", "")
+        to_email = data.get("email", "")
         message_content = data.get("message", "")
         
         if not to_email or not message_content:
