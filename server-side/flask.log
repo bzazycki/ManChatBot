@@ -6,199 +6,354 @@ WARNING: This is a development server. Do not use it in a production deployment.
 Press CTRL+C to quit
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 11:59:46] "GET /getContext HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 11:59:46] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 11:59:46] "GET /getAvailableModels HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 11:59:46] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 11:59:46] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 10:35:53] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:36:55] "POST /chatbot HTTP/1.1" 500 -
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:00:28] "GET /getContext HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 12:00:28] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:00:28] "GET /getAvailableModels HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 12:00:28] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:00:28] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:00:39] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:00:39] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:00:39] "GET /getAvailableModels HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 12:00:39] "GET /getModel HTTP/1.1" 200 -
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 10:38:29] "POST /chatbot HTTP/1.1" 500 -
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 10:45:23] "POST /chatbot HTTP/1.1" 500 -
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 10:45:57] "POST /chatbot HTTP/1.1" 500 -
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:04:34] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:34] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:34] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:35] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:44] "POST /updateModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:45] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:47] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:47] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:47] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:47] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:47] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:48] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:48] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:48] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:48] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:48] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:49] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:49] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:50] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:04:51] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:08] "POST /updateModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:09] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:15] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:15] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:15] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:15] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:25] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:25] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:26] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:26] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:05:33] "POST /chatbot HTTP/1.1" 500 -
-127.0.0.1 - - [17/Jan/2025 12:06:11] "GET /.env HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 12:06:12] "POST / HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 12:10:58] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:10:58] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:10:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:10:58] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:11:56] "POST /chatbot HTTP/1.1" 500 -
-127.0.0.1 - - [17/Jan/2025 12:12:19] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:12:19] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:12:19] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:12:20] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:15:09] "POST /chatbot HTTP/1.1" 500 -
-127.0.0.1 - - [17/Jan/2025 12:17:14] "POST /chatbot HTTP/1.1" 500 -
-127.0.0.1 - - [17/Jan/2025 12:17:55] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:17:55] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:17:55] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:17:55] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:00] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:00] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:00] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:01] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:26] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:26] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:26] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:27] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:36] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:36] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:36] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:36] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:49] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:49] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:49] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:18:49] "GET /getAvailableModels HTTP/1.1" 200 -
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 10:46:12] "POST /chatbot HTTP/1.1" 500 -
+127.0.0.1 - - [20/Jan/2025 10:47:07] "GET /getContextSections?getAll=false HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:47:21] "POST /chatbot HTTP/1.1" 500 -
+127.0.0.1 - - [20/Jan/2025 10:48:52] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:49:17] "POST /chatbot HTTP/1.1" 500 -
+127.0.0.1 - - [20/Jan/2025 10:49:50] "POST /chatbot HTTP/1.1" 500 -
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 10:50:28] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:50:49] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:51:05] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:51:10] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:51:11] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:51:57] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:51:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:00] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:00] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:00] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:01] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:13] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:33] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:43] "DELETE /removeContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:43] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:43] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:48] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:49] "DELETE /removeContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:49] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:52:57] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 10:55:07] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:07] "GET /phpinfo.php HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:07] "GET /info.php HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:07] "GET /phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:08] "GET /php_info.php HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:08] "GET /test.php HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:08] "GET /_profiler/phpinfo HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:08] "GET /wp-config.php HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:09] "GET /.json HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:09] "GET /wp-config.php.save HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:09] "GET /test HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:10] "GET /info HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:10] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:10] "GET /config/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:10] "GET /.env.production HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:11] "GET /.env.local HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:11] "GET /api/shared/config/config.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:11] "GET /api/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:12] "GET /app/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:12] "GET /backend/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:12] "GET /apps/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:12] "GET /admin/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:13] "GET /laravel/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:13] "GET /crm/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:13] "GET /blog/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:13] "GET /config.properties HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:14] "GET /local/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:14] "GET /src/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:14] "GET /new/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:15] "GET /library/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:15] "GET /core/.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:15] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:15] "GET /register/ HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:16] "GET /contact/ HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:16] "GET /.AWS_/credentials HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:16] "GET /karma.conf.json HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:17] "GET /index.php HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:17] "GET /.aws/credentials HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 10:55:17] "GET /httpd.conf HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 11:01:02] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:01:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:01:13] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:01:51] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:01:52] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:02:41] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:02:42] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:03:07] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:03:08] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:06:14] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 11:06:15] "POST / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 11:26:52] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:27:09] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:27:22] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:27:30] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:27:37] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:27:42] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:27:58] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:28:17] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:28:27] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:28:37] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:28:57] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:29:12] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 11:36:07] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:07] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:07] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:08] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:48] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:48] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:48] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:36:49] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:06] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:12] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:12] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:12] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:12] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:32] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:37:57] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:38:19] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:39:08] "POST /sendEmail HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:40:45] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 11:42:29] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:18] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:18] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:18] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:19] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:22] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:34] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:36] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:43:45] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:46:55] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:55:11] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 11:58:58] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:58:58] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:58:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:58:58] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:04] "POST /updateAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:05] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:10] "POST /updateAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:11] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:14] "POST /updateModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:15] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:35] "POST /updateModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:36] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:44] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 11:59:45] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:02:06] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:02:06] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:02:06] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:02:06] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:05:30] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:05:30] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:05:30] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:05:30] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:10] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:10] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:10] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:11] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:18] "POST /updateAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:19] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:25] "POST /updateAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:26] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:33] "POST /updateModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:34] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:47] "POST /updateModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:48] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:52] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:53] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:56] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:06:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:09] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:10] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "DELETE /removeContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:11] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:07:15] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 885-107-589
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:26:58] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:26:58] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:26:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:26:58] "GET /getAvailableModels HTTP/1.1" 200 -
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 12:09:51] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:02] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:03] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:03] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:03] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:04] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:13] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:13] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:16] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:17] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:19] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:23] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:24] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:25] "DELETE /removeContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:25] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:26] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:26] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:26] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:26] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:26] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:27] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:34] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:35] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "DELETE /removeContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:42] "POST /upsertContextSection HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:10:51] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:16:31] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:17:16] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:17:54] "POST /chatbot HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+Data logged successfully
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 12:20:59] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:20:59] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:21:00] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:21:00] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:22:09] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:22:10] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:22:10] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:22:10] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:17] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:17] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:17] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:18] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:29] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:30] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:30] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:23:30] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:38] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:38] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:38] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:39] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:45] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:45] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:45] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:25:45] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:27:17] "GET / HTTP/1.1" 404 -
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:29:38] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:29:38] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:29:38] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:29:39] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:32:41] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:32:41] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:32:41] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:32:42] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:04] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:04] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:04] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:05] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:58] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:33:59] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:36:29] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:36:29] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:36:29] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:36:30] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:37:45] "POST /chatbot HTTP/1.1" 500 -
+ * Debugger PIN: 885-107-589
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:38:26] "POST /chatbot HTTP/1.1" 500 -
-127.0.0.1 - - [17/Jan/2025 12:39:00] "POST /sendEmail HTTP/1.1" 404 -
-127.0.0.1 - - [17/Jan/2025 12:39:46] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:39:46] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:39:46] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:39:47] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:40:11] "POST /chatbot HTTP/1.1" 500 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:16] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:41:17] "GET /getAvailableModels HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:42:07] "GET /getModel HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:42:07] "GET /getAPIKey HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:42:07] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:42:07] "GET /getAvailableModels HTTP/1.1" 200 -
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 12:38:29] "OPTIONS / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 12:42:02] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 12:46:49] "GET /getAPIKey HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:46:49] "GET /getModel HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:46:50] "GET /getContextSections?getAll=true HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:46:50] "GET /getAvailableModels HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 12:56:48] "POST /chatbot HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2025 13:07:40] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:10:14] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:26:14] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:32:13] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:46] "GET /odinhttpcall1737380266 HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:46] "POST /sdk HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:46] "GET /evox/about HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:46] "GET /HNAP1 HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:47] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:47] "GET /solr/admin/info/system HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:47] "GET /cgi-bin/authLogin.cgi HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:47] "GET / HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:47] "GET /query?q=SHOW+DIAGNOSTICS HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:47] "GET /solr/admin/cores?action=STATUS&wt=json HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:37:48] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:39:35] "GET /v2/_catalog HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:42:18] "GET /.env HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2025 13:42:19] "POST / HTTP/1.1" 404 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+Data logged successfully
+ * Restarting with stat
+/home/ubuntu/ManChatBot/server-side/gpt_api.py:33: SyntaxWarning: invalid escape sequence '\ '
+  """
+/home/ubuntu/ManChatBot/server-side/gpt_api.py:147: SyntaxWarning: invalid escape sequence '\ '
+  """
+ * Debugger is active!
+ * Debugger PIN: 885-107-589
+127.0.0.1 - - [20/Jan/2025 14:01:48] "POST /chatbot HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
+Data logged successfully
+ * Restarting with stat
+/home/ubuntu/ManChatBot/server-side/gpt_api.py:33: SyntaxWarning: invalid escape sequence '\ '
+  """
+/home/ubuntu/ManChatBot/server-side/gpt_api.py:195: SyntaxWarning: invalid escape sequence '\ '
+  """
+ * Debugger is active!
+ * Debugger PIN: 885-107-589
  * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
  * Restarting with stat
+/home/ubuntu/ManChatBot/server-side/gpt_api.py:33: SyntaxWarning: invalid escape sequence '\ '
+  """
+/home/ubuntu/ManChatBot/server-side/gpt_api.py:195: SyntaxWarning: invalid escape sequence '\ '
+  """
  * Debugger is active!
- * Debugger PIN: 720-143-654
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 720-143-654
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 720-143-654
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:47:41] "POST /sendEmail HTTP/1.1" 400 -
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 720-143-654
-127.0.0.1 - - [17/Jan/2025 12:48:44] "POST /sendEmail HTTP/1.1" 200 -
-127.0.0.1 - - [17/Jan/2025 12:49:13] "POST /chatbot HTTP/1.1" 500 -
- * Detected change in '/home/ubuntu/ManChatBot/server-side/gpt_api.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 720-143-654
+ * Debugger PIN: 885-107-589
