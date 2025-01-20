@@ -427,9 +427,15 @@ public class AppActivity extends AppCompatActivity {
 
                 // Update the UI with recognized text
                 userTextInput.setText(text);
-                //changeAnimation('w');
+                runOnUiThread(() -> {
+                    changeAnimation('w');
+                });
+
             } else {
                 Log.e("Listener", "Failed to recognize speech.");
+                runOnUiThread(() -> {
+                    changeAnimation('w');
+                });
             }
         });
     }

@@ -115,6 +115,7 @@ public class ChatDialog extends Dialog {
                 // Start a new activity
                 Intent intent = new Intent(context, MainActivity.class); // Replace 'NewActivity' with your target activity
                 context.startActivity(intent); // Use the context to start the activity
+                context.finish();
                 dismiss();
             }
         });
