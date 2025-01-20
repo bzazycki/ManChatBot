@@ -465,7 +465,7 @@ public class AppActivity extends AppCompatActivity {
         container.addView(bubble);
 
         // Update chat log
-        chatLog += "User asked: " + text + "   ";
+        chatLog += "User: " + text + "\\n\\n";
     }
 
     /**
@@ -494,7 +494,7 @@ public class AppActivity extends AppCompatActivity {
         container.addView(bubble);
 
         // Update chat log
-        chatLog += "Chat responded: " + text + "   ";
+        chatLog += "Chat: " + text + "\\n\\n";
     }
 
     /**

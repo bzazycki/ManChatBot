@@ -1,3 +1,7 @@
+/* CSS File to Style the website
+   Date Last Edited: 1/20/2025
+   Author: Jalen Brunson, Zach Clouse, Ethan Armbruster
+*/
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Context Page</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Link to the external JavaScript file -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="API.js"></script>
   <style>
     /* Unified container for all sections */
@@ -134,8 +138,7 @@
   <header>
     <nav>
       <ul>
-        <li><a href="index.html">Hive</a></li>
-        <li><a href="preferences.html">Hive Settings</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="admin.html" class="active">Admin</a></li>
       </ul>
     </nav>
@@ -180,7 +183,7 @@
         <form id="modelForm">
           <label for="newModel">Select a New GPT Model:</label>
           <select id="newModel" required>
-            <!-- Options will be populated dynamically -->
+            <!-- Options will be shown dynamically -->
           </select>
           <p class="warning">
             Warning: Changing the GPT model may affect performance and cost. Ensure this is the desired configuration.
@@ -188,72 +191,25 @@
           <button type="submit">Submit New Model</button>
         </form>
       </div>
-    </div> <!-- End of second content container -->
+    </div> <!-- End of second content section -->
 
     <!-- Context File Editor Section -->
     <div class="content-container">
       <div class="context-editor-section">
         <h2>Context File Editor</h2>
-        <p>Please enter your message or notes below:</p>
+          <p>Please enter your message or notes below:</p>
         <form id="contextForm">
           <div id="sectionsContainer">
             <!-- Sections will be added here dynamically -->
           </div>
-          <button type="button" class="add-section-btn" onclick="addSection()">+ Add Section</button>
-          <button type="submit" class="btn-submit">Submit</button>
+          <button type="button" class="add-section-btn" id="addSectionBtn">+ Add Section</button>
         </form>
       </div>
-    </div> <!-- End of third content container -->
+    </div> <!-- End of third content section -->
   </main>
 
   <footer>
-    <p>&copy; 2025 Hive Admin Portal</p>
+    <p>&copy; 2025 MannyConnect Admin Portal</p>
   </footer>
-
-  <script>
-    function addSection() {
-      const sectionContainer = document.createElement('div');
-      sectionContainer.className = 'section';
-
-      const sectionHeader = document.createElement('div');
-      sectionHeader.className = 'section-header';
-
-      const activeLabel = document.createElement('label');
-      activeLabel.textContent = 'Active:';
-
-      const activeCheckbox = document.createElement('input');
-      activeCheckbox.type = 'checkbox';
-      activeCheckbox.checked = true;
-
-      const headerLabel = document.createElement('label');
-      headerLabel.textContent = 'Header:';
-
-      const headerInput = document.createElement('input');
-      headerInput.type = 'text';
-      headerInput.placeholder = 'Header text';
-
-      sectionHeader.appendChild(activeLabel);
-      sectionHeader.appendChild(activeCheckbox);
-      sectionHeader.appendChild(headerLabel);
-      sectionHeader.appendChild(headerInput);
-
-      const sectionContent = document.createElement('div');
-      sectionContent.className = 'section-content';
-
-      const contentLabel = document.createElement('label');
-      contentLabel.textContent = 'Content:';
-
-      const contentTextarea = document.createElement('textarea');
-      contentTextarea.placeholder = 'Information';
-
-      sectionContent.appendChild(contentLabel);
-      sectionContent.appendChild(contentTextarea);
-
-      sectionContainer.appendChild(sectionHeader);
-      sectionContainer.appendChild(sectionContent);
-
-      document.getElementById('sectionsContainer').appendChild(sectionContainer);
-    }
-  </script>
 </body>
 </html>
