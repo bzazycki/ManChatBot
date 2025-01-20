@@ -1,3 +1,7 @@
+/* CSS File to Style the website
+   Date Last Edited: 1/20/2025
+   Author: Jalen Brunson, Zach Clouse, Ethan Armbruster
+*/
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +10,51 @@
   <title>Buzz Settings - Hive</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    /* Keep the original formatting and style */
-    .preferences-page {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      background-color: #f9f9f9;
+    /* Default Light Mode */
+    body.light-mode {
+      background-color: #ffffff; /* Default background */
+      color: #000000; /* Default text color */
     }
 
+  
+
+    header.light-mode a {
+      color: #ffc107; /* Yellow navigation links */
+    }
+
+    .container.light-mode {
+      border: 2px solid #cccccc; /* Light border */
+    }
+
+    /* Inverted Dark Mode */
+    body.dark-mode {
+      background-color: #000000; /* Ensure proper dark background when inverted */
+    }
+
+    header.dark-mode {
+      filter: invert(1); /* Invert colors for the header */
+    }
+
+    .container.dark-mode {
+      filter: invert(1); /* Invert colors for the container */
+    }
+
+    /* Navigation Links */
+    nav ul li a {
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px 15px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav ul li a:hover,
+    nav ul li a:focus {
+      text-decoration: underline;
+    }
+
+    /* Form Styling */
     form {
       display: flex;
       flex-direction: column;
@@ -30,23 +69,41 @@
       padding: 10px;
       font-size: 16px;
       border-radius: 5px;
+      border: 1px solid #999; /* Neutral border color */
+      background-color: #f9f9f9; /* Default form background */
+      color: #333; /* Default form text color */
     }
 
     button {
-      background-color: #000;
-      color: #ffc107;
-      border: none;
+      background-color: #000; /* Button background */
+      color: #ffc107; /* Button text color */
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #333;
+      background-color: #333; /* Button hover background */
+    }
+
+    /* Feedback Message */
+    #statusMessage {
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    #statusMessage.light-mode {
+      background-color: #e6ffe6; /* Light green for success */
+      color: #006600;
+    }
+
+    #statusMessage.dark-mode {
+      filter: invert(1); /* Invert feedback message */
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <header>
+<body class="light-mode">
+  <div class="container light-mode">
+    <header class="light-mode" id="siteHeader">
       <nav>
         <ul>
           <li><a href="index.html">Hive</a></li>
@@ -57,14 +114,13 @@
     </header>
 
     <main>
-      <section class="preferences-page">
+      <section class="preferences-page" id="preferencesSection">
         <h1>Hive Settings</h1>
         <form id="settingsForm">
-          <label for="theme">Choose Your Hive Theme:</label>
+          <label for="theme">Choose Your Hive Mode:</label>
           <select id="theme" name="theme">
-            <option value="yellow">Yellow (Classic)</option>
-            <option value="black">Black (Night)</option>
-            <option value="gold">Gold (Premium)</option>
+            <option value="light">Light Mode</option>
+            <option value="dark">Dark Mode</option>
           </select>
 
           <label for="notifications">Enable Hive Alerts:</label>
@@ -73,7 +129,7 @@
           <button type="submit">Save Settings</button>
         </form>
 
-        <p id="statusMessage" style="color: green; font-weight: bold; display: none;">
+        <p id="statusMessage" class="light-mode" style="font-weight: bold; display: none;">
           Settings saved successfully!
         </p>
       </section>
@@ -85,18 +141,41 @@
   </div>
 
   <script>
+    // Function to apply the selected theme/mode
+    function applyTheme(theme) {
+      const body = document.body;
+      const header = document.getElementById('siteHeader');
+      const container = document.querySelector('.container');
+      const statusMessage = document.getElementById('statusMessage');
+      const formElements = document.querySelectorAll('select, input[type="checkbox"], button');
+
+      // Remove existing theme classes
+      body.classList.remove('light-mode', 'dark-mode');
+      header.classList.remove('light-mode', 'dark-mode');
+      container.classList.remove('light-mode', 'dark-mode');
+      statusMessage.classList.remove('light-mode', 'dark-mode');
+      formElements.forEach(el => el.classList.remove('light-mode', 'dark-mode'));
+
+      // Add the selected theme class
+      body.classList.add(`${theme}-mode`);
+      header.classList.add(`${theme}-mode`);
+      container.classList.add(`${theme}-mode`);
+      statusMessage.classList.add(`${theme}-mode`);
+      formElements.forEach(el => el.classList.add(`${theme}-mode`));
+    }
+
     // Function to load saved settings
     function loadSettings() {
-      const savedTheme = localStorage.getItem('hiveTheme');
+      const savedTheme = localStorage.getItem('hiveTheme') || 'light';
       const savedNotifications = localStorage.getItem('hiveNotifications');
 
-      // If a theme is saved, set it in the dropdown
-      if (savedTheme) {
-        document.getElementById('theme').value = savedTheme;
-        document.body.style.backgroundColor = savedTheme;  // Change background color
-      }
+      // Apply the saved theme
+      applyTheme(savedTheme);
 
-      // If notifications setting is saved, apply it to the checkbox
+      // Set the dropdown value
+      document.getElementById('theme').value = savedTheme;
+
+      // Set the notification checkbox value
       if (savedNotifications !== null) {
         document.getElementById('notifications').checked = savedNotifications === 'true';
       }
@@ -114,8 +193,8 @@
       localStorage.setItem('hiveTheme', selectedTheme);
       localStorage.setItem('hiveNotifications', notificationsEnabled);
 
-      // Change the background color of the page based on the selected theme
-      document.body.style.backgroundColor = selectedTheme;
+      // Apply the selected theme
+      applyTheme(selectedTheme);
 
       // Display feedback message
       const statusMessage = document.getElementById('statusMessage');

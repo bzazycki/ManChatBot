@@ -1,81 +1,111 @@
-<!DOCTYPE html> 
+/* CSS File to Style the website
+   Date Last Edited: 1/20/2025
+   Author: Jalen Brunson, Zach Clouse, Ethan Armbruster
+*/
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to the Hive - Admin Portal</title>
+  <title>MannyConnect - Admin Portal</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* Unified border styling */
-    .content-container {
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      padding: 20px;
-      background-color: #f9f9f9;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin: 20px auto;
-      max-width: 800px;
-    }
-    .content-container h1, .content-container h2 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .content-container p {
-      color: #555;
-      font-size: 16px;
-      line-height: 1.6;
-      margin: 10px 0;
-      text-align: justify;
-    }
-    .cta-button {
-      display: block;
-      width: fit-content;
-      margin: 20px auto;
-      padding: 10px 20px;
-      font-size: 16px;
-      color: #ffc107;
-      background-color: #000;
-      text-decoration: none;
-      border-radius: 5px;
-      text-align: center;
-    }
-    .cta-button:hover {
-      background-color: #333;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
-    <header>
+    <header id="siteHeader">
       <nav>
         <ul>
-          <li><a href="index.html" class="active">Hive</a></li>
-          <li><a href="preferences.html">Hive Settings</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
           <li><a href="admin.html">Admin</a></li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <!-- Unified content container for both sections -->
+      <!-- Slideshow -->
+      <div class="slideshow-container">
+        <div class="slide active">
+          <img src="press3.png" alt="Platform Interface">
+          <div class="slide-caption">Easy-to-use chatbot interface for accessing resources</div>
+        </div>
+        <div class="slide">
+          <img src="volunteer.jpg" alt="Community Support">
+          <div class="slide-caption">Connecting vulnerable populations with essential services</div>
+        </div>
+        <div class="slide">
+          <img src="big.jpg" alt="Admin Dashboard">
+          <div class="slide-caption">Powerful admin tools for managing support services</div>
+        </div>
+
+        <button class="prev" onclick="changeSlide(-1)">❮</button>
+        <button class="next" onclick="changeSlide(1)">❯</button>
+
+        <div class="dots-container">
+          <span class="dot active" onclick="currentSlide(0)"></span>
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+      </div>
+
+      <!-- Original Content Container -->
       <div class="content-container">
         <!-- Welcome Section -->
-        <h1>Welcome to the Hive</h1>
-        <p>Your centralized hub for managing the ChatGPT-based assistant platform. This tool supports organizations in empowering communities and improving outreach efforts for vulnerable populations.</p>
+        <h1>Welcome to MannyConnect</h1>
+        <p>Your centralized hub for managing the ChatGPT-based assistant platform. This tool supports organizations in empowering communities and improving outreach efforts for vulnerable populations. The platform is designed to help assist individuals experiencing homelessness, providing them access to essential resources, such as shelters, food banks, and medical care, all through an easy-to-use chatbot interface.</p>
+        <p>
+          As part of our study abroad project at Miami University, we are a dedicated group of students working in collaboration with local organizations in Manchester. Our mission is to design and implement a chatbot that can help individuals who are homeless access crucial support services. This tool is just one part of our broader effort to improve the well-being of underserved populations by harnessing the power of technology.
+        </p>
 
         <!-- About Section -->
-        <h2>About the Hive</h2>
-        <p>The Hive is an admin portal designed for organizations to configure and manage their AI-powered chatbot solutions. Tailored for assisting underserved populations, such as homeless individuals, this platform allows seamless control over themes, notifications, and system configurations. By streamlining chatbot management, we aim to enhance communication and deliver impactful assistance.</p>
+        <h2>About MannyConnect</h2>
+        <p>
+          MannyConnect is an admin portal designed for organizations to configure and manage their AI-powered chatbot solutions. This platform is specifically tailored for assisting underserved populations, such as homeless individuals. The chatbot serves as a bridge between these individuals and the resources they need to regain stability and find support.
+        </p>
+        <p>
+          Our project team consists of a group of students from Miami University, here in Manchester as part of our study abroad program. We are working closely with local social service organizations to understand the challenges faced by the homeless population and to design solutions that address these issues effectively. The platform we are building will streamline chatbot management, providing tools to help users control themes, notifications, and system configurations.
+        </p>
+        <p>
+          By enhancing communication between social service providers and those in need, we aim to empower vulnerable populations to access essential services more efficiently. We believe that our solution has the potential to make a meaningful impact on the homeless community, and we are excited to be part of this transformative project.
+        </p>
 
-        <!-- Call-to-Action Button -->
-        <a href="preferences.html" class="cta-button">Go to Chatbot Settings</a>
+        <!-- Go to Admin Page Button -->
+        <a href="admin.html" class="cta-button">Go to Admin Panel</a>
       </div>
     </main>
 
     <footer>
-      <p>&copy; 2025 Hive Admin Portal</p>
+      <p>&copy; 2025 MannyConnect Admin Portal</p>
     </footer>
   </div>
+
+  <script>
+    let currentSlideIndex = 0;
+    const slides = document.getElementsByClassName("slide");
+    const dots = document.getElementsByClassName("dot");
+    const totalSlides = slides.length;
+
+    // Auto timer changes slides every 5 seconds
+    setInterval(() => changeSlide(1), 5000);
+
+    function changeSlide(direction) {
+      currentSlideIndex = (currentSlideIndex + direction + totalSlides) % totalSlides;
+      updateSlides();
+    }
+
+    function currentSlide(index) {
+      currentSlideIndex = index;
+      updateSlides();
+    }
+
+    function updateSlides() {
+      // Update slides
+      for (let i = 0; i < totalSlides; i++) {
+        slides[i].classList.remove("active");
+        dots[i].classList.remove("active");
+      }
+      slides[currentSlideIndex].classList.add("active");
+      dots[currentSlideIndex].classList.add("active");
+    }
+  </script>
 </body>
 </html>

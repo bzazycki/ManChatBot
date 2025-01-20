@@ -1,4 +1,18 @@
-/* General styles */
+/* CSS File to Style the website
+   Date Last Edited: 1/20/2025
+   Author: Jalen Brunson, Zach Clouse, Ethan Armbruster
+*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('HoneyComb.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #fdf8e4; /* Bee honeycomb background */
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -10,16 +24,6 @@ main {
   display: block;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-image: url('HoneyComb.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-color: #fdf8e4; /* Bee honeycomb background */
-}
 /* Sticky Navigation Bar */
 header {
   position: sticky;
@@ -28,18 +32,7 @@ header {
   z-index: 100;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: block;
-}
-
-header.yellow {
-  background-color: #ffe571;
-}
-
-header.black {
-  background-color: #000;
-}
-
-header.gold {
-  background-color: #ffc400;
+  background-color: #000; /* Black background */
 }
 
 nav ul {
@@ -50,9 +43,11 @@ nav ul {
   display: flex;
   justify-content: center;
 }
+
 nav ul li {
   margin-right: 30px;
 }
+
 nav ul li a {
   color: #ffc107; /* Bee yellow */
   text-decoration: none;
@@ -63,44 +58,168 @@ nav ul li a {
   letter-spacing: 1px;
   transition: color 0.3s, transform 0.3s;
 }
+
 nav ul li a:hover,
 nav ul li a:focus {
   color: #fff; /* Highlight on hover */
   transform: scale(1.1);
 }
+
 nav ul li a.active {
   color: #fff;
 }
+
 /* Page Containers */
-.landing-page,
-.preferences-page,
-.about-us,
-.admin-page {
-  display: flex;
+.content-container {
+  border: 2px solid #ccc;
+  border-radius: 10px;
   padding: 20px;
-  background-color: #fff;
-  max-width: 75%;
-  margin: 50px auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  align-content: center;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 800px;
 }
-/* Admin Page */
+
+.content-container h1, .content-container h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.content-container p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0;
+  text-align: justify;
+}
+
+/* Call-to-Action Button */
+.cta-button {
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffc107;
+  background-color: #000;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.cta-button:hover {
+  background-color: #333;
+}
+
+/* Slideshow Styles */
+.slideshow-container {
+  max-width: 800px;
+  position: relative;
+  margin: 20px auto;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dots-container {
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+}
+
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.dot.active, .dot:hover {
+  background-color: #fff;
+}
+
+/* Admin Page Styles */
 .admin-page {
   max-width: 400px;
   text-align: center;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .admin-page h1 {
   color: #ffc107;
   margin-bottom: 20px;
 }
+
 .admin-page .form-group {
   margin-bottom: 15px;
   text-align: left;
 }
+
 .admin-page label {
   display: block;
   font-size: 14px;
@@ -108,6 +227,7 @@ nav ul li a.active {
   color: #333;
   margin-bottom: 5px;
 }
+
 .admin-page input {
   width: 100%;
   padding: 10px;
@@ -116,14 +236,18 @@ nav ul li a.active {
   border-radius: 5px;
   box-sizing: border-box;
 }
+
 .admin-page input:focus {
   border-color: #ffc107;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
+
 .admin-page .button-group {
   margin-top: 20px;
+  text-align: center;
 }
+
 .admin-page .btn-login {
   background-color: #000;
   color: #ffc107;
@@ -134,141 +258,19 @@ nav ul li a.active {
   border-radius: 5px;
   transition: background-color 0.3s;
 }
+
 .admin-page .btn-login:hover {
   background-color: #333;
 }
-.admin-page .links {
-  margin-top: 20px;
-}
-.admin-page .links a {
-  display: block;
-  color: #000;
-  text-decoration: none;
-  font-size: 14px;
+
+.admin-page .error-message {
   margin-top: 10px;
-  transition: color 0.3s;
-}
-.admin-page .links a:hover {
-  color: #ffc107;
-}
-/* Footer */
-footer {
-  background-color: #000;
-  color: #ffc107;
-  text-align: center;
-  padding: 10px 0;
-}
-/* Forgot Password Page */
-.forgot-password-page {
-  max-width: 400px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-.forgot-password-page h1 {
-  color: #ffc107;
-  margin-bottom: 10px;
-}
-.forgot-password-page p {
+  color: red;
   font-size: 14px;
-  color: #333;
-  margin-bottom: 20px;
-}
-.forgot-password-page form {
-  text-align: left;
-}
-.forgot-password-page .form-group {
-  margin-bottom: 15px;
-}
-.forgot-password-page .btn-login {
-  width: 100%;
-  margin-top: 15px;
-}
-/* Create Account Page */
-.create-account-page {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.create-account-page h2 {
-  color: #ffc107;
-  font-size: 28px;
   text-align: center;
-  margin-bottom: 20px;
 }
-.create-account-page form {
-  display: flex;
-  flex-direction: column;
-}
-.create-account-page .form-group {
-  margin-bottom: 20px;
-}
-.create-account-page label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
-}
-.create-account-page input {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  width: 100%;
-}
-.create-account-page input:focus {
-  border-color: #ffc107;
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
-}
-.create-account-page button {
-  background-color: #000;
-  color: #ffc107;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  width: 100%;
-}
-.create-account-page button:hover {
-  background-color: #333;
-}
-.create-account-page .link-container {
-  text-align: center;
-  margin-top: 20px;
-}
-.create-account-page .link-container a {
-  color: #000;
-  text-decoration: none;
-  font-size: 14px;
-}
-.create-account-page .link-container a:hover {
-  color: #ffc107;
-}
-/* Context File Page */
-.context-page {
-  max-width: 600px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.context-page h1 {
-  color: #ffc107;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 28px;
-}
+
+/* Context File Page Styles */
 .context-page textarea {
   width: 100%;
   height: 150px;
@@ -279,11 +281,13 @@ footer {
   box-sizing: border-box;
   margin-bottom: 20px;
 }
+
 .context-page textarea:focus {
   border-color: #ffc107;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
 }
+
 .context-page button {
   background-color: #000;
   color: #ffc107;
@@ -294,7 +298,15 @@ footer {
   border-radius: 5px;
   transition: background-color 0.3s;
 }
+
 .context-page button:hover {
   background-color: #333;
 }
 
+/* Footer */
+footer {
+  background-color: #000;
+  color: #ffc107;
+  text-align: center;
+  padding: 10px 0;
+}

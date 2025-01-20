@@ -40,12 +40,6 @@ public class AppActivity extends AppCompatActivity {
     // === *** Attributes *** === //
 
     /**
-     * The last system long second that the activity has been taken place on. This is monitored
-     * so that it can me measured when inactivity has occurred.
-     */
-    protected long lastActivity;
-
-    /**
      * Stores the chat log so that it can be emailed if needed.
      */
     protected String chatLog = "";
@@ -79,8 +73,20 @@ public class AppActivity extends AppCompatActivity {
      * that the system can time out when it has not been used in a while.
      */
     private Handler inactivityHandler;
+
+    /**
+     * The inactivity runnable, this is fed to the inactivity handler so it knows
+     * what to do when the user does not click anything for a specified amount of time.
+     */
     private Runnable inactivityRunnable;
 
+    /**
+     * The keystone of the project revolves around manipulation of this text box.
+     * The text box will be added to and sent from so that the backend functions
+     * can receive input from the user. After user speech is input, this will
+     * be populated by what they said to ensure that they can read it over before
+     * sending it.
+     */
     private EditText userTextInput;
 
 
@@ -91,9 +97,6 @@ public class AppActivity extends AppCompatActivity {
      */
     public AppActivity() {
         super();
-
-        lastActivity = System.currentTimeMillis();
-
     }
 
     // === *** Methods *** === //
@@ -109,6 +112,11 @@ public class AppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // === Non graphical setup === //
+
+        // The inactivity handler. Sets up both the inactivity handler and the runnable
+        // to ensure that when the app is inactive for a long time the showInactivityDialog
+        // will appear.
         inactivityHandler = new Handler();
         inactivityRunnable = new Runnable() {
             public void run() {
@@ -116,8 +124,11 @@ public class AppActivity extends AppCompatActivity {
             }
         };
 
+        // Sets up the listener, and gives it itself as context.
         this.listener = new Listener(this);
 
+        // Checks if the application has permission to use the microphone, if it does not
+        // will use the OS to ask if it can have permission.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -172,6 +183,9 @@ public class AppActivity extends AppCompatActivity {
         endChatParams.setMargins(dpToPx(16), dpToPx(8), dpToPx(16), dpToPx(8)); // Add margins
         endChatButton.setLayoutParams(endChatParams);
 
+        // When the user selects that they would like to end the chat, display
+        // the ChatDialog to see if they would like an email of their chathistory
+        // sent to them.
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +207,8 @@ public class AppActivity extends AppCompatActivity {
         soundButtonParams.setMargins(dpToPx(16), 0, 0, 0); // Add left margin for spacing
         soundImageView.setLayoutParams(soundButtonParams);
 
-        // Set onClickListener to toggle sound state
+        // Set onClickListener to toggle sound state. Will cut it off if the
+        // sound is even allowed.
         soundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,8 +325,6 @@ public class AppActivity extends AppCompatActivity {
 
                 }).start();
 
-                lastActivity = System.currentTimeMillis();
-
             }
         });
 
@@ -414,9 +427,15 @@ public class AppActivity extends AppCompatActivity {
 
                 // Update the UI with recognized text
                 userTextInput.setText(text);
-                //changeAnimation('w');
+                runOnUiThread(() -> {
+                    changeAnimation('w');
+                });
+
             } else {
                 Log.e("Listener", "Failed to recognize speech.");
+                runOnUiThread(() -> {
+                    changeAnimation('w');
+                });
             }
         });
     }

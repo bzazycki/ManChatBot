@@ -23,19 +23,16 @@ import java.util.concurrent.CountDownLatch;
 public class Listener {
 
     /**
-     * The Text-To-Speech object.
+     * The Text-To-Speech object. Must connect to the android text to speech
+     * system so that it can speak. Connecting to the system takes about 3-5
+     * seconds.
      */
     protected TextToSpeech tts;
 
     /**
-     * The Speech Recognizer Object.
+     * The Speech Recognizer Object. This reads in what the user is saying.
      */
     protected SpeechRecognizer sr;
-
-    /**
-     * The Volume used by the listener.
-     */
-    protected float volume;
 
     /**
      * Stores if the Listener is allowed to speak. If it is not, then when
@@ -59,9 +56,10 @@ public class Listener {
      * along with many of the contexts.
      */
     public Listener(AppActivity c) {
+        // Sets up some of the default behavior. The locale is set to English and
+        // Great Britain.
         this.context = c;
         this.locale = new Locale("en", "GB");
-        this.volume = 1.0f;
         this.allowSpeech = true;
 
         // Initialize TextToSpeech
@@ -88,11 +86,12 @@ public class Listener {
     }
 
     /**
-     * Speaks the words provided to it.
+     * Speaks the words provided to it. Must connect to the speech system in the system.
+     * This is polled for in the AppActivity.
      * @param wordsToSpeak the words to speak.
      */
     public void speak(String wordsToSpeak) {
-
+        // If it is not allowed to speak, then return.
         if (!allowSpeech) {
             return;
         }
@@ -114,8 +113,8 @@ public class Listener {
 
 
     /**
-     * Waits for user input.
-     * @return the user input that was read from the voice.
+     * Waits for user input. Uses callbacks to get the result
+     * of the string.
      */
     public void listen(Consumer<String> callback) {
         // Initialize SpeechRecognizer on the main thread
@@ -172,6 +171,12 @@ public class Listener {
         });
     }
 
+    /**
+     * Error Logging, whenever there is an error it will log the error based on the
+     * error code. Use LogCat to view the results of errors failing.
+     * @param errorCode the error code.
+     * @return the human readable cause of the error.
+     */
     private String getErrorText(int errorCode) {
         switch (errorCode) {
             case SpeechRecognizer.ERROR_AUDIO:

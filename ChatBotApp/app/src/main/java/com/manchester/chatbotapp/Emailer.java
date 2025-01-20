@@ -16,13 +16,15 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
- * This class handles all of the required emailing that is used for the chat history.
+ * This class handles all of the required emailing that is used for the chat history. This class
+ * uses a simple http request to the server, where the server then handles the SMTP.
  */
 public class Emailer  {
 
     /**
      * Makes a call to the server to send an email to the user. Will return
      * if the email successfully sent.
+     * @return True - The message was sent to the server. False - Failed
      */
     public static boolean sendEmail(String emailAddress, String message) {
         String flaskURL = "http://34.236.100.216/sendEmail";
