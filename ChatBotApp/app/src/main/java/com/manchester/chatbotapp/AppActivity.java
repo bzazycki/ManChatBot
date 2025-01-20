@@ -1,9 +1,6 @@
 package com.manchester.chatbotapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,12 +40,6 @@ public class AppActivity extends AppCompatActivity {
     // === *** Attributes *** === //
 
     /**
-     * The last system long second that the activity has been taken place on. This is monitored
-     * so that it can me measured when inactivity has occurred.
-     */
-    protected long lastActivity;
-
-    /**
      * Stores the chat log so that it can be emailed if needed.
      */
     protected String chatLog = "";
@@ -82,8 +73,20 @@ public class AppActivity extends AppCompatActivity {
      * that the system can time out when it has not been used in a while.
      */
     private Handler inactivityHandler;
+
+    /**
+     * The inactivity runnable, this is fed to the inactivity handler so it knows
+     * what to do when the user does not click anything for a specified amount of time.
+     */
     private Runnable inactivityRunnable;
 
+    /**
+     * The keystone of the project revolves around manipulation of this text box.
+     * The text box will be added to and sent from so that the backend functions
+     * can receive input from the user. After user speech is input, this will
+     * be populated by what they said to ensure that they can read it over before
+     * sending it.
+     */
     private EditText userTextInput;
 
 
@@ -94,9 +97,6 @@ public class AppActivity extends AppCompatActivity {
      */
     public AppActivity() {
         super();
-
-        lastActivity = System.currentTimeMillis();
-
     }
 
     // === *** Methods *** === //
@@ -112,6 +112,11 @@ public class AppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // === Non graphical setup === //
+
+        // The inactivity handler. Sets up both the inactivity handler and the runnable
+        // to ensure that when the app is inactive for a long time the showInactivityDialog
+        // will appear.
         inactivityHandler = new Handler();
         inactivityRunnable = new Runnable() {
             public void run() {
@@ -119,8 +124,11 @@ public class AppActivity extends AppCompatActivity {
             }
         };
 
+        // Sets up the listener, and gives it itself as context.
         this.listener = new Listener(this);
 
+        // Checks if the application has permission to use the microphone, if it does not
+        // will use the OS to ask if it can have permission.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -175,6 +183,9 @@ public class AppActivity extends AppCompatActivity {
         endChatParams.setMargins(dpToPx(16), dpToPx(8), dpToPx(16), dpToPx(8)); // Add margins
         endChatButton.setLayoutParams(endChatParams);
 
+        // When the user selects that they would like to end the chat, display
+        // the ChatDialog to see if they would like an email of their chathistory
+        // sent to them.
         endChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +207,8 @@ public class AppActivity extends AppCompatActivity {
         soundButtonParams.setMargins(dpToPx(16), 0, 0, 0); // Add left margin for spacing
         soundImageView.setLayoutParams(soundButtonParams);
 
-        // Set onClickListener to toggle sound state
+        // Set onClickListener to toggle sound state. Will cut it off if the
+        // sound is even allowed.
         soundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,10 +234,8 @@ public class AppActivity extends AppCompatActivity {
 
         // Create the VideoView
         this.animation = new VideoView(this);
-
-        changeAnimation('w');
-
         verticalLayout.addView(animation);
+        changeAnimation('w');
 
         // Add the vertical layout (with VideoView and buttons) to the leftLayout
         leftLayout.addView(verticalLayout);
@@ -290,8 +300,6 @@ public class AppActivity extends AppCompatActivity {
                 // Handle submit action
                 String input = userTextInput.getText().toString().trim();
 
-                changeAnimation('t');
-
                 if (input.isBlank() || input.isEmpty()) {
                     return;
                 }
@@ -312,13 +320,11 @@ public class AppActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         logChatOutput(chatPanel, output);
                         listener.speak(output);
+                        changeAnimation('t');
                     });
 
                 }).start();
 
-                lastActivity = System.currentTimeMillis();
-
-                changeAnimation('l');
             }
         });
 
@@ -336,6 +342,7 @@ public class AppActivity extends AppCompatActivity {
         listenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changeAnimation('l');
                 startListening();
             }
         });
@@ -362,7 +369,7 @@ public class AppActivity extends AppCompatActivity {
                     this.listener.speak("Hi! My name is Manny, how can I help you today?");
                 }
             } catch (InterruptedException e) {
-
+                Log.e("Speaking thread error", e.toString());
             }
         }).start();
 
@@ -391,24 +398,20 @@ public class AppActivity extends AppCompatActivity {
 
         // Reset the VideoView
         animation.stopPlayback();
-        animation.suspend();
+        animation.seekTo(0);
 
         // Set new video URI
         animation.setVideoURI(videoUri);
 
         // Set looping explicitly
         animation.setOnPreparedListener(mp -> {
-            mp.setLooping(true);
             animation.start();
-            Log.d("VideoDuration", "Duration: " + mp.getDuration());
-        });
-
-        animation.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Log.e("VideoView", "Error: " + what + ", " + extra);
-                return true; // Prevent default error handling
-            }
+            animation.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    animation.start();
+                }
+            });
         });
 
     }
@@ -424,8 +427,15 @@ public class AppActivity extends AppCompatActivity {
 
                 // Update the UI with recognized text
                 userTextInput.setText(text);
+                runOnUiThread(() -> {
+                    changeAnimation('w');
+                });
+
             } else {
                 Log.e("Listener", "Failed to recognize speech.");
+                runOnUiThread(() -> {
+                    changeAnimation('w');
+                });
             }
         });
     }
@@ -526,26 +536,6 @@ public class AppActivity extends AppCompatActivity {
         InactivityDialog inactivityDialog = new InactivityDialog(this, chatLog);
         inactivityDialog.show();
     }
-
-    // Handle quit button action, show the chat dialog
-    public void onQuitClicked() {
-        // Handle quit button action, show the chat dialog
-        ChatDialog chatDialog = new ChatDialog(this, chatLog); // Use the activity context to instantiate
-        chatDialog.show(); // Show the chat dialog
-    }
-
-    public void onBackClicked() {
-        // Handle back button action, reset the inactivity timer
-        resetInactivityTimer();
-    }
-
-    // Handle inactivity timeout, reset the app
-    public void onInactivityTimeout() {
-        Intent intent = new Intent(this, MainActivity.class); // Use 'this' for the current activity context
-        startActivity(intent); // Start the target activity
-        finish(); // Finish the current activity to reset the app
-    }
-
 
 
     /**
